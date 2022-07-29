@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import Domain
+import Data
+import Presentation
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {}
