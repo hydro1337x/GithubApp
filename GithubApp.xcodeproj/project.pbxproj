@@ -32,11 +32,7 @@
 		60D771D228946BE80027CD4C /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 60D771D128946BE80027CD4C /* RxRelay */; };
 		60D771D428946BE80027CD4C /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 60D771D328946BE80027CD4C /* RxSwift */; };
 		60D771F528946E820027CD4C /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 60D771F428946E820027CD4C /* RxCocoa */; };
-		60D771F728946E820027CD4C /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 60D771F628946E820027CD4C /* RxRelay */; };
-		60D771F928946E820027CD4C /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 60D771F828946E820027CD4C /* RxSwift */; };
 		60D771FA28946E830027CD4C /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60D7716C2894690E0027CD4C /* Domain.framework */; };
-		60D7720428946EC10027CD4C /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 60D7720328946EC10027CD4C /* RxRelay */; };
-		60D7720628946EC10027CD4C /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 60D7720528946EC10027CD4C /* RxSwift */; };
 		60D7720728946EC10027CD4C /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60D7716C2894690E0027CD4C /* Domain.framework */; };
 		60D7720928946EE00027CD4C /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 60D7720828946EE00027CD4C /* RxRelay */; };
 		60D7720B28946EE00027CD4C /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 60D7720A28946EE00027CD4C /* RxSwift */; };
@@ -212,8 +208,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				60D7720728946EC10027CD4C /* Domain.framework in Frameworks */,
-				60D7720628946EC10027CD4C /* RxSwift in Frameworks */,
-				60D7720428946EC10027CD4C /* RxRelay in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,8 +224,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				60D771FA28946E830027CD4C /* Domain.framework in Frameworks */,
-				60D771F928946E820027CD4C /* RxSwift in Frameworks */,
-				60D771F728946E820027CD4C /* RxRelay in Frameworks */,
 				60D771F528946E820027CD4C /* RxCocoa in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -489,13 +481,9 @@
 			);
 			dependencies = (
 				60D771DE28946CD70027CD4C /* PBXTargetDependency */,
-				60D771E028946CD70027CD4C /* PBXTargetDependency */,
-				60D771E228946CD70027CD4C /* PBXTargetDependency */,
 			);
 			name = Data;
 			packageProductDependencies = (
-				60D7720328946EC10027CD4C /* RxRelay */,
-				60D7720528946EC10027CD4C /* RxSwift */,
 			);
 			productName = Data;
 			productReference = 60D7718F289469B00027CD4C /* Data.framework */;
@@ -533,15 +521,11 @@
 			);
 			dependencies = (
 				60D771FC28946EA70027CD4C /* PBXTargetDependency */,
-				60D771FE28946EA70027CD4C /* PBXTargetDependency */,
-				60D7720028946EA70027CD4C /* PBXTargetDependency */,
 				60D7720228946EA70027CD4C /* PBXTargetDependency */,
 			);
 			name = Presentation;
 			packageProductDependencies = (
 				60D771F428946E820027CD4C /* RxCocoa */,
-				60D771F628946E820027CD4C /* RxRelay */,
-				60D771F828946E820027CD4C /* RxSwift */,
 			);
 			productName = Presentation;
 			productReference = 60D771B128946A070027CD4C /* Presentation.framework */;
@@ -831,26 +815,10 @@
 			target = 60D7716B2894690E0027CD4C /* Domain */;
 			targetProxy = 60D771DD28946CD70027CD4C /* PBXContainerItemProxy */;
 		};
-		60D771E028946CD70027CD4C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 60D771DF28946CD70027CD4C /* RxRelay */;
-		};
-		60D771E228946CD70027CD4C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 60D771E128946CD70027CD4C /* RxSwift */;
-		};
 		60D771FC28946EA70027CD4C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 60D7716B2894690E0027CD4C /* Domain */;
 			targetProxy = 60D771FB28946EA70027CD4C /* PBXContainerItemProxy */;
-		};
-		60D771FE28946EA70027CD4C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 60D771FD28946EA70027CD4C /* RxCocoa */;
-		};
-		60D7720028946EA70027CD4C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 60D771FF28946EA70027CD4C /* RxRelay */;
 		};
 		60D7720228946EA70027CD4C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1506,52 +1474,12 @@
 			package = 60D771CE28946BE80027CD4C /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
 		};
-		60D771DF28946CD70027CD4C /* RxRelay */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 60D771CE28946BE80027CD4C /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxRelay;
-		};
-		60D771E128946CD70027CD4C /* RxSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 60D771CE28946BE80027CD4C /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxSwift;
-		};
 		60D771F428946E820027CD4C /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 60D771CE28946BE80027CD4C /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxCocoa;
 		};
-		60D771F628946E820027CD4C /* RxRelay */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 60D771CE28946BE80027CD4C /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxRelay;
-		};
-		60D771F828946E820027CD4C /* RxSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 60D771CE28946BE80027CD4C /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxSwift;
-		};
-		60D771FD28946EA70027CD4C /* RxCocoa */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 60D771CE28946BE80027CD4C /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxCocoa;
-		};
-		60D771FF28946EA70027CD4C /* RxRelay */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 60D771CE28946BE80027CD4C /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxRelay;
-		};
 		60D7720128946EA70027CD4C /* RxSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 60D771CE28946BE80027CD4C /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxSwift;
-		};
-		60D7720328946EC10027CD4C /* RxRelay */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 60D771CE28946BE80027CD4C /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxRelay;
-		};
-		60D7720528946EC10027CD4C /* RxSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 60D771CE28946BE80027CD4C /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
