@@ -28,9 +28,6 @@
 		60D771C428946A070027CD4C /* Presentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60D771B128946A070027CD4C /* Presentation.framework */; };
 		60D771C528946A070027CD4C /* Presentation.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 60D771B128946A070027CD4C /* Presentation.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		60D771CD28946A250027CD4C /* PresentationFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D771CC28946A250027CD4C /* PresentationFile.swift */; };
-		60D771D028946BE80027CD4C /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 60D771CF28946BE80027CD4C /* RxCocoa */; };
-		60D771D228946BE80027CD4C /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 60D771D128946BE80027CD4C /* RxRelay */; };
-		60D771D428946BE80027CD4C /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 60D771D328946BE80027CD4C /* RxSwift */; };
 		60D771F528946E820027CD4C /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 60D771F428946E820027CD4C /* RxCocoa */; };
 		60D771FA28946E830027CD4C /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60D7716C2894690E0027CD4C /* Domain.framework */; };
 		60D7720728946EC10027CD4C /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60D7716C2894690E0027CD4C /* Domain.framework */; };
@@ -170,11 +167,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60D771D428946BE80027CD4C /* RxSwift in Frameworks */,
-				60D771D228946BE80027CD4C /* RxRelay in Frameworks */,
 				60D771A2289469B00027CD4C /* Data.framework in Frameworks */,
 				60D7717F2894690E0027CD4C /* Domain.framework in Frameworks */,
-				60D771D028946BE80027CD4C /* RxCocoa in Frameworks */,
 				60D771C428946A070027CD4C /* Presentation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -399,9 +393,6 @@
 			);
 			name = GithubApp;
 			packageProductDependencies = (
-				60D771CF28946BE80027CD4C /* RxCocoa */,
-				60D771D128946BE80027CD4C /* RxRelay */,
-				60D771D328946BE80027CD4C /* RxSwift */,
 			);
 			productName = GithubApp;
 			productReference = 60D7712F289447890027CD4C /* GithubApp.app */;
@@ -1449,21 +1440,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		60D771CF28946BE80027CD4C /* RxCocoa */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 60D771CE28946BE80027CD4C /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxCocoa;
-		};
-		60D771D128946BE80027CD4C /* RxRelay */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 60D771CE28946BE80027CD4C /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxRelay;
-		};
-		60D771D328946BE80027CD4C /* RxSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 60D771CE28946BE80027CD4C /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxSwift;
-		};
 		60D771D928946C980027CD4C /* RxRelay */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 60D771CE28946BE80027CD4C /* XCRemoteSwiftPackageReference "RxSwift" */;
