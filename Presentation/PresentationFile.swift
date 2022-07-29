@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import Domain
+import RxCocoa
 
 struct PresentationFile {
     

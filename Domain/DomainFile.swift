@@ -5,4 +5,8 @@
 //  Created by Benjamin Mecanović on 29.07.2022..
 //
 
-import Foundation
+import RxSwift
+
+struct DomainFile {
+
+}
