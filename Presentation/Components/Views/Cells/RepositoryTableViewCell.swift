@@ -9,9 +9,17 @@ import UIKit
 
 final class RepositoryTableViewCell: UITableViewCell {
 
+    enum Dimension {
+        static let padding: CGFloat = 8
+        static let imageSpan: CGFloat = 40
+        static let spacing: CGFloat = 8
+        static let tupleViewSpacing: CGFloat = 2
+    }
+
     let avatarImageView = UIImageView()
     let ownerNameLabel = UILabel()
     let nameLabel = UILabel()
+    let stackView = UIStackView()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -23,9 +31,30 @@ final class RepositoryTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func prepareForReuse() {
+        stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+    }
+
+    // TODO: - Refactor with stackviews
     func configure(with viewModel: RepositoryViewModel) {
         self.nameLabel.text = viewModel.name
         self.ownerNameLabel.text = viewModel.ownerName
+
+        let tuples = [
+            ("smallcircle.filled.circle", viewModel.openIssuesCount),
+            ("arrow.triangle.branch", viewModel.forksCount),
+            ("star", viewModel.stargazersCount),
+            ("eye", viewModel.watchersCount)
+        ]
+
+        tuples.forEach {
+            stackView.addArrangedSubview(
+                makeTupleView(
+                    imageName: $0.0,
+                    text: $0.1
+                )
+            )
+        }
     }
 
 }
@@ -35,35 +64,67 @@ extension RepositoryTableViewCell: ViewConstructing {
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(avatarImageView)
         NSLayoutConstraint.activate([
-            avatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            avatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-            avatarImageView.heightAnchor.constraint(equalToConstant: 20),
-            avatarImageView.widthAnchor.constraint(equalTo: avatarImageView.heightAnchor)
+            avatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Dimension.padding),
+            avatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Dimension.padding),
+            avatarImageView.heightAnchor.constraint(equalToConstant: Dimension.imageSpan),
+            avatarImageView.widthAnchor.constraint(equalToConstant: Dimension.imageSpan)
         ])
 
         ownerNameLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(ownerNameLabel)
         NSLayoutConstraint.activate([
             ownerNameLabel.centerYAnchor.constraint(equalTo: avatarImageView.centerYAnchor),
-            ownerNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 8),
-            ownerNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 8)
+            ownerNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: Dimension.padding),
+            ownerNameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Dimension.padding)
         ])
 
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(nameLabel)
         NSLayoutConstraint.activate([
-            nameLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 8),
+            nameLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: Dimension.padding),
             nameLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
-            nameLabel.trailingAnchor.constraint(equalTo: ownerNameLabel.trailingAnchor),
-            nameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
+            nameLabel.trailingAnchor.constraint(equalTo: ownerNameLabel.trailingAnchor)
+        ])
+
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.spacing = Dimension.spacing
+        contentView.addSubview(stackView)
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: Dimension.padding),
+            stackView.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
+            stackView.trailingAnchor.constraint(lessThanOrEqualTo: nameLabel.trailingAnchor),
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Dimension.padding)
         ])
     }
 
     func setupStyle() {
+        avatarImageView.contentMode = .scaleAspectFit
         avatarImageView.image = UIImage(systemName: "pencil")
-        avatarImageView.layer.cornerRadius = 8
+        avatarImageView.backgroundColor = .red
+        avatarImageView.layer.cornerRadius = Dimension.imageSpan / 2
+        avatarImageView.layer.borderWidth = 1
         avatarImageView.clipsToBounds = true
 
+        nameLabel.numberOfLines = 2
         nameLabel.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+    }
+
+    private func makeTupleView(imageName: String, text: String) -> UIView {
+        let stackView = UIStackView()
+        stackView.backgroundColor = .secondarySystemBackground
+        stackView.spacing = Dimension.tupleViewSpacing
+        stackView.axis = .horizontal
+
+        let image = UIImage(systemName: imageName)
+        let imageView = UIImageView(image: image)
+
+        stackView.addArrangedSubview(imageView)
+
+        let label = UILabel()
+        label.text = text
+
+        stackView.addArrangedSubview(label)
+
+        return stackView
     }
 }

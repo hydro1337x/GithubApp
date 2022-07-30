@@ -58,7 +58,7 @@ public final class SearchRepositoriesViewModel {
 
         let subsequentRepositories = input.subsequentTrigger
             .asObservable()
-            .filter { $0.currentIndex == ($0.lastIndex ?? 0)  }
+            .filter { $0.currentIndex == ($0.lastIndex ?? 0) - 5  }
             .map(\.text)
             .flatMap { [unowned self] input in
                 fetchRepositoryListUseCase.execute(with: FetchRepositoryListInput(query: input, isInitialFetch: false))
@@ -98,7 +98,11 @@ public final class SearchRepositoriesViewModel {
                 id: $0.id,
                 ownerName: $0.owner.name,
                 ownerAvatarURL: $0.owner.avatarURL,
-                name: $0.name
+                name: $0.name,
+                stargazersCount: $0.stargazersCount.description,
+                watchersCount: $0.watchersCount.description,
+                forksCount: $0.forksCount.description,
+                openIssuesCount: $0.openIssuesCount.description
             )
         }
     }

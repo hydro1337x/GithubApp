@@ -12,4 +12,8 @@ struct RepositoryViewModel: Hashable {
     let ownerName: String
     let ownerAvatarURL: String
     let name: String
+    let stargazersCount: String
+    let watchersCount: String
+    let forksCount: String
+    let openIssuesCount: String
 }

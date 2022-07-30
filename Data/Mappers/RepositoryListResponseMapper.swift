@@ -28,7 +28,11 @@ public final class RepositoryListResponseMapper: Mapper {
                     stargazersCount: $0.stargazers_count,
                     watchersCount: $0.watchers_count,
                     forksCount: $0.forks_count,
-                    openIssuesCount: $0.open_issues_count)
+                    openIssuesCount: $0.open_issues_count,
+                    url: $0.url,
+                    createdAt: $0.created_at,
+                    updatedAt: $0.updated_at
+                )
             }
 
         return PaginatedResponse(page: page, pagination: pagination)
