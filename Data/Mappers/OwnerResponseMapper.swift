@@ -9,6 +9,9 @@ import Foundation
 import Domain
 
 public final class OwnerResponseMapper: Mapper {
+
+    public init() {}
+
     public func map(input: OwnerResponse) -> Owner {
         Owner(name: input.login, avatarURL: input.avatar_url)
     }

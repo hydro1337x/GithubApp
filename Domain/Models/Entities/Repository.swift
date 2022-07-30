@@ -11,7 +11,7 @@ public struct Repository {
 
     public let id: String
     public let name: String
-    public let description: String
+    public let description: String?
     public let owner: Owner
     public let stargazersCount: Int
     public let watchersCount: Int
@@ -21,7 +21,7 @@ public struct Repository {
     public init(
         id: String,
         name: String,
-        description: String,
+        description: String?,
         owner: Owner,
         stargazersCount: Int,
         watchersCount: Int,

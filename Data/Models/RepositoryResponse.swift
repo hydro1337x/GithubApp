@@ -8,9 +8,9 @@
 import Foundation
 
 struct RepositoryResponse: Decodable {
-    let id: String
+    let id: Int
     let name: String
-    let description: String
+    let description: String?
     let owner: OwnerResponse
     let stargazers_count: Int
     let watchers_count: Int

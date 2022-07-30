@@ -9,10 +9,10 @@ import Foundation
 import Domain
 
 public final class RepositoryListResponseMapper: Mapper {
-    private let ownerMapper: AnyMapper<OwnerResponse, Owner>
+    private let ownerResponseMapper: AnyMapper<OwnerResponse, Owner>
 
-    public init(ownerMapper: AnyMapper<OwnerResponse, Owner>) {
-        self.ownerMapper = ownerMapper
+    public init(ownerResponseMapper: AnyMapper<OwnerResponse, Owner>) {
+        self.ownerResponseMapper = ownerResponseMapper
     }
 
     public func map(input: RepositoryListResponse) -> PaginatedResponse<Repository> {
@@ -21,10 +21,10 @@ public final class RepositoryListResponseMapper: Mapper {
             .items
             .map {
                 Repository(
-                    id: $0.id,
+                    id: $0.id.description,
                     name: $0.name,
                     description: $0.description,
-                    owner: ownerMapper.map(input: $0.owner),
+                    owner: ownerResponseMapper.map(input: $0.owner),
                     stargazersCount: $0.stargazers_count,
                     watchersCount: $0.watchers_count,
                     forksCount: $0.forks_count,
