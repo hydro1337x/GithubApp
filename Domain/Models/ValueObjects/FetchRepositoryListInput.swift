@@ -8,8 +8,8 @@
 import Foundation
 
 public struct FetchRepositoryListInput {
-    let query: String
-    let isInitialFetch: Bool
+    public let query: String
+    public let isInitialFetch: Bool
 
     public init(query: String, isInitialFetch: Bool) {
         self.query = query

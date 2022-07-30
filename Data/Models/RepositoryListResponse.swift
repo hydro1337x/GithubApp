@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RepositoryListResponse: Decodable {
+public struct RepositoryListResponse: Decodable {
     let total_count: Int
     let items: [RepositoryResponse]
 }

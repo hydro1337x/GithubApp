@@ -8,6 +8,12 @@
 import Foundation
 
 public struct Owner {
+
     public let name: String
-    public let avatarURL: URL
+    public let avatarURL: String
+
+    public init(name: String, avatarURL: String) {
+        self.name = name
+        self.avatarURL = avatarURL
+    }
 }
