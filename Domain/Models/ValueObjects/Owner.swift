@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+public struct Owner {
+    public let name: String
+    public let avatarURL: URL
+}
