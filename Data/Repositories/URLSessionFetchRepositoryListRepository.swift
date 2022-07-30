@@ -25,11 +25,17 @@ public final class URLSessionFetchRepositoryListRepository: FetchRepositoryListR
     }
 
     public func fetch(with input: FetchRepositoryListInput) -> Single<[Repository]> {
-        guard let url = URL(string: "https://api.github.com/search/repositories") else {
+        var urlComponents = URLComponents(string: "https://api.github.com/search/repositories")
+        let searchQuery = URLQueryItem(name: "q", value: input.query)
+        let perPageQuery = URLQueryItem(name: "per_page", value: paginator.limit.description)
+        urlComponents?.queryItems = [searchQuery, perPageQuery]
+
+        guard let url = urlComponents?.url else {
             return .error(URLError(.badURL))
         }
 
-        let request = URLRequest(url: url)
+        var request = URLRequest(url: url)
+        request.addValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
 
         return fetch(request)
             .map { [weak self] response in
@@ -55,6 +61,8 @@ public final class URLSessionFetchRepositoryListRepository: FetchRepositoryListR
                     single(.failure(error))
                 }
             }
+
+            task.resume()
 
             return Disposables.create {
                 task.cancel()
