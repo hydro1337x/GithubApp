@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct RepositoryViewModel: Hashable {
+    let ownerName: String
+    let ownerAvatarURL: String
+    let name: String
+}
