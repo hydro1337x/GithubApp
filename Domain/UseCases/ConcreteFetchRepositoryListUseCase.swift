@@ -12,7 +12,7 @@ public final class ConcreteFetchRepositoryListUseCase: FetchRepositoryListUseCas
 
     private let repository: FetchRepositoryListRepository
 
-    init(repository: FetchRepositoryListRepository) {
+    public init(repository: FetchRepositoryListRepository) {
         self.repository = repository
     }
 
