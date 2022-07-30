@@ -20,7 +20,8 @@ public final class URLSessionFetchRepositoryListRepository: FetchRepositoryListR
     public init(session: URLSession,
                 paginator: Paginator<Repository>,
                 requestMapper: AnyMapper<FetchRepositoryListRequest, URLRequest?>,
-                responseMapper: AnyMapper<RepositoryListResponse, PaginatedResponse<Repository>>) {
+                responseMapper: AnyMapper<RepositoryListResponse, PaginatedResponse<Repository>>
+    ) {
         self.session = session
         self.paginator = paginator
         self.requestMapper = requestMapper

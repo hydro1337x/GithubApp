@@ -20,6 +20,7 @@ public final class SearchRepositoriesViewModel {
         let repositories: Driver<[RepositoryViewModel]>
         let initialActivity: Driver<Bool>
         let subsequentActivity: Driver<Bool>
+        let failureMessage: Signal<String>
     }
 
     private let fetchRepositoryListUseCase: FetchRepositoryListUseCase
@@ -79,10 +80,16 @@ public final class SearchRepositoriesViewModel {
         let initialActivity = initialActivityTracker.asDriver()
         let subsequentActivity = subsequentActivityTracker.asDriver()
 
+        let failureMessage = failureTracker
+            .map { $0.localizedDescription }
+            .asSignal(onErrorSignalWith: .empty())
+
         return Output(
             repositories: repositories,
             initialActivity: initialActivity,
-            subsequentActivity: subsequentActivity)
+            subsequentActivity: subsequentActivity,
+            failureMessage: failureMessage
+        )
     }
 
     private func map(_ repositories: [Repository]) -> [RepositoryViewModel] {

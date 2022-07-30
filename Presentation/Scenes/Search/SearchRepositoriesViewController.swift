@@ -87,6 +87,13 @@ public final class SearchRepositoriesViewController: UIViewController {
         output.subsequentActivity
             .drive(activityIndicatorView.rx.isAnimating)
             .disposed(by: disposeBag)
+
+        output.failureMessage
+            .emit(onNext: {
+                print($0)
+            })
+            .disposed(by: disposeBag)
+            
     }
 
     private func makeDataSource() -> DataSource {
