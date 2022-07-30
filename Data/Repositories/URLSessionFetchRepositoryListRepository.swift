@@ -27,8 +27,9 @@ public final class URLSessionFetchRepositoryListRepository: FetchRepositoryListR
     public func fetch(with input: FetchRepositoryListInput) -> Single<[Repository]> {
         var urlComponents = URLComponents(string: "https://api.github.com/search/repositories")
         let searchQuery = URLQueryItem(name: "q", value: input.query)
+        let pageQuery = URLQueryItem(name: "page", value: paginator.currentPage.description)
         let perPageQuery = URLQueryItem(name: "per_page", value: paginator.limit.description)
-        urlComponents?.queryItems = [searchQuery, perPageQuery]
+        urlComponents?.queryItems = [searchQuery, pageQuery, perPageQuery]
 
         guard let url = urlComponents?.url else {
             return .error(URLError(.badURL))
@@ -41,7 +42,9 @@ public final class URLSessionFetchRepositoryListRepository: FetchRepositoryListR
             .map { [weak self] response in
                 guard let self = self else { return [] }
                 let response = self.mapper.map(input: response)
-                return self.paginator.paginate(response)
+                return self.paginator
+                    .paginate(response)
+                    .uniqued()
             }
     }
 
@@ -49,13 +52,13 @@ public final class URLSessionFetchRepositoryListRepository: FetchRepositoryListR
         Single.create { [weak self] single in
             guard let self = self else { return Disposables.create() }
 
-            let task = self.session.dataTask(with: request) { [decoder = self.decoder] data, _, error in
-                guard let data = data else {
+            let task = self.session.dataTask(with: request) { [weak self] data, _, error in
+                guard let self = self, let data = data else {
                     return single(.failure(error ?? URLError(.badServerResponse)))
                 }
 
                 do {
-                    let response = try decoder.decode(RepositoryListResponse.self, from: data)
+                    let response = try self.decoder.decode(RepositoryListResponse.self, from: data)
                     single(.success(response))
                 } catch {
                     single(.failure(error))

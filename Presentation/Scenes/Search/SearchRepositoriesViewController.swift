@@ -19,7 +19,6 @@ public final class SearchRepositoriesViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private let sectionIdentifier = "section"
     private let itemsIdentifier = "items"
-
     private let viewModel: SearchRepositoriesViewModel
 
     public init(viewModel: SearchRepositoriesViewModel) {
@@ -45,14 +44,27 @@ public final class SearchRepositoriesViewController: UIViewController {
     }
 
     private func setupSubscriptions() {
-        let initialTrigger = Signal.just(())
+        let initialTrigger = Signal.just(("joh"))
+        let subsequentTrigger = tableView.rx
+            .willDisplayCell
+            .map { [unowned self] input -> (text: String, currentIndex: Int, lastIndex: Int?) in
+                let currentIndex = input.indexPath.row
+                let lastIndex = dataSource.snapshot().itemIdentifiers.indices.last
+                return (text: "joh", currentIndex: currentIndex, lastIndex: lastIndex)
+            }
+            .asSignal(onErrorSignalWith: .empty())
 
-        let input = SearchRepositoriesViewModel.Input(initialTrigger: initialTrigger)
+        let input = SearchRepositoriesViewModel.Input(
+            initialTrigger: initialTrigger,
+            subsequentTrigger: subsequentTrigger
+        )
 
         let output = viewModel.transform(input: input)
 
         output.repositories
-            .map(makeSnapshot(with:))
+            .map { [unowned self] repositories in
+                makeSnapshot(with: repositories)
+            }
             .drive(onNext: { [unowned self] snapshot in
                 dataSource.apply(snapshot)
             })
@@ -91,6 +103,6 @@ extension SearchRepositoriesViewController: ViewConstructing {
     }
 
     func setupStyle() {
-        view.backgroundColor = .red
+        
     }
 }

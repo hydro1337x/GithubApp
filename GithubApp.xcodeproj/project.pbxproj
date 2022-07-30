@@ -30,6 +30,8 @@
 		604756FB28954C9300DE40DE /* SearchRepositoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756FA28954C9300DE40DE /* SearchRepositoriesViewModel.swift */; };
 		6047570228954E1700DE40DE /* RepositoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6047570128954E1700DE40DE /* RepositoryViewModel.swift */; };
 		60475705289551CD00DE40DE /* RepositoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60475704289551CD00DE40DE /* RepositoryTableViewCell.swift */; };
+		607DD9C5289586A800957EEA /* Sequence+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9C4289586A800957EEA /* Sequence+Extension.swift */; };
+		607DD9C82895912C00957EEA /* Repository+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9C72895912C00957EEA /* Repository+Extension.swift */; };
 		60D77133289447890027CD4C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D77132289447890027CD4C /* AppDelegate.swift */; };
 		60D7713C2894478C0027CD4C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60D7713B2894478C0027CD4C /* Assets.xcassets */; };
 		60D7713F2894478C0027CD4C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60D7713D2894478C0027CD4C /* LaunchScreen.storyboard */; };
@@ -181,6 +183,8 @@
 		604756FA28954C9300DE40DE /* SearchRepositoriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepositoriesViewModel.swift; sourceTree = "<group>"; };
 		6047570128954E1700DE40DE /* RepositoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewModel.swift; sourceTree = "<group>"; };
 		60475704289551CD00DE40DE /* RepositoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryTableViewCell.swift; sourceTree = "<group>"; };
+		607DD9C4289586A800957EEA /* Sequence+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Extension.swift"; sourceTree = "<group>"; };
+		607DD9C72895912C00957EEA /* Repository+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Repository+Extension.swift"; sourceTree = "<group>"; };
 		60D7712F289447890027CD4C /* GithubApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60D77132289447890027CD4C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		60D7713B2894478C0027CD4C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -274,6 +278,7 @@
 		604756BF2895239000DE40DE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				607DD9C62895912200957EEA /* Extensions */,
 				604756E9289538B700DE40DE /* Abstractions */,
 				604756C0289523B200DE40DE /* RepositoryResponse.swift */,
 				604756EE2895447C00DE40DE /* DefaultPagination.swift */,
@@ -373,6 +378,7 @@
 		604756E42895369300DE40DE /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				607DD9C32895869700957EEA /* Extensions */,
 				604756E5289536A600DE40DE /* Paginator.swift */,
 			);
 			path = Utilities;
@@ -450,6 +456,22 @@
 				60475704289551CD00DE40DE /* RepositoryTableViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		607DD9C32895869700957EEA /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				607DD9C4289586A800957EEA /* Sequence+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		607DD9C62895912200957EEA /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				607DD9C72895912C00957EEA /* Repository+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		60D77126289447890027CD4C = {
@@ -942,11 +964,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				604756C32895251E00DE40DE /* OwnerResponse.swift in Sources */,
+				607DD9C5289586A800957EEA /* Sequence+Extension.swift in Sources */,
 				604756DC2895305800DE40DE /* URLSessionFetchRepositoryListRepository.swift in Sources */,
 				604756C1289523B200DE40DE /* RepositoryResponse.swift in Sources */,
 				604756ED2895440600DE40DE /* RepositoryListResponseMapper.swift in Sources */,
 				604756E6289536A600DE40DE /* Paginator.swift in Sources */,
 				604756EF2895447C00DE40DE /* DefaultPagination.swift in Sources */,
+				607DD9C82895912C00957EEA /* Repository+Extension.swift in Sources */,
 				604756E12895315D00DE40DE /* AnyMapper.swift in Sources */,
 				604756F12895457000DE40DE /* OwnerResponseMapper.swift in Sources */,
 				604756E32895319300DE40DE /* Mapper.swift in Sources */,

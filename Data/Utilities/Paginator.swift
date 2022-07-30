@@ -9,12 +9,13 @@ import Foundation
 
 public final class Paginator<PageType> {
     let limit: Int
-    private(set) var currentPage = 0
+    private(set) var currentPage: Int
     private var hasNextPage = true
     private var pages: [PageType] = []
 
-    public init(limit: Int) {
+    public init(limit: Int, initialPage: Int) {
         self.limit = limit
+        self.currentPage = initialPage
     }
 
     func paginate(_ input: PaginatedResponse<PageType>) -> [PageType] {
@@ -32,8 +33,8 @@ public final class Paginator<PageType> {
         }
     }
 
-    func resetState() {
-        currentPage = 0
+    func resetPages() {
+        currentPage = 1
         hasNextPage = true
         pages = []
     }

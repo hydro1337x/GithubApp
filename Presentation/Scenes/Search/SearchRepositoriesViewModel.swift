@@ -12,7 +12,8 @@ import Domain
 
 public final class SearchRepositoriesViewModel {
     struct Input {
-        let initialTrigger: Signal<Void>
+        let initialTrigger: Signal<String>
+        let subsequentTrigger: Signal<(text: String, currentIndex: Int, lastIndex: Int?)>
     }
 
     struct Output {
@@ -20,20 +21,28 @@ public final class SearchRepositoriesViewModel {
     }
 
     private let fetchRepositoryListUseCase: FetchRepositoryListUseCase
+    private let scheduler: SchedulerType
 
-    public init(fetchRepositoryListUseCase: FetchRepositoryListUseCase) {
+    public init(
+        fetchRepositoryListUseCase: FetchRepositoryListUseCase,
+        scheduler: SchedulerType
+    ) {
         self.fetchRepositoryListUseCase = fetchRepositoryListUseCase
+        self.scheduler = scheduler
     }
 
     func transform(input: Input) -> Output {
-        let repositories = input.initialTrigger
+        let initialRepositories = Observable
+            .merge(input.initialTrigger.asObservable())
             .asObservable()
-            .flatMap { [unowned self] in
-                fetchRepositoryListUseCase.execute(with: FetchRepositoryListInput(query: "aus", isInitialFetch: true))
+            .observe(on: scheduler)
+            .flatMap { [unowned self] input in
+                fetchRepositoryListUseCase.execute(with: FetchRepositoryListInput(query: input, isInitialFetch: true))
             }
             .map { repositories in
                 repositories.map {
                     RepositoryViewModel(
+                        id: $0.id,
                         ownerName: $0.owner.name,
                         ownerAvatarURL: $0.owner.avatarURL,
                         name: $0.name
@@ -41,6 +50,28 @@ public final class SearchRepositoriesViewModel {
                 }
             }
 
-            return Output(repositories: repositories.asDriver(onErrorDriveWith: .empty()))
+        let subsequentRepositories = input.subsequentTrigger
+            .asObservable()
+        
+            .filter { $0.currentIndex == ($0.lastIndex ?? 0)  }
+            .map(\.text)
+            .flatMap { [unowned self] input in
+                fetchRepositoryListUseCase.execute(with: FetchRepositoryListInput(query: input, isInitialFetch: false))
+            }
+            .map { repositories in
+                repositories.map {
+                    RepositoryViewModel(
+                        id: $0.id,
+                        ownerName: $0.owner.name,
+                        ownerAvatarURL: $0.owner.avatarURL,
+                        name: $0.name
+                    )
+                }
+            }
+
+        let repositories = Observable.merge(initialRepositories, subsequentRepositories)
+            .asDriver(onErrorDriveWith: .empty())
+
+        return Output(repositories: repositories)
     }
 }
