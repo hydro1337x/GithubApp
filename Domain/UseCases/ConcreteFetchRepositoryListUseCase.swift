@@ -6,3 +6,17 @@
 //
 
 import Foundation
+import RxSwift
+
+public final class ConcreteFetchRepositoryListUseCase: FetchRepositoryListUseCase {
+
+    private let repository: FetchRepositoryListRepository
+
+    init(repository: FetchRepositoryListRepository) {
+        self.repository = repository
+    }
+
+    public func execute(with input: FetchRepositoryListInput) -> Single<[Repository]> {
+        input.query.count >= 3 ? repository.fetch(with: input) : Observable.empty().asSingle()
+    }
+}
