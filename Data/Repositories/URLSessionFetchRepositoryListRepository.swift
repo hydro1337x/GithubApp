@@ -6,3 +6,59 @@
 //
 
 import Foundation
+import Domain
+import RxSwift
+
+public final class URLSessionFetchRepositoryListRepository: FetchRepositoryListRepository {
+
+    private let session: URLSession
+    private let paginator: Paginator<Repository>
+    private let mapper: AnyMapper<RepositoryListResponse, PaginatedResponse<Repository>>
+    private let decoder = JSONDecoder()
+
+    public init(session: URLSession,
+                paginator: Paginator<Repository>,
+                mapper: AnyMapper<RepositoryListResponse, PaginatedResponse<Repository>>) {
+        self.session = session
+        self.paginator = paginator
+        self.mapper = mapper
+    }
+
+    public func fetch(with input: FetchRepositoryListInput) -> Single<[Repository]> {
+        guard let url = URL(string: "https://api.github.com/search/repositories") else {
+            return .error(URLError(.badURL))
+        }
+
+        let request = URLRequest(url: url)
+
+        return fetch(request)
+            .map { [weak self] response in
+                guard let self = self else { return [] }
+                let response = self.mapper.map(input: response)
+                return self.paginator.paginate(response)
+            }
+    }
+
+    private func fetch(_ request: URLRequest) -> Single<RepositoryListResponse> {
+        Single.create { [weak self] single in
+            guard let self = self else { return Disposables.create() }
+
+            let task = self.session.dataTask(with: request) { [decoder = self.decoder] data, _, error in
+                guard let data = data else {
+                    return single(.failure(error ?? URLError(.badServerResponse)))
+                }
+
+                do {
+                    let response = try decoder.decode(RepositoryListResponse.self, from: data)
+                    single(.success(response))
+                } catch {
+                    single(.failure(error))
+                }
+            }
+
+            return Disposables.create {
+                task.cancel()
+            }
+        }
+    }
+}
