@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import RxSwift
+
+public protocol FetchRepositoryListUseCase {
+    func execute(with input: FetchRepositoryListInput) -> Single<[Repository]>
+}

@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+import Foundation
+import RxSwift
+
+public protocol FetchRepositoryListRepository {
+    func fetch(with input: FetchRepositoryListInput) -> Single<[Repository]>
+}
