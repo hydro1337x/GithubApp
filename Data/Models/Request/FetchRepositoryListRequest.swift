@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+public struct FetchRepositoryListRequest {
+    let searchInput: String
+    let currentPage: Int
+    let itemsPerPage: Int
+}

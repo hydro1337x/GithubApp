@@ -13,35 +13,37 @@ public final class URLSessionFetchRepositoryListRepository: FetchRepositoryListR
 
     private let session: URLSession
     private let paginator: Paginator<Repository>
-    private let mapper: AnyMapper<RepositoryListResponse, PaginatedResponse<Repository>>
+    private let requestMapper: AnyMapper<FetchRepositoryListRequest, URLRequest?>
+    private let responseMapper: AnyMapper<RepositoryListResponse, PaginatedResponse<Repository>>
     private let decoder = JSONDecoder()
 
     public init(session: URLSession,
                 paginator: Paginator<Repository>,
-                mapper: AnyMapper<RepositoryListResponse, PaginatedResponse<Repository>>) {
+                requestMapper: AnyMapper<FetchRepositoryListRequest, URLRequest?>,
+                responseMapper: AnyMapper<RepositoryListResponse, PaginatedResponse<Repository>>) {
         self.session = session
         self.paginator = paginator
-        self.mapper = mapper
+        self.requestMapper = requestMapper
+        self.responseMapper = responseMapper
     }
 
     public func fetch(with input: FetchRepositoryListInput) -> Single<[Repository]> {
-        var urlComponents = URLComponents(string: "https://api.github.com/search/repositories")
-        let searchQuery = URLQueryItem(name: "q", value: input.query)
-        let pageQuery = URLQueryItem(name: "page", value: paginator.currentPage.description)
-        let perPageQuery = URLQueryItem(name: "per_page", value: paginator.limit.description)
-        urlComponents?.queryItems = [searchQuery, pageQuery, perPageQuery]
+        guard let request = requestMapper.map(
+            input: FetchRepositoryListRequest(
+                searchInput: input.query,
+                currentPage: paginator.currentPage,
+                itemsPerPage: paginator.limit
+            )
+        ) else { return .error(URLError(.badURL)) }
 
-        guard let url = urlComponents?.url else {
-            return .error(URLError(.badURL))
+        if input.isInitialFetch {
+            paginator.resetPages()
         }
-
-        var request = URLRequest(url: url)
-        request.addValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
 
         return fetch(request)
             .map { [weak self] response in
                 guard let self = self else { return [] }
-                let response = self.mapper.map(input: response)
+                let response = self.responseMapper.map(input: response)
                 return self.paginator
                     .paginate(response)
                     .uniqued()

@@ -25,11 +25,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated)
         let session = URLSession(configuration: .default)
         let paginator = Paginator<Repository>(limit: 10, initialPage: 1)
+        let repositoryListRequestMapper = FetchRepositoryListRequestMapper().eraseToAnyMapper
         let ownerResponseMapper = OwnerResponseMapper().eraseToAnyMapper
         let repositoryListResponseMapper = RepositoryListResponseMapper(
             ownerResponseMapper: ownerResponseMapper
         ).eraseToAnyMapper
-        let repository = URLSessionFetchRepositoryListRepository(session: session, paginator: paginator, mapper: repositoryListResponseMapper)
+        let repository = URLSessionFetchRepositoryListRepository(
+            session: session,
+            paginator: paginator,
+            requestMapper: repositoryListRequestMapper,
+            responseMapper: repositoryListResponseMapper
+        )
         let useCase = ConcreteFetchRepositoryListUseCase(repository: repository)
         let viewModel = SearchRepositoriesViewModel(fetchRepositoryListUseCase: useCase, scheduler: scheduler)
         let viewController = SearchRepositoriesViewController(viewModel: viewModel)

@@ -34,6 +34,8 @@
 		607DD9C82895912C00957EEA /* Repository+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9C72895912C00957EEA /* Repository+Extension.swift */; };
 		607DD9CA2895AD5700957EEA /* ActivityTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9C92895AD5700957EEA /* ActivityTracker.swift */; };
 		607DD9CC2895AD6000957EEA /* FailureTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9CB2895AD6000957EEA /* FailureTracker.swift */; };
+		607DD9CE2895B95700957EEA /* FetchRepositoryListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9CD2895B95700957EEA /* FetchRepositoryListRequest.swift */; };
+		607DD9D22895BB2700957EEA /* FetchRepositoryListRequestMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9D12895BB2700957EEA /* FetchRepositoryListRequestMapper.swift */; };
 		60D77133289447890027CD4C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D77132289447890027CD4C /* AppDelegate.swift */; };
 		60D7713C2894478C0027CD4C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60D7713B2894478C0027CD4C /* Assets.xcassets */; };
 		60D7713F2894478C0027CD4C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60D7713D2894478C0027CD4C /* LaunchScreen.storyboard */; };
@@ -189,6 +191,8 @@
 		607DD9C72895912C00957EEA /* Repository+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Repository+Extension.swift"; sourceTree = "<group>"; };
 		607DD9C92895AD5700957EEA /* ActivityTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTracker.swift; sourceTree = "<group>"; };
 		607DD9CB2895AD6000957EEA /* FailureTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailureTracker.swift; sourceTree = "<group>"; };
+		607DD9CD2895B95700957EEA /* FetchRepositoryListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRepositoryListRequest.swift; sourceTree = "<group>"; };
+		607DD9D12895BB2700957EEA /* FetchRepositoryListRequestMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRepositoryListRequestMapper.swift; sourceTree = "<group>"; };
 		60D7712F289447890027CD4C /* GithubApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60D77132289447890027CD4C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		60D7713B2894478C0027CD4C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -282,12 +286,11 @@
 		604756BF2895239000DE40DE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				607DD9D02895B96700957EEA /* Response */,
+				607DD9CF2895B96200957EEA /* Request */,
 				607DD9C62895912200957EEA /* Extensions */,
 				604756E9289538B700DE40DE /* Abstractions */,
-				604756C0289523B200DE40DE /* RepositoryResponse.swift */,
 				604756EE2895447C00DE40DE /* DefaultPagination.swift */,
-				604756C22895251E00DE40DE /* OwnerResponse.swift */,
-				604756C42895282100DE40DE /* RepositoryListResponse.swift */,
 				604756E7289538AC00DE40DE /* PaginatedResponse.swift */,
 			);
 			path = Models;
@@ -366,6 +369,7 @@
 				604756DF2895315300DE40DE /* Abstractions */,
 				604756EC2895440600DE40DE /* RepositoryListResponseMapper.swift */,
 				604756F02895457000DE40DE /* OwnerResponseMapper.swift */,
+				607DD9D12895BB2700957EEA /* FetchRepositoryListRequestMapper.swift */,
 			);
 			path = Mappers;
 			sourceTree = "<group>";
@@ -478,6 +482,24 @@
 				607DD9C72895912C00957EEA /* Repository+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		607DD9CF2895B96200957EEA /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				607DD9CD2895B95700957EEA /* FetchRepositoryListRequest.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		607DD9D02895B96700957EEA /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				604756C42895282100DE40DE /* RepositoryListResponse.swift */,
+				604756C0289523B200DE40DE /* RepositoryResponse.swift */,
+				604756C22895251E00DE40DE /* OwnerResponse.swift */,
+			);
+			path = Response;
 			sourceTree = "<group>";
 		};
 		60D77126289447890027CD4C = {
@@ -971,8 +993,10 @@
 			files = (
 				604756C32895251E00DE40DE /* OwnerResponse.swift in Sources */,
 				607DD9C5289586A800957EEA /* Sequence+Extension.swift in Sources */,
+				607DD9D22895BB2700957EEA /* FetchRepositoryListRequestMapper.swift in Sources */,
 				604756DC2895305800DE40DE /* URLSessionFetchRepositoryListRepository.swift in Sources */,
 				604756C1289523B200DE40DE /* RepositoryResponse.swift in Sources */,
+				607DD9CE2895B95700957EEA /* FetchRepositoryListRequest.swift in Sources */,
 				604756ED2895440600DE40DE /* RepositoryListResponseMapper.swift in Sources */,
 				604756E6289536A600DE40DE /* Paginator.swift in Sources */,
 				604756EF2895447C00DE40DE /* DefaultPagination.swift in Sources */,
