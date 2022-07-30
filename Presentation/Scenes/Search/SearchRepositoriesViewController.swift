@@ -15,6 +15,7 @@ public final class SearchRepositoriesViewController: UIViewController {
 
     let tableView = UITableView()
     let refreshControl = UIRefreshControl()
+    let activityIndicatorView = UIActivityIndicatorView(style: .large)
 
     private lazy var dataSource = makeDataSource()
     private let disposeBag = DisposeBag()
@@ -82,6 +83,10 @@ public final class SearchRepositoriesViewController: UIViewController {
         output.initialActivity
             .drive(refreshControl.rx.isRefreshing)
             .disposed(by: disposeBag)
+
+        output.subsequentActivity
+            .drive(activityIndicatorView.rx.isAnimating)
+            .disposed(by: disposeBag)
     }
 
     private func makeDataSource() -> DataSource {
@@ -113,6 +118,13 @@ extension SearchRepositoriesViewController: ViewConstructing {
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
+
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(activityIndicatorView)
+        NSLayoutConstraint.activate([
+            activityIndicatorView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
+            activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
 
