@@ -19,6 +19,9 @@
 		604756DC2895305800DE40DE /* URLSessionFetchRepositoryListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756DB2895305800DE40DE /* URLSessionFetchRepositoryListRepository.swift */; };
 		604756E12895315D00DE40DE /* AnyMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756E02895315D00DE40DE /* AnyMapper.swift */; };
 		604756E32895319300DE40DE /* Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756E22895319300DE40DE /* Mapper.swift */; };
+		604756E6289536A600DE40DE /* Paginator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756E5289536A600DE40DE /* Paginator.swift */; };
+		604756E8289538AC00DE40DE /* PaginatedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756E7289538AC00DE40DE /* PaginatedResponse.swift */; };
+		604756EB289538E200DE40DE /* Pagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756EA289538E200DE40DE /* Pagination.swift */; };
 		60D77133289447890027CD4C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D77132289447890027CD4C /* AppDelegate.swift */; };
 		60D77137289447890027CD4C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D77136289447890027CD4C /* ViewController.swift */; };
 		60D7713C2894478C0027CD4C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60D7713B2894478C0027CD4C /* Assets.xcassets */; };
@@ -161,6 +164,9 @@
 		604756DB2895305800DE40DE /* URLSessionFetchRepositoryListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionFetchRepositoryListRepository.swift; sourceTree = "<group>"; };
 		604756E02895315D00DE40DE /* AnyMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyMapper.swift; sourceTree = "<group>"; };
 		604756E22895319300DE40DE /* Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mapper.swift; sourceTree = "<group>"; };
+		604756E5289536A600DE40DE /* Paginator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paginator.swift; sourceTree = "<group>"; };
+		604756E7289538AC00DE40DE /* PaginatedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginatedResponse.swift; sourceTree = "<group>"; };
+		604756EA289538E200DE40DE /* Pagination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pagination.swift; sourceTree = "<group>"; };
 		60D7712F289447890027CD4C /* GithubApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60D77132289447890027CD4C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		60D77136289447890027CD4C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -256,9 +262,11 @@
 		604756BF2895239000DE40DE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				604756E9289538B700DE40DE /* Abstractions */,
 				604756C0289523B200DE40DE /* RepositoryResponse.swift */,
 				604756C22895251E00DE40DE /* OwnerResponse.swift */,
 				604756C42895282100DE40DE /* RepositoryListResponse.swift */,
+				604756E7289538AC00DE40DE /* PaginatedResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -347,6 +355,22 @@
 			path = Abstractions;
 			sourceTree = "<group>";
 		};
+		604756E42895369300DE40DE /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				604756E5289536A600DE40DE /* Paginator.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		604756E9289538B700DE40DE /* Abstractions */ = {
+			isa = PBXGroup;
+			children = (
+				604756EA289538E200DE40DE /* Pagination.swift */,
+			);
+			path = Abstractions;
+			sourceTree = "<group>";
+		};
 		60D77126289447890027CD4C = {
 			isa = PBXGroup;
 			children = (
@@ -428,6 +452,7 @@
 		60D77190289469B00027CD4C /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				604756E42895369300DE40DE /* Utilities */,
 				604756BF2895239000DE40DE /* Models */,
 				604756DE2895314C00DE40DE /* Mappers */,
 				604756DA2895302F00DE40DE /* Repositories */,
@@ -838,8 +863,11 @@
 				604756C32895251E00DE40DE /* OwnerResponse.swift in Sources */,
 				604756DC2895305800DE40DE /* URLSessionFetchRepositoryListRepository.swift in Sources */,
 				604756C1289523B200DE40DE /* RepositoryResponse.swift in Sources */,
+				604756E6289536A600DE40DE /* Paginator.swift in Sources */,
 				604756E12895315D00DE40DE /* AnyMapper.swift in Sources */,
 				604756E32895319300DE40DE /* Mapper.swift in Sources */,
+				604756EB289538E200DE40DE /* Pagination.swift in Sources */,
+				604756E8289538AC00DE40DE /* PaginatedResponse.swift in Sources */,
 				604756C52895282100DE40DE /* RepositoryListResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
