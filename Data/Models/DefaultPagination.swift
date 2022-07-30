@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+public struct DefaultPagination: Pagination {
+    public let total: Int
+}
