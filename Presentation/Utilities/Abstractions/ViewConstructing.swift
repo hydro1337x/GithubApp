@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+protocol ViewConstructing {
+    func setupLayout()
+    func setupStyle()
+}
