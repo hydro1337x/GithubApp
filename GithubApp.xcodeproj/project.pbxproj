@@ -17,6 +17,8 @@
 		604756D728952B1C00DE40DE /* ConcreteFetchRepositoryListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756D628952B1C00DE40DE /* ConcreteFetchRepositoryListUseCase.swift */; };
 		604756D928952B5A00DE40DE /* FetchRepositoryListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756D828952B5A00DE40DE /* FetchRepositoryListRepository.swift */; };
 		604756DC2895305800DE40DE /* URLSessionFetchRepositoryListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756DB2895305800DE40DE /* URLSessionFetchRepositoryListRepository.swift */; };
+		604756E12895315D00DE40DE /* AnyMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756E02895315D00DE40DE /* AnyMapper.swift */; };
+		604756E32895319300DE40DE /* Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756E22895319300DE40DE /* Mapper.swift */; };
 		60D77133289447890027CD4C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D77132289447890027CD4C /* AppDelegate.swift */; };
 		60D77137289447890027CD4C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D77136289447890027CD4C /* ViewController.swift */; };
 		60D7713C2894478C0027CD4C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60D7713B2894478C0027CD4C /* Assets.xcassets */; };
@@ -157,6 +159,8 @@
 		604756D628952B1C00DE40DE /* ConcreteFetchRepositoryListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteFetchRepositoryListUseCase.swift; sourceTree = "<group>"; };
 		604756D828952B5A00DE40DE /* FetchRepositoryListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRepositoryListRepository.swift; sourceTree = "<group>"; };
 		604756DB2895305800DE40DE /* URLSessionFetchRepositoryListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionFetchRepositoryListRepository.swift; sourceTree = "<group>"; };
+		604756E02895315D00DE40DE /* AnyMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyMapper.swift; sourceTree = "<group>"; };
+		604756E22895319300DE40DE /* Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mapper.swift; sourceTree = "<group>"; };
 		60D7712F289447890027CD4C /* GithubApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60D77132289447890027CD4C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		60D77136289447890027CD4C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -326,6 +330,23 @@
 			path = Repositories;
 			sourceTree = "<group>";
 		};
+		604756DE2895314C00DE40DE /* Mappers */ = {
+			isa = PBXGroup;
+			children = (
+				604756DF2895315300DE40DE /* Abstractions */,
+			);
+			path = Mappers;
+			sourceTree = "<group>";
+		};
+		604756DF2895315300DE40DE /* Abstractions */ = {
+			isa = PBXGroup;
+			children = (
+				604756E22895319300DE40DE /* Mapper.swift */,
+				604756E02895315D00DE40DE /* AnyMapper.swift */,
+			);
+			path = Abstractions;
+			sourceTree = "<group>";
+		};
 		60D77126289447890027CD4C = {
 			isa = PBXGroup;
 			children = (
@@ -408,6 +429,7 @@
 			isa = PBXGroup;
 			children = (
 				604756BF2895239000DE40DE /* Models */,
+				604756DE2895314C00DE40DE /* Mappers */,
 				604756DA2895302F00DE40DE /* Repositories */,
 			);
 			path = Data;
@@ -816,6 +838,8 @@
 				604756C32895251E00DE40DE /* OwnerResponse.swift in Sources */,
 				604756DC2895305800DE40DE /* URLSessionFetchRepositoryListRepository.swift in Sources */,
 				604756C1289523B200DE40DE /* RepositoryResponse.swift in Sources */,
+				604756E12895315D00DE40DE /* AnyMapper.swift in Sources */,
+				604756E32895319300DE40DE /* Mapper.swift in Sources */,
 				604756C52895282100DE40DE /* RepositoryListResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
