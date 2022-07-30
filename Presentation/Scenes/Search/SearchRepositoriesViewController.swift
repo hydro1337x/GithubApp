@@ -14,6 +14,7 @@ public final class SearchRepositoriesViewController: UIViewController {
     typealias Snapshot = NSDiffableDataSourceSnapshot<String, RepositoryViewModel>
 
     let tableView = UITableView()
+    let refreshControl = UIRefreshControl()
 
     private lazy var dataSource = makeDataSource()
     private let disposeBag = DisposeBag()
@@ -44,7 +45,15 @@ public final class SearchRepositoriesViewController: UIViewController {
     }
 
     private func setupSubscriptions() {
-        let initialTrigger = Signal.just(("joh"))
+        let refreshTrigger = refreshControl.rx
+            .controlEvent(.valueChanged)
+            .map { [unowned self] in
+                "joh"
+            }
+
+        let initialTrigger = Observable.merge(refreshTrigger, .just("joh"))
+            .asSignal(onErrorSignalWith: .empty())
+
         let subsequentTrigger = tableView.rx
             .willDisplayCell
             .map { [unowned self] input -> (text: String, currentIndex: Int, lastIndex: Int?) in
@@ -68,6 +77,10 @@ public final class SearchRepositoriesViewController: UIViewController {
             .drive(onNext: { [unowned self] snapshot in
                 dataSource.apply(snapshot)
             })
+            .disposed(by: disposeBag)
+
+        output.initialActivity
+            .drive(refreshControl.rx.isRefreshing)
             .disposed(by: disposeBag)
     }
 
@@ -93,6 +106,7 @@ public final class SearchRepositoriesViewController: UIViewController {
 extension SearchRepositoriesViewController: ViewConstructing {
     func setupLayout() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.refreshControl = refreshControl
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
