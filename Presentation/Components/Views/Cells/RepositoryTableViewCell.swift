@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxSwift
 
 final class RepositoryTableViewCell: UITableViewCell {
 
@@ -16,10 +17,12 @@ final class RepositoryTableViewCell: UITableViewCell {
         static let tupleViewSpacing: CGFloat = 2
     }
 
-    let avatarImageView = UIImageView()
+    let avatarImageView = AsyncImageView()
     let ownerNameLabel = UILabel()
     let nameLabel = UILabel()
     let stackView = UIStackView()
+
+    private var disposeBag = DisposeBag()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -32,6 +35,7 @@ final class RepositoryTableViewCell: UITableViewCell {
     }
 
     override func prepareForReuse() {
+        disposeBag = DisposeBag()
         stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
     }
 
@@ -39,6 +43,8 @@ final class RepositoryTableViewCell: UITableViewCell {
     func configure(with viewModel: RepositoryViewModel) {
         self.nameLabel.text = viewModel.name
         self.ownerNameLabel.text = viewModel.ownerName
+
+        avatarImageView.configure(with: viewModel.imageViewModel, disposeBag: disposeBag)
 
         let tuples = [
             ("smallcircle.filled.circle", viewModel.openIssuesCount),
@@ -99,8 +105,6 @@ extension RepositoryTableViewCell: ViewConstructing {
 
     func setupStyle() {
         avatarImageView.contentMode = .scaleAspectFit
-        avatarImageView.image = UIImage(systemName: "pencil")
-        avatarImageView.backgroundColor = .red
         avatarImageView.layer.cornerRadius = Dimension.imageSpan / 2
         avatarImageView.layer.borderWidth = 1
         avatarImageView.clipsToBounds = true
