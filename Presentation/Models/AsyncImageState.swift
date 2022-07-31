@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+enum AsyncImageState {
+    case initial
+    case loaded(Data)
+    case failed
+}
