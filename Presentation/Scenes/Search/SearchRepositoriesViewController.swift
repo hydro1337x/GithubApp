@@ -141,7 +141,6 @@ public final class SearchRepositoriesViewController: UIViewController {
 
 extension SearchRepositoriesViewController: ViewConstructing {
     func setupLayout() {
-        searchBar.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(searchBar)
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -149,8 +148,8 @@ extension SearchRepositoriesViewController: ViewConstructing {
             searchBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             searchBar.heightAnchor.constraint(equalToConstant: 56)
         ])
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
 
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
@@ -159,13 +158,14 @@ extension SearchRepositoriesViewController: ViewConstructing {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
         tableView.refreshControl = refreshControl
+        tableView.translatesAutoresizingMaskIntoConstraints = false
 
-        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(activityIndicatorView)
         NSLayoutConstraint.activate([
             activityIndicatorView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
             activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
     }
 
     func setupStyle() {

@@ -14,7 +14,7 @@ final class AsyncImageView: UIView {
         static let retryButtonSpan: CGFloat = 44
     }
 
-    let retryButton = UIButton()
+    let retryButton = UIButton(type: .custom)
     let imageView = UIImageView()
     let blurView = UIVisualEffectView()
     let placeholderImage = UIImage(systemName: "person.circle")
@@ -69,7 +69,8 @@ final class AsyncImageView: UIView {
     }
 
     private func handleStateTransition(_ state: AsyncImageState) {
-        switch state {
+        let st = AsyncImageState.failed
+        switch st {
         case .initial:
             blurView.isHidden = true
             imageView.image = placeholderImage
@@ -129,10 +130,8 @@ extension AsyncImageView: ViewConstructing {
         imageView.contentMode = .scaleAspectFit
 
         let retryImage = UIImage(systemName: "arrow.clockwise")
-        var buttonConfiguration = UIButton.Configuration.filled()
-        buttonConfiguration.image = retryImage
-        buttonConfiguration.imagePadding = 5
-        retryButton.configuration = buttonConfiguration
+        retryButton.setImage(retryImage, for: .normal)
+        retryButton.imageEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         retryButton.imageView?.contentMode = .scaleAspectFit
 
         blurView.effect = UIBlurEffect(style: .systemUltraThinMaterialDark)
