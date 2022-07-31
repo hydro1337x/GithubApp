@@ -11,8 +11,9 @@ import RxSwift
 
 public final class URLSessionFetchRepositoryListRepository: FetchRepositoryListRepository {
 
+    let paginator: Paginator<Repository>
+
     private let session: URLSession
-    private let paginator: Paginator<Repository>
     private let requestMapper: AnyMapper<FetchRepositoryListRequest, URLRequest?>
     private let responseMapper: AnyMapper<RepositoryListResponse, PaginatedResponse<Repository>>
     private let decoder = JSONDecoder()

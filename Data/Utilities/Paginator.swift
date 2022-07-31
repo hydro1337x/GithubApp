@@ -10,8 +10,8 @@ import Foundation
 public final class Paginator<PageType> {
     let limit: Int
     private(set) var currentPage: Int
+    private(set) var pages: [PageType] = []
     private var hasNextPage = true
-    private var pages: [PageType] = []
 
     public init(limit: Int, initialPage: Int) {
         self.limit = limit
