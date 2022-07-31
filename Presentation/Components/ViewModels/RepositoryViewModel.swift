@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct RepositoryViewModel {
-    let id: String
+public struct RepositoryViewModel {
+    public let id: String
     let ownerName: String
     let name: String
     let stargazersCount: String
@@ -19,11 +19,11 @@ struct RepositoryViewModel {
 }
 
 extension RepositoryViewModel: Hashable {
-    static func == (lhs: RepositoryViewModel, rhs: RepositoryViewModel) -> Bool {
+    public static func == (lhs: RepositoryViewModel, rhs: RepositoryViewModel) -> Bool {
         lhs.id == rhs.id
     }
 
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
 }
