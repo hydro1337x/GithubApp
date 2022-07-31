@@ -7,6 +7,8 @@
 
 import Foundation
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class RootCoordinator: Coordinator {
     let window: UIWindow
@@ -20,8 +22,14 @@ final class RootCoordinator: Coordinator {
     }
 
     func start() {
+        showRootScene()
+    }
+
+    private func showRootScene() {
         let viewController = factory.makeSearchRepositoresViewController()
-        window.rootViewController = viewController
+        viewController.title = "Search Repositores"
+        let navigationController = UINavigationController(rootViewController: viewController)
+        window.rootViewController = navigationController
         window.makeKeyAndVisible()
     }
 }

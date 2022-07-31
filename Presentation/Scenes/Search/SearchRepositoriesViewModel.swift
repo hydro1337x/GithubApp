@@ -12,8 +12,9 @@ import Domain
 
 public final class SearchRepositoriesViewModel {
     struct Input {
-        let initialTrigger: Signal<String>
-        let subsequentTrigger: Signal<(text: String, currentIndex: Int, lastIndex: Int?)>
+        let searchTrigger: Signal<String?>
+        let refreshTrigger: Signal<String?>
+        let subsequentTrigger: Signal<(text: String?, currentIndex: Int, lastIndex: Int?)>
     }
 
     struct Output {
@@ -42,9 +43,19 @@ public final class SearchRepositoriesViewModel {
         let initialActivityTracker = ActivityTracker()
         let subsequentActivityTracker = ActivityTracker()
 
-        let initialRepositories = input.initialTrigger
+        let refreshTrigger = input.refreshTrigger.asObservable()
+        let searchTrigger = input.searchTrigger
+            .asObservable()
+            .debounce(.milliseconds(500), scheduler: scheduler)
+
+        let initialRepositories = Observable
+            .merge(
+                refreshTrigger,
+                searchTrigger
+            )
             .asObservable()
             .observe(on: scheduler)
+            .compactMap { $0 }
             .flatMap { [unowned self] input in
                 fetchRepositoryListUseCase.execute(with: FetchRepositoryListInput(searchInput: input,
                                                                                   isInitialFetch: true))
@@ -65,7 +76,7 @@ public final class SearchRepositoriesViewModel {
             .filter { [unowned self] input in
                 shouldTriggerSubsequentFetch(for: input.currentIndex, lastIndex: input.lastIndex)
             }
-            .map(\.text)
+            .compactMap(\.text)
             .flatMap { [unowned self] input in
                 fetchRepositoryListUseCase.execute(with: FetchRepositoryListInput(searchInput: input,
                                                                                   isInitialFetch: false))
@@ -100,7 +111,6 @@ public final class SearchRepositoriesViewModel {
     }
 
     private func shouldTriggerSubsequentFetch(for currentIndex: Int, lastIndex: Int?) -> Bool {
-        // Maybe move the parameters to domain and decide there for fetch?
         currentIndex == (lastIndex ?? 0) - 5 // FIX: - might crash if less than 5 repos get fetched
     }
 

@@ -33,6 +33,7 @@
 		604898772896A12500EA6E21 /* RootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604898762896A12500EA6E21 /* RootCoordinator.swift */; };
 		6048987A2896A13700EA6E21 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604898792896A13700EA6E21 /* Coordinator.swift */; };
 		6048987D2896A1E100EA6E21 /* RootSceneFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6048987C2896A1E100EA6E21 /* RootSceneFactory.swift */; };
+		6048987F2896AD4100EA6E21 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6048987E2896AD4100EA6E21 /* UIViewController+Extension.swift */; };
 		607DD9C5289586A800957EEA /* Sequence+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9C4289586A800957EEA /* Sequence+Extension.swift */; };
 		607DD9C82895912C00957EEA /* Repository+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9C72895912C00957EEA /* Repository+Extension.swift */; };
 		607DD9CA2895AD5700957EEA /* ActivityTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9C92895AD5700957EEA /* ActivityTracker.swift */; };
@@ -202,6 +203,7 @@
 		604898762896A12500EA6E21 /* RootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
 		604898792896A13700EA6E21 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		6048987C2896A1E100EA6E21 /* RootSceneFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootSceneFactory.swift; sourceTree = "<group>"; };
+		6048987E2896AD4100EA6E21 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		607DD9C4289586A800957EEA /* Sequence+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Extension.swift"; sourceTree = "<group>"; };
 		607DD9C72895912C00957EEA /* Repository+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Repository+Extension.swift"; sourceTree = "<group>"; };
 		607DD9C92895AD5700957EEA /* ActivityTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTracker.swift; sourceTree = "<group>"; };
@@ -571,6 +573,7 @@
 			isa = PBXGroup;
 			children = (
 				607DD9DB2895E50D00957EEA /* NSLayoutConstraint+Extension.swift */,
+				6048987E2896AD4100EA6E21 /* UIViewController+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1106,6 +1109,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6048987F2896AD4100EA6E21 /* UIViewController+Extension.swift in Sources */,
 				6047570228954E1700DE40DE /* RepositoryViewModel.swift in Sources */,
 				604756F528954B5C00DE40DE /* SearchRepositoriesViewController.swift in Sources */,
 				604756FB28954C9300DE40DE /* SearchRepositoriesViewModel.swift in Sources */,

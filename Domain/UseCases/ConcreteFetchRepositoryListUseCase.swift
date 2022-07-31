@@ -17,6 +17,6 @@ public final class ConcreteFetchRepositoryListUseCase: FetchRepositoryListUseCas
     }
 
     public func execute(with input: FetchRepositoryListInput) -> Single<[Repository]> {
-        input.searchInput.count >= 3 ? repository.fetch(with: input) : Observable.empty().asSingle()
+        input.searchInput.count >= 3 ? repository.fetch(with: input) : .just([])
     }
 }

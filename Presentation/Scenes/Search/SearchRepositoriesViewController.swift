@@ -14,6 +14,7 @@ public final class SearchRepositoriesViewController: UIViewController {
     typealias Snapshot = NSDiffableDataSourceSnapshot<String, RepositoryViewModel>
 
     let tableView = UITableView()
+    let searchBar = UISearchBar()
     let refreshControl = UIRefreshControl()
     let activityIndicatorView = UIActivityIndicatorView(style: .large)
 
@@ -49,23 +50,26 @@ public final class SearchRepositoriesViewController: UIViewController {
         let refreshTrigger = refreshControl.rx
             .controlEvent(.valueChanged)
             .map { [unowned self] in
-                "joh"
+                searchBar.text
             }
+            .asSignal(onErrorSignalWith: .empty())
 
-        let initialTrigger = Observable.merge(refreshTrigger, .just("joh"))
+        let searchTrigger = searchBar.rx
+            .text
             .asSignal(onErrorSignalWith: .empty())
 
         let subsequentTrigger = tableView.rx
             .willDisplayCell
-            .map { [unowned self] input -> (text: String, currentIndex: Int, lastIndex: Int?) in
+            .map { [unowned self] input -> (text: String?, currentIndex: Int, lastIndex: Int?) in
                 let currentIndex = input.indexPath.row
                 let lastIndex = dataSource.snapshot().itemIdentifiers.indices.last
-                return (text: "joh", currentIndex: currentIndex, lastIndex: lastIndex)
+                return (text: searchBar.text, currentIndex: currentIndex, lastIndex: lastIndex)
             }
             .asSignal(onErrorSignalWith: .empty())
 
         let input = SearchRepositoriesViewModel.Input(
-            initialTrigger: initialTrigger,
+            searchTrigger: searchTrigger,
+            refreshTrigger: refreshTrigger,
             subsequentTrigger: subsequentTrigger
         )
 
@@ -97,13 +101,17 @@ public final class SearchRepositoriesViewController: UIViewController {
     }
 
     private func makeDataSource() -> DataSource {
-        DataSource(tableView: tableView) { tableView, indexPath, viewModel in
+        let dataSource = DataSource(tableView: tableView) { tableView, indexPath, viewModel in
 
             let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: RepositoryTableViewCell.self),
                                                      for: indexPath) as? RepositoryTableViewCell
             cell?.configure(with: viewModel)
             return cell
         }
+
+        dataSource.defaultRowAnimation = .fade
+
+        return dataSource
     }
 
     private func makeSnapshot(with repositories: [RepositoryViewModel]) -> Snapshot {
@@ -117,13 +125,21 @@ public final class SearchRepositoriesViewController: UIViewController {
 
 extension SearchRepositoriesViewController: ViewConstructing {
     func setupLayout() {
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(searchBar)
+        NSLayoutConstraint.activate([
+            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            searchBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            searchBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+        ])
+
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.refreshControl = refreshControl
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
 
