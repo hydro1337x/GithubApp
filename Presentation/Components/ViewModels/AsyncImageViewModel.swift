@@ -27,7 +27,8 @@ final class AsyncImageViewModel {
 
     func transform(input: Input) -> Output {
         let failureTracker = FailureTracker()
-        let response = Observable.merge(input.retryTrigger.asObservable(), input.initialTrigger.asObservable())
+
+        let data = Observable.merge(input.retryTrigger.asObservable(), input.initialTrigger.asObservable())
             .flatMapLatest { [weak self] _ -> Observable<Data?> in
                 guard let self = self else { return .empty() }
                 return self.imageConvertible
@@ -35,15 +36,13 @@ final class AsyncImageViewModel {
                     .trackFailure(failureTracker)
                     .catchAndReturn(nil)
             }
-            .share()
+            .compactMap { $0 }
+            .map { AsyncImageState.loaded($0) }
 
         let failure = failureTracker
             .asObservable()
             .map { _ in AsyncImageState.failed }
 
-        let data = response
-            .compactMap { $0 }
-            .map { AsyncImageState.loaded($0) }
 
         let state = Observable.merge(data, failure)
             .startWith(.initial)
