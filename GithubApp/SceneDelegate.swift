@@ -30,14 +30,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let repositoryListResponseMapper = RepositoryListResponseMapper(
             ownerResponseMapper: ownerResponseMapper
         ).eraseToAnyMapper
-        let repository = URLSessionFetchRepositoryListRepository(
+        let fetchRepositoryListRepository = URLSessionFetchRepositoryListRepository(
             session: session,
             paginator: paginator,
             requestMapper: repositoryListRequestMapper,
             responseMapper: repositoryListResponseMapper
         )
-        let useCase = ConcreteFetchRepositoryListUseCase(repository: repository)
-        let viewModel = SearchRepositoriesViewModel(fetchRepositoryListUseCase: useCase, scheduler: scheduler)
+        let fetchImageRepository = URLSessionFetchImageRepository(session: session)
+        let fetchRepositoryListUseCase = ConcreteFetchRepositoryListUseCase(repository: fetchRepositoryListRepository)
+        let fetchImageUseCase = ConcreteFetchImageUseCase(repository: fetchImageRepository)
+        let viewModel = SearchRepositoriesViewModel(
+            fetchRepositoryListUseCase: fetchRepositoryListUseCase,
+            fetchImageUseCase: fetchImageUseCase,
+            scheduler: scheduler
+        )
         let viewController = SearchRepositoriesViewController(viewModel: viewModel)
 
         window?.rootViewController = viewController

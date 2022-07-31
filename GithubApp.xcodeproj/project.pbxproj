@@ -36,6 +36,15 @@
 		607DD9CC2895AD6000957EEA /* FailureTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9CB2895AD6000957EEA /* FailureTracker.swift */; };
 		607DD9CE2895B95700957EEA /* FetchRepositoryListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9CD2895B95700957EEA /* FetchRepositoryListRequest.swift */; };
 		607DD9D22895BB2700957EEA /* FetchRepositoryListRequestMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9D12895BB2700957EEA /* FetchRepositoryListRequestMapper.swift */; };
+		607DD9D42895E3FE00957EEA /* AsyncImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9D32895E3FE00957EEA /* AsyncImageView.swift */; };
+		607DD9D72895E42300957EEA /* AsyncImageState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9D62895E42300957EEA /* AsyncImageState.swift */; };
+		607DD9D92895E45E00957EEA /* AsyncImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9D82895E45E00957EEA /* AsyncImageViewModel.swift */; };
+		607DD9DC2895E50D00957EEA /* NSLayoutConstraint+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9DB2895E50D00957EEA /* NSLayoutConstraint+Extension.swift */; };
+		607DD9DE2895E79200957EEA /* FetchImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9DD2895E79200957EEA /* FetchImageUseCase.swift */; };
+		607DD9E02895E7BC00957EEA /* FetchImageInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9DF2895E7BC00957EEA /* FetchImageInput.swift */; };
+		607DD9E22895E81000957EEA /* ConcreteFetchImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9E12895E81000957EEA /* ConcreteFetchImageUseCase.swift */; };
+		607DD9E42895E83A00957EEA /* FetchImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9E32895E83A00957EEA /* FetchImageRepository.swift */; };
+		607DD9E62895E8C100957EEA /* URLSessionFetchImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9E52895E8C100957EEA /* URLSessionFetchImageRepository.swift */; };
 		60D77133289447890027CD4C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D77132289447890027CD4C /* AppDelegate.swift */; };
 		60D7713C2894478C0027CD4C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60D7713B2894478C0027CD4C /* Assets.xcassets */; };
 		60D7713F2894478C0027CD4C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60D7713D2894478C0027CD4C /* LaunchScreen.storyboard */; };
@@ -193,6 +202,15 @@
 		607DD9CB2895AD6000957EEA /* FailureTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailureTracker.swift; sourceTree = "<group>"; };
 		607DD9CD2895B95700957EEA /* FetchRepositoryListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRepositoryListRequest.swift; sourceTree = "<group>"; };
 		607DD9D12895BB2700957EEA /* FetchRepositoryListRequestMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRepositoryListRequestMapper.swift; sourceTree = "<group>"; };
+		607DD9D32895E3FE00957EEA /* AsyncImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncImageView.swift; sourceTree = "<group>"; };
+		607DD9D62895E42300957EEA /* AsyncImageState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncImageState.swift; sourceTree = "<group>"; };
+		607DD9D82895E45E00957EEA /* AsyncImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncImageViewModel.swift; sourceTree = "<group>"; };
+		607DD9DB2895E50D00957EEA /* NSLayoutConstraint+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extension.swift"; sourceTree = "<group>"; };
+		607DD9DD2895E79200957EEA /* FetchImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchImageUseCase.swift; sourceTree = "<group>"; };
+		607DD9DF2895E7BC00957EEA /* FetchImageInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchImageInput.swift; sourceTree = "<group>"; };
+		607DD9E12895E81000957EEA /* ConcreteFetchImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteFetchImageUseCase.swift; sourceTree = "<group>"; };
+		607DD9E32895E83A00957EEA /* FetchImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchImageRepository.swift; sourceTree = "<group>"; };
+		607DD9E52895E8C100957EEA /* URLSessionFetchImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionFetchImageRepository.swift; sourceTree = "<group>"; };
 		60D7712F289447890027CD4C /* GithubApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60D77132289447890027CD4C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		60D7713B2894478C0027CD4C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -318,6 +336,7 @@
 			children = (
 				604756CB289528FA00DE40DE /* Owner.swift */,
 				604756D428952A7A00DE40DE /* FetchRepositoryListInput.swift */,
+				607DD9DF2895E7BC00957EEA /* FetchImageInput.swift */,
 			);
 			path = ValueObjects;
 			sourceTree = "<group>";
@@ -327,6 +346,7 @@
 			children = (
 				604756D1289529FB00DE40DE /* Abstractions */,
 				604756D628952B1C00DE40DE /* ConcreteFetchRepositoryListUseCase.swift */,
+				607DD9E12895E81000957EEA /* ConcreteFetchImageUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -343,6 +363,7 @@
 			isa = PBXGroup;
 			children = (
 				604756D828952B5A00DE40DE /* FetchRepositoryListRepository.swift */,
+				607DD9E32895E83A00957EEA /* FetchImageRepository.swift */,
 			);
 			path = Abstractions;
 			sourceTree = "<group>";
@@ -351,6 +372,7 @@
 			isa = PBXGroup;
 			children = (
 				604756D228952A1600DE40DE /* FetchRepositoryListUseCase.swift */,
+				607DD9DD2895E79200957EEA /* FetchImageUseCase.swift */,
 			);
 			path = Abstractions;
 			sourceTree = "<group>";
@@ -359,6 +381,7 @@
 			isa = PBXGroup;
 			children = (
 				604756DB2895305800DE40DE /* URLSessionFetchRepositoryListRepository.swift */,
+				607DD9E52895E8C100957EEA /* URLSessionFetchImageRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -421,6 +444,7 @@
 			isa = PBXGroup;
 			children = (
 				604756F728954B6700DE40DE /* Abstractions */,
+				607DD9DA2895E4FB00957EEA /* Extensions */,
 				607DD9C92895AD5700957EEA /* ActivityTracker.swift */,
 				607DD9CB2895AD6000957EEA /* FailureTracker.swift */,
 			);
@@ -448,6 +472,7 @@
 			isa = PBXGroup;
 			children = (
 				60475703289551B900DE40DE /* Cells */,
+				607DD9D32895E3FE00957EEA /* AsyncImageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -456,6 +481,7 @@
 			isa = PBXGroup;
 			children = (
 				6047570128954E1700DE40DE /* RepositoryViewModel.swift */,
+				607DD9D82895E45E00957EEA /* AsyncImageViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -500,6 +526,22 @@
 				604756C22895251E00DE40DE /* OwnerResponse.swift */,
 			);
 			path = Response;
+			sourceTree = "<group>";
+		};
+		607DD9D52895E41500957EEA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				607DD9D62895E42300957EEA /* AsyncImageState.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		607DD9DA2895E4FB00957EEA /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				607DD9DB2895E50D00957EEA /* NSLayoutConstraint+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		60D77126289447890027CD4C = {
@@ -602,6 +644,7 @@
 			isa = PBXGroup;
 			children = (
 				604756F628954B6300DE40DE /* Utilities */,
+				607DD9D52895E41500957EEA /* Models */,
 				604756FE28954DF100DE40DE /* Components */,
 				604756F228954B2B00DE40DE /* Scenes */,
 			);
@@ -974,7 +1017,11 @@
 				604756CC289528FA00DE40DE /* Owner.swift in Sources */,
 				604756CA289528E800DE40DE /* Repository.swift in Sources */,
 				604756D528952A7A00DE40DE /* FetchRepositoryListInput.swift in Sources */,
+				607DD9E22895E81000957EEA /* ConcreteFetchImageUseCase.swift in Sources */,
 				604756D928952B5A00DE40DE /* FetchRepositoryListRepository.swift in Sources */,
+				607DD9E42895E83A00957EEA /* FetchImageRepository.swift in Sources */,
+				607DD9E02895E7BC00957EEA /* FetchImageInput.swift in Sources */,
+				607DD9DE2895E79200957EEA /* FetchImageUseCase.swift in Sources */,
 				604756D728952B1C00DE40DE /* ConcreteFetchRepositoryListUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1000,6 +1047,7 @@
 				604756ED2895440600DE40DE /* RepositoryListResponseMapper.swift in Sources */,
 				604756E6289536A600DE40DE /* Paginator.swift in Sources */,
 				604756EF2895447C00DE40DE /* DefaultPagination.swift in Sources */,
+				607DD9E62895E8C100957EEA /* URLSessionFetchImageRepository.swift in Sources */,
 				607DD9C82895912C00957EEA /* Repository+Extension.swift in Sources */,
 				604756E12895315D00DE40DE /* AnyMapper.swift in Sources */,
 				604756F12895457000DE40DE /* OwnerResponseMapper.swift in Sources */,
@@ -1025,9 +1073,13 @@
 				6047570228954E1700DE40DE /* RepositoryViewModel.swift in Sources */,
 				604756F528954B5C00DE40DE /* SearchRepositoriesViewController.swift in Sources */,
 				604756FB28954C9300DE40DE /* SearchRepositoriesViewModel.swift in Sources */,
+				607DD9DC2895E50D00957EEA /* NSLayoutConstraint+Extension.swift in Sources */,
+				607DD9D92895E45E00957EEA /* AsyncImageViewModel.swift in Sources */,
+				607DD9D42895E3FE00957EEA /* AsyncImageView.swift in Sources */,
 				60475705289551CD00DE40DE /* RepositoryTableViewCell.swift in Sources */,
 				604756F928954B7600DE40DE /* ViewConstructing.swift in Sources */,
 				607DD9CC2895AD6000957EEA /* FailureTracker.swift in Sources */,
+				607DD9D72895E42300957EEA /* AsyncImageState.swift in Sources */,
 				607DD9CA2895AD5700957EEA /* ActivityTracker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
