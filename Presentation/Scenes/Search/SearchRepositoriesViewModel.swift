@@ -24,13 +24,16 @@ public final class SearchRepositoriesViewModel {
     }
 
     private let fetchRepositoryListUseCase: FetchRepositoryListUseCase
+    private let fetchImageUseCase: FetchImageUseCase
     private let scheduler: SchedulerType
 
     public init(
         fetchRepositoryListUseCase: FetchRepositoryListUseCase,
+        fetchImageUseCase: FetchImageUseCase,
         scheduler: SchedulerType
     ) {
         self.fetchRepositoryListUseCase = fetchRepositoryListUseCase
+        self.fetchImageUseCase = fetchImageUseCase
         self.scheduler = scheduler
     }
 
@@ -58,7 +61,9 @@ public final class SearchRepositoriesViewModel {
 
         let subsequentRepositories = input.subsequentTrigger
             .asObservable()
-            .filter { $0.currentIndex == ($0.lastIndex ?? 0) - 5  }
+            .filter { [unowned self] input in
+                shouldTriggerSubsequentFetch(for: input.currentIndex, lastIndex: input.lastIndex)
+            }
             .map(\.text)
             .flatMap { [unowned self] input in
                 fetchRepositoryListUseCase.execute(with: FetchRepositoryListInput(query: input, isInitialFetch: false))
@@ -92,18 +97,31 @@ public final class SearchRepositoriesViewModel {
         )
     }
 
+    private func shouldTriggerSubsequentFetch(for currentIndex: Int, lastIndex: Int?) -> Bool {
+        // Maybe move the parameters to domain and decide there for fetch?
+        currentIndex == (lastIndex ?? 0) - 5 // FIX: - might crash if less than 5 repos get fetched
+    }
+
     private func map(_ repositories: [Repository]) -> [RepositoryViewModel] {
         repositories.map {
             RepositoryViewModel(
                 id: $0.id,
                 ownerName: $0.owner.name,
-                ownerAvatarURL: $0.owner.avatarURL,
                 name: $0.name,
                 stargazersCount: $0.stargazersCount.description,
                 watchersCount: $0.watchersCount.description,
                 forksCount: $0.forksCount.description,
-                openIssuesCount: $0.openIssuesCount.description
+                openIssuesCount: $0.openIssuesCount.description,
+                imageViewModel: map(imageURL: $0.owner.avatarURL)
             )
         }
+    }
+
+    private func map(imageURL: String) -> AsyncImageViewModel {
+        let input = FetchImageInput(url: imageURL)
+        let imageConvertible = fetchImageUseCase
+            .execute(with: input)
+            .asObservable()
+        return AsyncImageViewModel(with: imageConvertible)
     }
 }
