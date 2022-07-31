@@ -16,38 +16,15 @@ import RxRelay
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    let urlSession = URLSession(configuration: .default)
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         window = UIWindow(windowScene: windowScene)
-
-        let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated)
-        let session = URLSession(configuration: .default)
-        let paginator = Paginator<Repository>(limit: 10, initialPage: 1)
-        let repositoryListRequestMapper = FetchRepositoryListRequestMapper().eraseToAnyMapper
-        let ownerResponseMapper = OwnerResponseMapper().eraseToAnyMapper
-        let repositoryListResponseMapper = RepositoryListResponseMapper(
-            ownerResponseMapper: ownerResponseMapper
-        ).eraseToAnyMapper
-        let fetchRepositoryListRepository = URLSessionFetchRepositoryListRepository(
-            session: session,
-            paginator: paginator,
-            requestMapper: repositoryListRequestMapper,
-            responseMapper: repositoryListResponseMapper
-        )
-        let fetchImageRepository = URLSessionFetchImageRepository(session: session)
-        let fetchRepositoryListUseCase = ConcreteFetchRepositoryListUseCase(repository: fetchRepositoryListRepository)
-        let fetchImageUseCase = ConcreteFetchImageUseCase(repository: fetchImageRepository)
-        let viewModel = SearchRepositoriesViewModel(
-            fetchRepositoryListUseCase: fetchRepositoryListUseCase,
-            fetchImageUseCase: fetchImageUseCase,
-            scheduler: scheduler
-        )
-        let viewController = SearchRepositoriesViewController(viewModel: viewModel)
-
-        window?.rootViewController = viewController
-        window?.makeKeyAndVisible()
+        let rootSceneFactory = RootSceneFactory(session: urlSession)
+        let coordinator = RootCoordinator(window: window!, factory: rootSceneFactory)
+        coordinator.start()
     }
 }
 
