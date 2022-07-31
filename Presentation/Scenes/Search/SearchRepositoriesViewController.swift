@@ -23,9 +23,14 @@ public final class SearchRepositoriesViewController: UIViewController {
     private let sectionIdentifier = "section"
     private let itemsIdentifier = "items"
     private let viewModel: SearchRepositoriesViewModel
+    private let selectionRelay: PublishRelay<RepositoryViewModel>
 
-    public init(viewModel: SearchRepositoriesViewModel) {
+    public init(
+        viewModel: SearchRepositoriesViewModel,
+        selectionRelay: PublishRelay<RepositoryViewModel>
+    ) {
         self.viewModel = viewModel
+        self.selectionRelay = selectionRelay
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -97,7 +102,18 @@ public final class SearchRepositoriesViewController: UIViewController {
                 print($0)
             })
             .disposed(by: disposeBag)
-            
+
+        /**
+         itemSelected is used as a workaround for modelSelected(),
+         since the later causes a runtime crash when used in conjunction with DiffableDataSource
+         */
+        tableView.rx
+            .itemSelected
+            .compactMap { [unowned self] indexPath in
+                dataSource.itemIdentifier(for: indexPath)
+            }
+            .bind(to: selectionRelay)
+            .disposed(by: disposeBag)
     }
 
     private func makeDataSource() -> DataSource {
@@ -130,11 +146,11 @@ extension SearchRepositoriesViewController: ViewConstructing {
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             searchBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            searchBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+            searchBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            searchBar.heightAnchor.constraint(equalToConstant: 56)
         ])
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.refreshControl = refreshControl
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
@@ -142,6 +158,7 @@ extension SearchRepositoriesViewController: ViewConstructing {
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
+        tableView.refreshControl = refreshControl
 
         activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(activityIndicatorView)
