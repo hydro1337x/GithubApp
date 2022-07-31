@@ -7,13 +7,23 @@
 
 import Foundation
 
-struct RepositoryViewModel: Hashable {
+struct RepositoryViewModel {
     let id: String
     let ownerName: String
-    let ownerAvatarURL: String
     let name: String
     let stargazersCount: String
     let watchersCount: String
     let forksCount: String
     let openIssuesCount: String
+    let imageViewModel: AsyncImageViewModel
+}
+
+extension RepositoryViewModel: Hashable {
+    static func == (lhs: RepositoryViewModel, rhs: RepositoryViewModel) -> Bool {
+        lhs.id == rhs.id
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 }
