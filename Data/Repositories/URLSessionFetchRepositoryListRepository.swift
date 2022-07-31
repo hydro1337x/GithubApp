@@ -31,7 +31,7 @@ public final class URLSessionFetchRepositoryListRepository: FetchRepositoryListR
     public func fetch(with input: FetchRepositoryListInput) -> Single<[Repository]> {
         guard let request = requestMapper.map(
             input: FetchRepositoryListRequest(
-                searchInput: input.query,
+                searchInput: input.searchInput,
                 currentPage: paginator.currentPage,
                 itemsPerPage: paginator.limit
             )

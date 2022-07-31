@@ -46,7 +46,8 @@ public final class SearchRepositoriesViewModel {
             .asObservable()
             .observe(on: scheduler)
             .flatMap { [unowned self] input in
-                fetchRepositoryListUseCase.execute(with: FetchRepositoryListInput(query: input, isInitialFetch: true))
+                fetchRepositoryListUseCase.execute(with: FetchRepositoryListInput(searchInput: input,
+                                                                                  isInitialFetch: true))
                     .trackActivity(initialActivityTracker)
                     .trackFailure(failureTracker)
                     .map { Optional($0) }
@@ -66,7 +67,8 @@ public final class SearchRepositoriesViewModel {
             }
             .map(\.text)
             .flatMap { [unowned self] input in
-                fetchRepositoryListUseCase.execute(with: FetchRepositoryListInput(query: input, isInitialFetch: false))
+                fetchRepositoryListUseCase.execute(with: FetchRepositoryListInput(searchInput: input,
+                                                                                  isInitialFetch: false))
                     .trackActivity(subsequentActivityTracker)
                     .trackFailure(failureTracker)
                     .map { Optional($0) }
