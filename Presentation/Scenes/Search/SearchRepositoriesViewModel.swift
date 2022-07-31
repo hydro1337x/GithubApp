@@ -27,15 +27,18 @@ public final class SearchRepositoriesViewModel {
     private let fetchRepositoryListUseCase: FetchRepositoryListUseCase
     private let fetchImageUseCase: FetchImageUseCase
     private let scheduler: SchedulerType
+    private let fetchTriggerThreshold: Int
 
     public init(
         fetchRepositoryListUseCase: FetchRepositoryListUseCase,
         fetchImageUseCase: FetchImageUseCase,
-        scheduler: SchedulerType
+        scheduler: SchedulerType,
+        fetchTriggerThreshold: Int
     ) {
         self.fetchRepositoryListUseCase = fetchRepositoryListUseCase
         self.fetchImageUseCase = fetchImageUseCase
         self.scheduler = scheduler
+        self.fetchTriggerThreshold = fetchTriggerThreshold
     }
 
     func transform(input: Input) -> Output {
@@ -74,7 +77,7 @@ public final class SearchRepositoriesViewModel {
         let subsequentRepositories = input.subsequentTrigger
             .asObservable()
             .filter { [unowned self] input in
-                shouldTriggerSubsequentFetch(for: input.currentIndex, lastIndex: input.lastIndex)
+                shouldTriggerFetch(for: input.currentIndex, lastIndex: input.lastIndex)
             }
             .compactMap(\.text)
             .flatMap { [unowned self] input in
@@ -110,8 +113,10 @@ public final class SearchRepositoriesViewModel {
         )
     }
 
-    private func shouldTriggerSubsequentFetch(for currentIndex: Int, lastIndex: Int?) -> Bool {
-        currentIndex == (lastIndex ?? 0) - 5 // FIX: - might crash if less than 5 repos get fetched
+    private func shouldTriggerFetch(for currentIndex: Int, lastIndex: Int?) -> Bool {
+        guard let lastIndex = lastIndex else { return false }
+
+        return currentIndex == lastIndex - fetchTriggerThreshold
     }
 
     private func map(_ repositories: [Repository]) -> [RepositoryViewModel] {

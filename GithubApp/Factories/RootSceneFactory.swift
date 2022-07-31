@@ -16,6 +16,7 @@ struct RootSceneFactory {
     let session: URLSession
 
     func makeSearchRepositoresViewController() -> UIViewController {
+        let fetchTriggerThreshold = 5
         let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated)
         let paginator = Paginator<Repository>(limit: 10, initialPage: 1)
         let repositoryListRequestMapper = FetchRepositoryListRequestMapper().eraseToAnyMapper
@@ -35,7 +36,7 @@ struct RootSceneFactory {
         let viewModel = SearchRepositoriesViewModel(
             fetchRepositoryListUseCase: fetchRepositoryListUseCase,
             fetchImageUseCase: fetchImageUseCase,
-            scheduler: scheduler
+            scheduler: scheduler, fetchTriggerThreshold: fetchTriggerThreshold
         )
         let viewController = SearchRepositoriesViewController(viewModel: viewModel)
 
