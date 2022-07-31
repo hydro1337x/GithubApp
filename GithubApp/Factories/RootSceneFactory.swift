@@ -8,37 +8,53 @@
 import Foundation
 import UIKit
 import RxSwift
+import RxRelay
 import Domain
 import Data
 import Presentation
 
 struct RootSceneFactory {
-    let session: URLSession
+    let fetchRepositoryListRepository: FetchRepositoryListRepository
+    let fetchImageUseCase: FetchImageUseCase
+    let fetchRepositoryRepository: FetchRepositoryRepository
 
-    func makeSearchRepositoresViewController() -> UIViewController {
+    init(
+        fetchRepositoryListRepository: FetchRepositoryListRepository,
+        fetchRepositoryRepository: FetchRepositoryRepository,
+        fetchImageUseCase: FetchImageUseCase
+    ) {
+        self.fetchRepositoryListRepository = fetchRepositoryListRepository
+        self.fetchRepositoryRepository = fetchRepositoryRepository
+        self.fetchImageUseCase = fetchImageUseCase
+    }
+
+    func makeSearchRepositoresViewController(
+        with selectionRelay: PublishRelay<RepositoryViewModel>
+    ) -> UIViewController {
         let fetchTriggerThreshold = 5
         let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated)
-        let paginator = Paginator<Repository>(limit: 10, initialPage: 1)
-        let repositoryListRequestMapper = FetchRepositoryListRequestMapper().eraseToAnyMapper
-        let ownerResponseMapper = OwnerResponseMapper().eraseToAnyMapper
-        let repositoryListResponseMapper = RepositoryListResponseMapper(
-            ownerResponseMapper: ownerResponseMapper
-        ).eraseToAnyMapper
-        let fetchRepositoryListRepository = URLSessionFetchRepositoryListRepository(
-            session: session,
-            paginator: paginator,
-            requestMapper: repositoryListRequestMapper,
-            responseMapper: repositoryListResponseMapper
-        )
-        let fetchImageRepository = URLSessionFetchImageRepository(session: session)
         let fetchRepositoryListUseCase = ConcreteFetchRepositoryListUseCase(repository: fetchRepositoryListRepository)
-        let fetchImageUseCase = ConcreteFetchImageUseCase(repository: fetchImageRepository)
         let viewModel = SearchRepositoriesViewModel(
             fetchRepositoryListUseCase: fetchRepositoryListUseCase,
             fetchImageUseCase: fetchImageUseCase,
             scheduler: scheduler, fetchTriggerThreshold: fetchTriggerThreshold
         )
-        let viewController = SearchRepositoriesViewController(viewModel: viewModel)
+        let viewController = SearchRepositoriesViewController(
+            viewModel: viewModel,
+            selectionRelay: selectionRelay
+        )
+
+        return viewController
+    }
+
+    func makeRepositoryDetailsViewController(with id: String) -> UIViewController {
+        let useCase = ConcreteFetchRepositoryUseCase(repository: fetchRepositoryRepository)
+        let viewModel = RepositoryDetailsViewModel(
+            id: id,
+            fetchRepositoryUseCase: useCase,
+            fetchImageUseCase: fetchImageUseCase
+        )
+        let viewController = RepositoryDetailsViewController(viewModel: viewModel)
 
         return viewController
     }
