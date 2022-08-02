@@ -54,22 +54,25 @@ public final class SearchRepositoriesViewController: UIViewController {
     private func setupSubscriptions() {
         let refreshTrigger = refreshControl.rx
             .controlEvent(.valueChanged)
-            .map { [unowned self] in
-                searchBar.text
-            }
+            .map { _ in }
             .asSignal(onErrorSignalWith: .empty())
 
         let searchTrigger = searchBar.rx
             .text
+            .distinctUntilChanged()
+            .skip(1)
             .asSignal(onErrorSignalWith: .empty())
 
         let subsequentTrigger = tableView.rx
             .willDisplayCell
-            .map { [unowned self] input -> (text: String?, currentIndex: Int, lastIndex: Int?) in
-                let currentIndex = input.indexPath.row
-                let lastIndex = dataSource.snapshot().itemIdentifiers.indices.last
-                return (text: searchBar.text, currentIndex: currentIndex, lastIndex: lastIndex)
+            .compactMap { [unowned self] input -> TriggerInput? in
+                guard let last = dataSource.snapshot().itemIdentifiers.indices.last else { return nil }
+                return TriggerInput(currentIndex: input.indexPath.row, lastIndex: last)
             }
+            .filter { input in
+                input.currentIndex == input.lastIndex
+            }
+            .map { _ in }
             .asSignal(onErrorSignalWith: .empty())
 
         let input = SearchRepositoriesViewModel.Input(

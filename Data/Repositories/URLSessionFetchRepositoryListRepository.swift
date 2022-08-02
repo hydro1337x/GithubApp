@@ -30,6 +30,10 @@ public final class URLSessionFetchRepositoryListRepository: FetchRepositoryListR
     }
 
     public func fetch(with input: FetchRepositoryListInput) -> Single<[Repository]> {
+        if input.isInitialFetch {
+            paginator.resetState()
+        }
+
         guard let request = requestMapper.map(
             input: FetchRepositoryListRequest(
                 searchInput: input.searchInput,
@@ -38,18 +42,18 @@ public final class URLSessionFetchRepositoryListRepository: FetchRepositoryListR
             )
         ) else { return .error(URLError(.badURL)) }
 
-        if input.isInitialFetch {
-            paginator.resetPages()
-        }
+        let response = fetch(request)
+            .compactMap { [weak self] response -> PaginatedResponse<Repository>? in
+                guard let self = self else { return nil }
 
-        return fetch(request)
-            .map { [weak self] response in
-                guard let self = self else { return [] }
-                let response = self.responseMapper.map(input: response)
-                return self.paginator
-                    .paginate(response)
-                    .uniqued()
+                return self.responseMapper.map(input: response)
             }
+            .asObservable()
+            .asSingle()
+
+        return paginator
+            .paginate(response)
+            .map { $0.uniqued() }
     }
 
     private func fetch(_ request: URLRequest) -> Single<RepositoryListResponse> {

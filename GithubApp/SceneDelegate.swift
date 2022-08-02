@@ -37,7 +37,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
+        setupNavigationBarAppearance()
+
         window = UIWindow(windowScene: windowScene)
+
         let rootSceneFactory = RootSceneFactory(
             fetchRepositoryListRepository: fetchRepositoryListRepository,
             fetchRepositoryRepository: fetchRepositoryListRepository,
@@ -47,5 +50,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.coordinator = coordinator
         coordinator.start()
     }
+}
+
+private func setupNavigationBarAppearance() {
+    let navBarAppearance = UINavigationBarAppearance()
+    navBarAppearance.configureWithOpaqueBackground()
+    UINavigationBar.appearance().standardAppearance = navBarAppearance
+    UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
 }
 

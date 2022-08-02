@@ -10,11 +10,16 @@ import RxSwift
 import RxCocoa
 import Domain
 
+struct TriggerInput {
+    let currentIndex: Int
+    let lastIndex: Int
+}
+
 public final class SearchRepositoriesViewModel {
     struct Input {
         let searchTrigger: Signal<String?>
-        let refreshTrigger: Signal<String?>
-        let subsequentTrigger: Signal<(text: String?, currentIndex: Int, lastIndex: Int?)>
+        let refreshTrigger: Signal<Void>
+        let subsequentTrigger: Signal<Void>
     }
 
     struct Output {
@@ -45,10 +50,17 @@ public final class SearchRepositoriesViewModel {
         let failureTracker = FailureTracker()
         let initialActivityTracker = ActivityTracker()
         let subsequentActivityTracker = ActivityTracker()
+        let searchRelay = BehaviorRelay<String?>(value: nil)
+        var isPaginating = false
 
         let refreshTrigger = input.refreshTrigger.asObservable()
+
         let searchTrigger = input.searchTrigger
             .asObservable()
+            .do(onNext: {
+                searchRelay.accept($0)
+            })
+            .map { _ in }
             .debounce(.milliseconds(500), scheduler: scheduler)
 
         let initialRepositories = Observable
@@ -58,7 +70,7 @@ public final class SearchRepositoriesViewModel {
             )
             .asObservable()
             .observe(on: scheduler)
-            .compactMap { $0 }
+            .compactMap { searchRelay.value }
             .flatMap { [unowned self] input in
                 fetchRepositoryListUseCase.execute(with: FetchRepositoryListInput(searchInput: input,
                                                                                   isInitialFetch: true))
@@ -70,16 +82,18 @@ public final class SearchRepositoriesViewModel {
                     }
                     .compactMap { $0 }
             }
+            .share()
             .map { [unowned self] repositories in
                 map(repositories)
             }
 
         let subsequentRepositories = input.subsequentTrigger
             .asObservable()
-            .filter { [unowned self] input in
-                shouldTriggerFetch(for: input.currentIndex, lastIndex: input.lastIndex)
-            }
-            .compactMap(\.text)
+            .filter { _ in !isPaginating }
+            .do(onNext: { _ in
+                isPaginating = true
+            })
+            .compactMap { _ in searchRelay.value }
             .flatMap { [unowned self] input in
                 fetchRepositoryListUseCase.execute(with: FetchRepositoryListInput(searchInput: input,
                                                                                   isInitialFetch: false))
@@ -91,6 +105,10 @@ public final class SearchRepositoriesViewModel {
                     }
                     .compactMap { $0 }
             }
+            .share()
+            .do(onNext: { _ in
+                isPaginating = false
+            })
             .map { [unowned self] repositories in
                 map(repositories)
             }

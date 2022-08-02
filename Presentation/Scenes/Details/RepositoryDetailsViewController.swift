@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 public final class RepositoryDetailsViewController: UIViewController {
 
@@ -13,6 +15,7 @@ public final class RepositoryDetailsViewController: UIViewController {
     let stackView = UIStackView()
     let avatarImageView = AsyncImageView()
 
+    private let disposeBag = DisposeBag()
     private let viewModel: RepositoryDetailsViewModel
 
     public init(viewModel: RepositoryDetailsViewModel) {
@@ -28,8 +31,22 @@ public final class RepositoryDetailsViewController: UIViewController {
         super.viewDidLoad()
         setupLayout()
         setupStyle()
+        setupSubscriptions()
     }
 
+    private func setupSubscriptions() {
+        let trigger = Signal.just(())
+
+        let input = RepositoryDetailsViewModel.Input(trigger: trigger)
+
+        let output = viewModel.transform(input: input)
+
+        output.imageViewModel
+            .drive(onNext: { [unowned self] viewModel in
+                avatarImageView.configure(with: viewModel, disposeBag: disposeBag)
+            })
+            .disposed(by: disposeBag)
+    }
 }
 
 extension RepositoryDetailsViewController: ViewConstructing {

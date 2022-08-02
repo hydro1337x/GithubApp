@@ -69,8 +69,7 @@ final class AsyncImageView: UIView {
     }
 
     private func handleStateTransition(_ state: AsyncImageState) {
-        let st = AsyncImageState.failed
-        switch st {
+        switch state {
         case .initial:
             blurView.isHidden = true
             imageView.image = placeholderImage
@@ -131,7 +130,6 @@ extension AsyncImageView: ViewConstructing {
 
         let retryImage = UIImage(systemName: "arrow.clockwise")
         retryButton.setImage(retryImage, for: .normal)
-        retryButton.imageEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         retryButton.imageView?.contentMode = .scaleAspectFit
 
         blurView.effect = UIBlurEffect(style: .systemUltraThinMaterialDark)
