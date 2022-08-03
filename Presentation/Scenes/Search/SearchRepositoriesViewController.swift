@@ -17,6 +17,7 @@ public final class SearchRepositoriesViewController: UIViewController {
     let searchBar = UISearchBar()
     let refreshControl = UIRefreshControl()
     let activityIndicatorView = UIActivityIndicatorView(style: .large)
+    let emptyStateLabel = UILabel()
 
     private lazy var dataSource = makeDataSource()
     private let disposeBag = DisposeBag()
@@ -87,6 +88,9 @@ public final class SearchRepositoriesViewController: UIViewController {
         let output = viewModel.transform(input: input)
 
         output.items
+            .do(onNext: { [unowned self] items in
+                emptyStateLabel.isHidden = !items.isEmpty
+            })
             .map { [unowned self] items in
                 makeSnapshot(with: items)
             }
@@ -184,9 +188,16 @@ extension SearchRepositoriesViewController: ViewConstructing {
             activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+
+        tableView.backgroundView = emptyStateLabel
+        NSLayoutConstraint.activate([
+            emptyStateLabel.centerYAnchor.constraint(equalTo: tableView.centerYAnchor),
+            emptyStateLabel.centerXAnchor.constraint(equalTo: tableView.centerXAnchor)
+        ])
+        emptyStateLabel.translatesAutoresizingMaskIntoConstraints = false
     }
 
     func setupStyle() {
-        
+        emptyStateLabel.text = "Whoops, nothing to show yet..."
     }
 }
