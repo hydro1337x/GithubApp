@@ -17,8 +17,7 @@ public final class SearchRepositoriesViewController: UIViewController {
     let searchBar = UISearchBar()
     let refreshControl = UIRefreshControl()
     let activityIndicatorView = UIActivityIndicatorView(style: .large)
-    let emptyStateLabel = UILabel()
-    let tapGestureRecognizer = UITapGestureRecognizer()
+    let emptyStateButton = UIButton(type: .custom)
 
     private lazy var dataSource = makeDataSource()
     private let disposeBag = DisposeBag()
@@ -90,7 +89,7 @@ public final class SearchRepositoriesViewController: UIViewController {
 
         output.items
             .do(onNext: { [unowned self] items in
-                emptyStateLabel.isHidden = !items.isEmpty
+                emptyStateButton.isHidden = !items.isEmpty
                 tableView.isScrollEnabled = !items.isEmpty
             }, onSubscribed: { [unowned self] in
                 tableView.isScrollEnabled = false
@@ -133,15 +132,11 @@ public final class SearchRepositoriesViewController: UIViewController {
             .bind(to: selectionRelay)
             .disposed(by: disposeBag)
 
-        tapGestureRecognizer.rx
-            .event
+        emptyStateButton.rx
+            .tap
             .asDriver()
-            .drive(onNext: { [unowned self] recognizer in
-                switch recognizer.state {
-                case .ended:
-                    dismissKeyboard()
-                default: break
-                }
+            .drive(onNext: { [unowned self] _ in
+                dismissKeyboard()
             })
             .disposed(by: disposeBag)
 
@@ -218,13 +213,12 @@ extension SearchRepositoriesViewController: ViewConstructing {
         ])
         activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
 
-        tableView.backgroundView = emptyStateLabel
-        emptyStateLabel.center = tableView.center
-        tableView.addGestureRecognizer(tapGestureRecognizer)
+        tableView.backgroundView = emptyStateButton
+        emptyStateButton.center = tableView.center
     }
 
     func setupStyle() {
-        emptyStateLabel.text = "Whoops, nothing to show yet..."
-        emptyStateLabel.textAlignment = .center
+        emptyStateButton.setTitle("Whoops, nothing to show yet...", for: .normal)
+        emptyStateButton.setTitleColor(.systemGray, for: .normal)
     }
 }
