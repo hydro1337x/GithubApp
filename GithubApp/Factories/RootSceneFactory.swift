@@ -31,13 +31,12 @@ struct RootSceneFactory {
     func makeSearchRepositoresViewController(
         with selectionRelay: PublishRelay<RepositoryViewModel>
     ) -> UIViewController {
-        let fetchTriggerThreshold = 5
         let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated)
         let fetchRepositoryListUseCase = ConcreteFetchRepositoryListUseCase(repository: fetchRepositoryListRepository)
         let viewModel = SearchRepositoriesViewModel(
             fetchRepositoryListUseCase: fetchRepositoryListUseCase,
             fetchImageUseCase: fetchImageUseCase,
-            scheduler: scheduler, fetchTriggerThreshold: fetchTriggerThreshold
+            scheduler: scheduler
         )
         let viewController = SearchRepositoriesViewController(
             viewModel: viewModel,

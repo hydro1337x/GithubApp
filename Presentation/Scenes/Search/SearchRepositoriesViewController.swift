@@ -10,8 +10,8 @@ import RxCocoa
 import RxSwift
 
 public final class SearchRepositoriesViewController: UIViewController {
-    typealias DataSource = UITableViewDiffableDataSource<String, RepositoryViewModel>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<String, RepositoryViewModel>
+    typealias DataSource = UITableViewDiffableDataSource<String, SearchRepositoriesItem>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<String, SearchRepositoriesItem>
 
     let tableView = UITableView()
     let searchBar = UISearchBar()
@@ -49,12 +49,15 @@ public final class SearchRepositoriesViewController: UIViewController {
     private func registerCells() {
         tableView.register(RepositoryTableViewCell.self,
                            forCellReuseIdentifier: String(describing: RepositoryTableViewCell.self))
+        tableView.register(ActivityIndicatorTableViewCell.self,
+                           forCellReuseIdentifier: String(describing: ActivityIndicatorTableViewCell.self))
     }
 
     private func setupSubscriptions() {
+
         let refreshTrigger = refreshControl.rx
             .controlEvent(.valueChanged)
-            .map { _ in }
+            .map { [unowned self] _ in searchBar.text }
             .asSignal(onErrorSignalWith: .empty())
 
         let searchTrigger = searchBar.rx
@@ -72,7 +75,7 @@ public final class SearchRepositoriesViewController: UIViewController {
             .filter { input in
                 input.currentIndex == input.lastIndex
             }
-            .map { _ in }
+            .map { [unowned self] _ in searchBar.text }
             .asSignal(onErrorSignalWith: .empty())
 
         let input = SearchRepositoriesViewModel.Input(
@@ -83,20 +86,20 @@ public final class SearchRepositoriesViewController: UIViewController {
 
         let output = viewModel.transform(input: input)
 
-        output.repositories
-            .map { [unowned self] repositories in
-                makeSnapshot(with: repositories)
+        output.items
+            .map { [unowned self] items in
+                makeSnapshot(with: items)
             }
             .drive(onNext: { [unowned self] snapshot in
                 dataSource.apply(snapshot)
             })
             .disposed(by: disposeBag)
 
-        output.initialActivity
+        output.refreshActivity
             .drive(refreshControl.rx.isRefreshing)
             .disposed(by: disposeBag)
 
-        output.subsequentActivity
+        output.searchActivity
             .drive(activityIndicatorView.rx.isAnimating)
             .disposed(by: disposeBag)
 
@@ -115,17 +118,29 @@ public final class SearchRepositoriesViewController: UIViewController {
             .compactMap { [unowned self] indexPath in
                 dataSource.itemIdentifier(for: indexPath)
             }
+            .compactMap {
+                guard case .item(let repository) = $0 else { return nil }
+                return repository
+            }
             .bind(to: selectionRelay)
             .disposed(by: disposeBag)
     }
 
     private func makeDataSource() -> DataSource {
-        let dataSource = DataSource(tableView: tableView) { tableView, indexPath, viewModel in
+        let dataSource = DataSource(tableView: tableView) { tableView, indexPath, item in
 
-            let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: RepositoryTableViewCell.self),
-                                                     for: indexPath) as? RepositoryTableViewCell
-            cell?.configure(with: viewModel)
-            return cell
+            switch item {
+            case .item(let viewModel):
+                let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: RepositoryTableViewCell.self),
+                                                         for: indexPath) as? RepositoryTableViewCell
+                cell?.configure(with: viewModel)
+                return cell
+
+            case .activity:
+                let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: ActivityIndicatorTableViewCell.self), for: indexPath) as? ActivityIndicatorTableViewCell
+                cell?.startAnimating()
+                return cell
+            }
         }
 
         dataSource.defaultRowAnimation = .fade
@@ -133,10 +148,10 @@ public final class SearchRepositoriesViewController: UIViewController {
         return dataSource
     }
 
-    private func makeSnapshot(with repositories: [RepositoryViewModel]) -> Snapshot {
+    private func makeSnapshot(with items: [SearchRepositoriesItem]) -> Snapshot {
         var snapshot = Snapshot()
         snapshot.appendSections([sectionIdentifier])
-        snapshot.appendItems(repositories, toSection: sectionIdentifier)
+        snapshot.appendItems(items, toSection: sectionIdentifier)
         return snapshot
     }
 
@@ -165,7 +180,7 @@ extension SearchRepositoriesViewController: ViewConstructing {
 
         view.addSubview(activityIndicatorView)
         NSLayoutConstraint.activate([
-            activityIndicatorView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
+            activityIndicatorView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
             activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false

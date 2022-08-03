@@ -40,6 +40,8 @@
 		6048988A2896CB1E00EA6E21 /* FetchRepositoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604898892896CB1E00EA6E21 /* FetchRepositoryRepository.swift */; };
 		6048988C2896CBC600EA6E21 /* ConcreteFetchRepositoryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6048988B2896CBC600EA6E21 /* ConcreteFetchRepositoryUseCase.swift */; };
 		6048988F2896CD6400EA6E21 /* URLSessionFetchRepositoryListRepository+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6048988E2896CD6400EA6E21 /* URLSessionFetchRepositoryListRepository+Extension.swift */; };
+		606546FB289AC7B200B01432 /* SearchRepositoriesItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606546FA289AC7B200B01432 /* SearchRepositoriesItem.swift */; };
+		606546FD289B1B8500B01432 /* ActivityIndicatorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606546FC289B1B8500B01432 /* ActivityIndicatorTableViewCell.swift */; };
 		607DD9C5289586A800957EEA /* Sequence+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9C4289586A800957EEA /* Sequence+Extension.swift */; };
 		607DD9C82895912C00957EEA /* Repository+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9C72895912C00957EEA /* Repository+Extension.swift */; };
 		607DD9CA2895AD5700957EEA /* ActivityTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9C92895AD5700957EEA /* ActivityTracker.swift */; };
@@ -197,6 +199,8 @@
 		604898892896CB1E00EA6E21 /* FetchRepositoryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRepositoryRepository.swift; sourceTree = "<group>"; };
 		6048988B2896CBC600EA6E21 /* ConcreteFetchRepositoryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteFetchRepositoryUseCase.swift; sourceTree = "<group>"; };
 		6048988E2896CD6400EA6E21 /* URLSessionFetchRepositoryListRepository+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSessionFetchRepositoryListRepository+Extension.swift"; sourceTree = "<group>"; };
+		606546FA289AC7B200B01432 /* SearchRepositoriesItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepositoriesItem.swift; sourceTree = "<group>"; };
+		606546FC289B1B8500B01432 /* ActivityIndicatorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorTableViewCell.swift; sourceTree = "<group>"; };
 		607DD9C4289586A800957EEA /* Sequence+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Extension.swift"; sourceTree = "<group>"; };
 		607DD9C72895912C00957EEA /* Repository+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Repository+Extension.swift"; sourceTree = "<group>"; };
 		607DD9C92895AD5700957EEA /* ActivityTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTracker.swift; sourceTree = "<group>"; };
@@ -497,6 +501,7 @@
 			isa = PBXGroup;
 			children = (
 				60475704289551CD00DE40DE /* RepositoryTableViewCell.swift */,
+				606546FC289B1B8500B01432 /* ActivityIndicatorTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -581,6 +586,7 @@
 			isa = PBXGroup;
 			children = (
 				607DD9D62895E42300957EEA /* AsyncImageState.swift */,
+				606546FA289AC7B200B01432 /* SearchRepositoriesItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1129,12 +1135,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				6047570228954E1700DE40DE /* RepositoryViewModel.swift in Sources */,
+				606546FD289B1B8500B01432 /* ActivityIndicatorTableViewCell.swift in Sources */,
 				604756F528954B5C00DE40DE /* SearchRepositoriesViewController.swift in Sources */,
 				604756FB28954C9300DE40DE /* SearchRepositoriesViewModel.swift in Sources */,
 				604898842896C5AB00EA6E21 /* RepositoryDetailsViewModel.swift in Sources */,
 				607DD9DC2895E50D00957EEA /* NSLayoutConstraint+Extension.swift in Sources */,
 				607DD9D92895E45E00957EEA /* AsyncImageViewModel.swift in Sources */,
 				604898822896C5A000EA6E21 /* RepositoryDetailsViewController.swift in Sources */,
+				606546FB289AC7B200B01432 /* SearchRepositoriesItem.swift in Sources */,
 				607DD9D42895E3FE00957EEA /* AsyncImageView.swift in Sources */,
 				60475705289551CD00DE40DE /* RepositoryTableViewCell.swift in Sources */,
 				604756F928954B7600DE40DE /* ViewConstructing.swift in Sources */,

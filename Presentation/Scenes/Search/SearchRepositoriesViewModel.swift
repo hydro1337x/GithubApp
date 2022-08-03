@@ -18,63 +18,54 @@ struct TriggerInput {
 public final class SearchRepositoriesViewModel {
     struct Input {
         let searchTrigger: Signal<String?>
-        let refreshTrigger: Signal<Void>
-        let subsequentTrigger: Signal<Void>
+        let refreshTrigger: Signal<String?>
+        let subsequentTrigger: Signal<String?>
     }
 
     struct Output {
-        let repositories: Driver<[RepositoryViewModel]>
-        let initialActivity: Driver<Bool>
-        let subsequentActivity: Driver<Bool>
+        let items: Driver<[SearchRepositoriesItem]>
+        let refreshActivity: Driver<Bool>
+        let searchActivity: Driver<Bool>
         let failureMessage: Signal<String>
     }
 
     private let fetchRepositoryListUseCase: FetchRepositoryListUseCase
     private let fetchImageUseCase: FetchImageUseCase
     private let scheduler: SchedulerType
-    private let fetchTriggerThreshold: Int
 
     public init(
         fetchRepositoryListUseCase: FetchRepositoryListUseCase,
         fetchImageUseCase: FetchImageUseCase,
-        scheduler: SchedulerType,
-        fetchTriggerThreshold: Int
+        scheduler: SchedulerType
     ) {
         self.fetchRepositoryListUseCase = fetchRepositoryListUseCase
         self.fetchImageUseCase = fetchImageUseCase
         self.scheduler = scheduler
-        self.fetchTriggerThreshold = fetchTriggerThreshold
     }
 
     func transform(input: Input) -> Output {
         let failureTracker = FailureTracker()
-        let initialActivityTracker = ActivityTracker()
-        let subsequentActivityTracker = ActivityTracker()
-        let searchRelay = BehaviorRelay<String?>(value: nil)
-        var isPaginating = false
+        let refreshActivityTracker = ActivityTracker()
+        let searchActivityTracker = ActivityTracker()
+        let loadActivityTracker = ActivityTracker()
+        var isSubsequentFetchInProgress = false
+
+        // TODO: Split repository entities to Repository and Repository details, make Dates in domain entities not strings
+        // TODO: - Make repo details api call
 
         let refreshTrigger = input.refreshTrigger.asObservable()
 
         let searchTrigger = input.searchTrigger
             .asObservable()
-            .do(onNext: {
-                searchRelay.accept($0)
-            })
-            .map { _ in }
             .debounce(.milliseconds(500), scheduler: scheduler)
 
-        let initialRepositories = Observable
-            .merge(
-                refreshTrigger,
-                searchTrigger
-            )
-            .asObservable()
+        let refreshedRepositories = refreshTrigger
             .observe(on: scheduler)
-            .compactMap { searchRelay.value }
+            .compactMap { $0 }
             .flatMap { [unowned self] input in
                 fetchRepositoryListUseCase.execute(with: FetchRepositoryListInput(searchInput: input,
                                                                                   isInitialFetch: true))
-                    .trackActivity(initialActivityTracker)
+                    .trackActivity(refreshActivityTracker)
                     .trackFailure(failureTracker)
                     .map { Optional($0) }
                     .catch { _ in
@@ -83,21 +74,35 @@ public final class SearchRepositoriesViewModel {
                     .compactMap { $0 }
             }
             .share()
-            .map { [unowned self] repositories in
-                map(repositories)
+
+        let searchedRepositories = searchTrigger
+            .observe(on: scheduler)
+            .compactMap { $0 }
+            .flatMap { [unowned self] input in
+                fetchRepositoryListUseCase.execute(with: FetchRepositoryListInput(searchInput: input,
+                                                                                  isInitialFetch: true))
+                    .trackActivity(searchActivityTracker)
+                    .trackFailure(failureTracker)
+                    .map { Optional($0) }
+                    .catch { _ in
+                        Observable<[Repository]?>.just(nil)
+                    }
+                    .compactMap { $0 }
             }
+            .share()
 
         let subsequentRepositories = input.subsequentTrigger
             .asObservable()
-            .filter { _ in !isPaginating }
+            .observe(on: scheduler)
+            .filter { _ in !isSubsequentFetchInProgress }
             .do(onNext: { _ in
-                isPaginating = true
+                isSubsequentFetchInProgress = true
             })
-            .compactMap { _ in searchRelay.value }
+            .compactMap { $0 }
             .flatMap { [unowned self] input in
                 fetchRepositoryListUseCase.execute(with: FetchRepositoryListInput(searchInput: input,
                                                                                   isInitialFetch: false))
-                    .trackActivity(subsequentActivityTracker)
+                    .trackActivity(loadActivityTracker)
                     .trackFailure(failureTracker)
                     .map { Optional($0) }
                     .catch { _ in
@@ -107,34 +112,38 @@ public final class SearchRepositoriesViewModel {
             }
             .share()
             .do(onNext: { _ in
-                isPaginating = false
+                isSubsequentFetchInProgress = false
             })
+
+
+        let repositories = Observable.merge(refreshedRepositories, searchedRepositories, subsequentRepositories)
             .map { [unowned self] repositories in
                 map(repositories)
             }
 
-        let repositories = Observable.merge(initialRepositories, subsequentRepositories)
+        let items = Observable.combineLatest(repositories, loadActivityTracker.asObservable())
+            .map { repositories, isLoading -> [SearchRepositoriesItem] in
+                var items = repositories.map { SearchRepositoriesItem.item($0) }
+                if isLoading {
+                    items.append(SearchRepositoriesItem.activity)
+                }
+                return items
+            }
             .asDriver(onErrorDriveWith: .empty())
 
-        let initialActivity = initialActivityTracker.asDriver()
-        let subsequentActivity = subsequentActivityTracker.asDriver()
+        let refreshActivity = refreshActivityTracker.asDriver()
+        let searchActivity = searchActivityTracker.asDriver()
 
         let failureMessage = failureTracker
             .map { $0.localizedDescription }
             .asSignal(onErrorSignalWith: .empty())
 
         return Output(
-            repositories: repositories,
-            initialActivity: initialActivity,
-            subsequentActivity: subsequentActivity,
+            items: items,
+            refreshActivity: refreshActivity,
+            searchActivity: searchActivity,
             failureMessage: failureMessage
         )
-    }
-
-    private func shouldTriggerFetch(for currentIndex: Int, lastIndex: Int?) -> Bool {
-        guard let lastIndex = lastIndex else { return false }
-
-        return currentIndex == lastIndex - fetchTriggerThreshold
     }
 
     private func map(_ repositories: [Repository]) -> [RepositoryViewModel] {
