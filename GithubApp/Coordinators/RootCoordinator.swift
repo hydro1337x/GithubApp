@@ -19,8 +19,9 @@ final class RootCoordinator: Coordinator {
     private let disposeBag = DisposeBag()
     private let factory: RootSceneFactory
 
-    init(window: UIWindow,
-         factory: RootSceneFactory
+    init(
+        window: UIWindow,
+        factory: RootSceneFactory
     ) {
         self.window = window
         self.factory = factory

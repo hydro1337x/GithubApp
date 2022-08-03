@@ -18,6 +18,7 @@ public final class SearchRepositoriesViewController: UIViewController {
     let refreshControl = UIRefreshControl()
     let activityIndicatorView = UIActivityIndicatorView(style: .large)
     let emptyStateLabel = UILabel()
+    let tapGestureRecognizer = UITapGestureRecognizer()
 
     private lazy var dataSource = makeDataSource()
     private let disposeBag = DisposeBag()
@@ -90,6 +91,9 @@ public final class SearchRepositoriesViewController: UIViewController {
         output.items
             .do(onNext: { [unowned self] items in
                 emptyStateLabel.isHidden = !items.isEmpty
+                tableView.isScrollEnabled = !items.isEmpty
+            }, onSubscribed: { [unowned self] in
+                tableView.isScrollEnabled = false
             })
             .map { [unowned self] items in
                 makeSnapshot(with: items)
@@ -128,6 +132,31 @@ public final class SearchRepositoriesViewController: UIViewController {
             }
             .bind(to: selectionRelay)
             .disposed(by: disposeBag)
+
+        tapGestureRecognizer.rx
+            .event
+            .asDriver()
+            .drive(onNext: { [unowned self] recognizer in
+                switch recognizer.state {
+                case .ended:
+                    dismissKeyboard()
+                default: break
+                }
+            })
+            .disposed(by: disposeBag)
+
+        tableView.rx
+            .contentOffset
+            .subscribe { [unowned self] _ in
+                dismissKeyboard()
+            }
+            .disposed(by: disposeBag)
+    }
+
+    private func dismissKeyboard() {
+        if searchBar.isFirstResponder {
+            _ = searchBar.resignFirstResponder()
+        }
     }
 
     private func makeDataSource() -> DataSource {
@@ -190,14 +219,12 @@ extension SearchRepositoriesViewController: ViewConstructing {
         activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
 
         tableView.backgroundView = emptyStateLabel
-        NSLayoutConstraint.activate([
-            emptyStateLabel.centerYAnchor.constraint(equalTo: tableView.centerYAnchor),
-            emptyStateLabel.centerXAnchor.constraint(equalTo: tableView.centerXAnchor)
-        ])
-        emptyStateLabel.translatesAutoresizingMaskIntoConstraints = false
+        emptyStateLabel.center = tableView.center
+        tableView.addGestureRecognizer(tapGestureRecognizer)
     }
 
     func setupStyle() {
         emptyStateLabel.text = "Whoops, nothing to show yet..."
+        emptyStateLabel.textAlignment = .center
     }
 }
