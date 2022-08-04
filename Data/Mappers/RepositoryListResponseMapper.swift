@@ -23,15 +23,11 @@ public final class RepositoryListResponseMapper: Mapper {
                 Repository(
                     id: $0.id.description,
                     name: $0.name,
-                    description: $0.description,
                     owner: ownerResponseMapper.map(input: $0.owner),
                     stargazersCount: $0.stargazers_count,
                     watchersCount: $0.watchers_count,
                     forksCount: $0.forks_count,
-                    openIssuesCount: $0.open_issues_count,
-                    url: $0.url,
-                    createdAt: $0.created_at,
-                    updatedAt: $0.updated_at
+                    openIssuesCount: $0.open_issues_count
                 )
             }
 

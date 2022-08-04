@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum SearchRepositoriesItem: Hashable {
+public enum SearchRepositoriesItem: Hashable {
     case item(RepositoryViewModel)
     case activity
 }

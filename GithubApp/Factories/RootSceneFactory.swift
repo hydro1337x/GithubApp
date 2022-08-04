@@ -16,15 +16,15 @@ import Presentation
 struct RootSceneFactory {
     let fetchRepositoryListRepository: FetchRepositoryListRepository
     let fetchImageUseCase: FetchImageUseCase
-    let fetchRepositoryRepository: FetchRepositoryRepository
+    let fetchRepositoryDetailsRepository: FetchRepositoryDetailsRepository
 
     init(
         fetchRepositoryListRepository: FetchRepositoryListRepository,
-        fetchRepositoryRepository: FetchRepositoryRepository,
+        fetchRepositoryDetailsRepository: FetchRepositoryDetailsRepository,
         fetchImageUseCase: FetchImageUseCase
     ) {
         self.fetchRepositoryListRepository = fetchRepositoryListRepository
-        self.fetchRepositoryRepository = fetchRepositoryRepository
+        self.fetchRepositoryDetailsRepository = fetchRepositoryDetailsRepository
         self.fetchImageUseCase = fetchImageUseCase
     }
 
@@ -46,11 +46,12 @@ struct RootSceneFactory {
         return viewController
     }
 
-    func makeRepositoryDetailsViewController(with id: String) -> UIViewController {
-        let useCase = ConcreteFetchRepositoryUseCase(repository: fetchRepositoryRepository)
+    func makeRepositoryDetailsViewController(with input: FetchRepositoryDetailsInput) -> UIViewController {
+        let useCase = ConcreteFetchRepositoryDetailsUseCase(repository: fetchRepositoryDetailsRepository)
         let viewModel = RepositoryDetailsViewModel(
-            id: id,
-            fetchRepositoryUseCase: useCase,
+            name: input.name,
+            owner: input.owner,
+            fetchRepositoryDetailsUseCase: useCase,
             fetchImageUseCase: fetchImageUseCase
         )
         let viewController = RepositoryDetailsViewController(viewModel: viewModel)

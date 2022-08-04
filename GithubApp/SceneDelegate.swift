@@ -21,8 +21,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let urlSession = URLSession(configuration: .default)
     let paginator = Paginator<Repository>(limit: 10, initialPage: 1)
     lazy var repositoryListRequestMapper = FetchRepositoryListRequestMapper().eraseToAnyMapper
+    lazy var repositoryDetailsRequestMapper = FetchRepositoryDetailsRequestMapper().eraseToAnyMapper
     lazy var ownerResponseMapper = OwnerResponseMapper().eraseToAnyMapper
     lazy var repositoryListResponseMapper = RepositoryListResponseMapper(
+        ownerResponseMapper: ownerResponseMapper
+    ).eraseToAnyMapper
+    lazy var repositoryDetailsResponseMapper = RepositoryDetailsResponseMapper(
         ownerResponseMapper: ownerResponseMapper
     ).eraseToAnyMapper
     lazy var fetchRepositoryListRepository = URLSessionFetchRepositoryListRepository(
@@ -30,6 +34,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         paginator: paginator,
         requestMapper: repositoryListRequestMapper,
         responseMapper: repositoryListResponseMapper
+    )
+    lazy var fetchRepositoryDetailsRepository = URLSessionFetchRepositoryDetailsRepository(
+        session: urlSession,
+        requestMapper: repositoryDetailsRequestMapper,
+        responseMapper: repositoryDetailsResponseMapper
     )
     lazy var fetchImageRepository = URLSessionFetchImageRepository(session: urlSession)
     lazy var fetchImageUseCase = ConcreteFetchImageUseCase(repository: fetchImageRepository)
@@ -43,7 +52,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let rootSceneFactory = RootSceneFactory(
             fetchRepositoryListRepository: fetchRepositoryListRepository,
-            fetchRepositoryRepository: fetchRepositoryListRepository,
+            fetchRepositoryDetailsRepository: fetchRepositoryDetailsRepository,
             fetchImageUseCase: fetchImageUseCase
         )
         let coordinator = RootCoordinator(window: window!, factory: rootSceneFactory)

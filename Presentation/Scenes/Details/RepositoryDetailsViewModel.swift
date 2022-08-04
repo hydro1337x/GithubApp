@@ -19,17 +19,20 @@ public final class RepositoryDetailsViewModel {
         let imageViewModel: Driver<AsyncImageViewModel>
     }
 
-    private let id: String
-    private let fetchRepositoryUseCase: FetchRepositoryUseCase
+    private let name: String
+    private let owner: String
+    private let fetchRepositoryDetailsUseCase: FetchRepositoryDetailsUseCase
     private let fetchImageUseCase: FetchImageUseCase
 
     public init(
-        id: String,
-        fetchRepositoryUseCase: FetchRepositoryUseCase,
+        name: String,
+        owner: String,
+        fetchRepositoryDetailsUseCase: FetchRepositoryDetailsUseCase,
         fetchImageUseCase: FetchImageUseCase
     ) {
-        self.id = id
-        self.fetchRepositoryUseCase = fetchRepositoryUseCase
+        self.name = name
+        self.owner = owner
+        self.fetchRepositoryDetailsUseCase = fetchRepositoryDetailsUseCase
         self.fetchImageUseCase = fetchImageUseCase
     }
 
@@ -37,7 +40,7 @@ public final class RepositoryDetailsViewModel {
         let imageViewModel = input.trigger
             .asObservable()
             .flatMap { [unowned self] in
-                fetchRepositoryUseCase.execute(with: FetchRepositoryInput(id: id))
+                fetchRepositoryDetailsUseCase.execute(with: FetchRepositoryDetailsInput(name: name, owner: owner))
             }
             .map { [unowned self] value -> AsyncImageViewModel in
                 let imageConvertible = fetchImageUseCase

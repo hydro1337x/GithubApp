@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import Presentation
+import Domain
 
 final class RootCoordinator: Coordinator {
     let window: UIWindow
@@ -35,8 +36,12 @@ final class RootCoordinator: Coordinator {
     private func setupSubscriptions() {
         selectionRelay
             .asSignal()
-            .emit(onNext: { [unowned self] repository in
-                showRepositoryDetailsScene(with: repository.id)
+            .emit(onNext: { [unowned self] input in
+                let input = FetchRepositoryDetailsInput(
+                    name: input.name,
+                    owner: input.ownerName
+                )
+                showRepositoryDetailsScene(with: input)
             })
             .disposed(by: disposeBag)
     }
@@ -49,8 +54,8 @@ final class RootCoordinator: Coordinator {
         window.makeKeyAndVisible()
     }
 
-    private func showRepositoryDetailsScene(with id: String) {
-        let viewController = factory.makeRepositoryDetailsViewController(with: id)
+    private func showRepositoryDetailsScene(with input: FetchRepositoryDetailsInput) {
+        let viewController = factory.makeRepositoryDetailsViewController(with: input)
         navigationController.pushViewController(viewController, animated: true)
     }
 }

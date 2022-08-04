@@ -8,9 +8,9 @@
 import Foundation
 
 public struct RepositoryViewModel {
-    public let id: String
-    let ownerName: String
-    let name: String
+    let id: String
+    public let ownerName: String
+    public let name: String
     let stargazersCount: String
     let watchersCount: String
     let forksCount: String

@@ -16,13 +16,12 @@ public final class SearchRepositoriesViewController: UIViewController {
     let tableView = UITableView()
     let searchBar = UISearchBar()
     let refreshControl = UIRefreshControl()
-    let activityIndicatorView = UIActivityIndicatorView(style: .large)
-    let emptyStateButton = UIButton(type: .custom)
+    let activityIndicatorView = UIActivityIndicatorView()
+    let emptyStateButton = UIButton()
 
     private lazy var dataSource = makeDataSource()
     private let disposeBag = DisposeBag()
     private let sectionIdentifier = "section"
-    private let itemsIdentifier = "items"
     private let viewModel: SearchRepositoriesViewModel
     private let selectionRelay: PublishRelay<RepositoryViewModel>
 
@@ -45,13 +44,6 @@ public final class SearchRepositoriesViewController: UIViewController {
         setupStyle()
         registerCells()
         setupSubscriptions()
-    }
-
-    private func registerCells() {
-        tableView.register(RepositoryTableViewCell.self,
-                           forCellReuseIdentifier: String(describing: RepositoryTableViewCell.self))
-        tableView.register(ActivityIndicatorTableViewCell.self,
-                           forCellReuseIdentifier: String(describing: ActivityIndicatorTableViewCell.self))
     }
 
     private func setupSubscriptions() {
@@ -153,6 +145,16 @@ public final class SearchRepositoriesViewController: UIViewController {
             _ = searchBar.resignFirstResponder()
         }
     }
+}
+
+extension SearchRepositoriesViewController {
+
+    private func registerCells() {
+        tableView.register(RepositoryTableViewCell.self,
+                           forCellReuseIdentifier: String(describing: RepositoryTableViewCell.self))
+        tableView.register(ActivityIndicatorTableViewCell.self,
+                           forCellReuseIdentifier: String(describing: ActivityIndicatorTableViewCell.self))
+    }
 
     private func makeDataSource() -> DataSource {
         let dataSource = DataSource(tableView: tableView) { tableView, indexPath, item in
@@ -182,7 +184,6 @@ public final class SearchRepositoriesViewController: UIViewController {
         snapshot.appendItems(items, toSection: sectionIdentifier)
         return snapshot
     }
-
 }
 
 extension SearchRepositoriesViewController: ViewConstructing {
@@ -218,7 +219,9 @@ extension SearchRepositoriesViewController: ViewConstructing {
     }
 
     func setupStyle() {
-        emptyStateButton.setTitle("Whoops, nothing to show yet...", for: .normal)
+        activityIndicatorView.style = .large
+
+        emptyStateButton.setTitle("Nothing to show for now...", for: .normal)
         emptyStateButton.setTitleColor(.systemGray, for: .normal)
     }
 }
