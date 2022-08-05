@@ -49,9 +49,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     )
     lazy var loginUserRepository = FakeLoginUserRepository(localClient: localStorageClient)
     lazy var logoutUserRepository = FakeLogoutUserRepository(localClient: localStorageClient)
+    lazy var retrieveUserAccessTokenRepository = FakeRetrieveUserAccessTokenRepository(localClient: localStorageClient)
     lazy var fetchImageRepository = URLSessionFetchImageRepository(session: urlSession)
     lazy var fetchImageUseCase = ConcreteFetchImageUseCase(repository: fetchImageRepository)
     lazy var logoutUserCase = ConcreteLogoutUserUseCase(repository: logoutUserRepository)
+    lazy var checkUserAuthenticityUseCase = ConcreteCheckUserAuthenticityUseCase(
+        repository: retrieveUserAccessTokenRepository,
+        emailValidator: BasicEmailValidator().eraseToAnyValidator
+    )
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
@@ -69,7 +74,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let coordinator = RootCoordinator(
             window: window!,
             factory: rootSceneFactory,
-            logoutUserCase: logoutUserCase
+            logoutUserCase: logoutUserCase,
+            checkUserAuthenticityUseCase: checkUserAuthenticityUseCase
         )
         self.coordinator = coordinator
         

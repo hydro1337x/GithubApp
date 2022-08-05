@@ -20,15 +20,18 @@ final class RootCoordinator: Coordinator {
     private let disposeBag = DisposeBag()
     private let factory: RootSceneFactory
     private let logoutUserCase: LogoutUserUseCase
+    private let checkUserAuthenticityUseCase: CheckUserAuthenticityUseCase
 
     init(
         window: UIWindow,
         factory: RootSceneFactory,
-        logoutUserCase: LogoutUserUseCase
+        logoutUserCase: LogoutUserUseCase,
+        checkUserAuthenticityUseCase: CheckUserAuthenticityUseCase
     ) {
         self.window = window
         self.factory = factory
         self.logoutUserCase = logoutUserCase
+        self.checkUserAuthenticityUseCase = checkUserAuthenticityUseCase
     }
 
     deinit {
@@ -37,7 +40,8 @@ final class RootCoordinator: Coordinator {
 
     func start() {
         setupSubscriptions()
-        showLoginScene()
+        window.backgroundColor = .white
+        window.makeKeyAndVisible()
     }
 
     private func setupSubscriptions() {
@@ -60,6 +64,16 @@ final class RootCoordinator: Coordinator {
                 children.removeAll()
             })
             .disposed(by: disposeBag)
+
+        checkUserAuthenticityUseCase
+            .execute()
+            .observe(on: MainScheduler.instance)
+            .subscribe(onCompleted: { [unowned self] in
+                showSearchRepositoriesScene()
+            }, onError: { [unowned self] _ in
+                showLoginScene()
+            })
+            .disposed(by: disposeBag)
     }
 
     private func showLoginScene() {
@@ -67,7 +81,6 @@ final class RootCoordinator: Coordinator {
         let navigationController = UINavigationController(rootViewController: viewController)
         viewController.title = "Login"
         window.rootViewController = navigationController
-        window.makeKeyAndVisible()
     }
 
     private func showSearchRepositoriesScene() {

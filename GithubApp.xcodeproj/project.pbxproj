@@ -23,6 +23,11 @@
 		603D8C17289D627000A5CBE3 /* LogoutUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D8C16289D627000A5CBE3 /* LogoutUserRepository.swift */; };
 		603D8C19289D62C400A5CBE3 /* ConcreteLogoutUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D8C18289D62C400A5CBE3 /* ConcreteLogoutUserUseCase.swift */; };
 		603D8C1B289D637000A5CBE3 /* FakeLogoutUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D8C1A289D637000A5CBE3 /* FakeLogoutUserRepository.swift */; };
+		603D8C1D289D79C500A5CBE3 /* CheckUserAuthenticityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D8C1C289D79C500A5CBE3 /* CheckUserAuthenticityUseCase.swift */; };
+		603D8C1F289D7B1D00A5CBE3 /* RetrieveUserAccessTokenRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D8C1E289D7B1D00A5CBE3 /* RetrieveUserAccessTokenRepository.swift */; };
+		603D8C21289D7C7800A5CBE3 /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D8C20289D7C7800A5CBE3 /* AccessToken.swift */; };
+		603D8C23289D7CF500A5CBE3 /* FakeCheckUserAuthenticityRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D8C22289D7CF500A5CBE3 /* FakeCheckUserAuthenticityRepository.swift */; };
+		603D8C25289D81EF00A5CBE3 /* ConcreteCheckUserAuthenticityUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D8C24289D81EF00A5CBE3 /* ConcreteCheckUserAuthenticityUseCase.swift */; };
 		604756C1289523B200DE40DE /* RepositoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756C0289523B200DE40DE /* RepositoryResponse.swift */; };
 		604756C32895251E00DE40DE /* OwnerResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756C22895251E00DE40DE /* OwnerResponse.swift */; };
 		604756C52895282100DE40DE /* RepositoryListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756C42895282100DE40DE /* RepositoryListResponse.swift */; };
@@ -219,6 +224,11 @@
 		603D8C16289D627000A5CBE3 /* LogoutUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutUserRepository.swift; sourceTree = "<group>"; };
 		603D8C18289D62C400A5CBE3 /* ConcreteLogoutUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteLogoutUserUseCase.swift; sourceTree = "<group>"; };
 		603D8C1A289D637000A5CBE3 /* FakeLogoutUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeLogoutUserRepository.swift; sourceTree = "<group>"; };
+		603D8C1C289D79C500A5CBE3 /* CheckUserAuthenticityUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckUserAuthenticityUseCase.swift; sourceTree = "<group>"; };
+		603D8C1E289D7B1D00A5CBE3 /* RetrieveUserAccessTokenRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetrieveUserAccessTokenRepository.swift; sourceTree = "<group>"; };
+		603D8C20289D7C7800A5CBE3 /* AccessToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessToken.swift; sourceTree = "<group>"; };
+		603D8C22289D7CF500A5CBE3 /* FakeCheckUserAuthenticityRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeCheckUserAuthenticityRepository.swift; sourceTree = "<group>"; };
+		603D8C24289D81EF00A5CBE3 /* ConcreteCheckUserAuthenticityUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteCheckUserAuthenticityUseCase.swift; sourceTree = "<group>"; };
 		604756C0289523B200DE40DE /* RepositoryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryResponse.swift; sourceTree = "<group>"; };
 		604756C22895251E00DE40DE /* OwnerResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerResponse.swift; sourceTree = "<group>"; };
 		604756C42895282100DE40DE /* RepositoryListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryListResponse.swift; sourceTree = "<group>"; };
@@ -427,6 +437,7 @@
 			children = (
 				604756C9289528E800DE40DE /* Repository.swift */,
 				6066F69F289C199B00A8631C /* RepositoryDetails.swift */,
+				603D8C20289D7C7800A5CBE3 /* AccessToken.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -450,6 +461,7 @@
 				607DD9E12895E81000957EEA /* ConcreteFetchImageUseCase.swift */,
 				6066F6B2289C4DF100A8631C /* ConcreteLoginUserUseCase.swift */,
 				603D8C18289D62C400A5CBE3 /* ConcreteLogoutUserUseCase.swift */,
+				603D8C24289D81EF00A5CBE3 /* ConcreteCheckUserAuthenticityUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -470,6 +482,7 @@
 				607DD9E32895E83A00957EEA /* FetchImageRepository.swift */,
 				6066F6C0289C5B9600A8631C /* LoginUserRepository.swift */,
 				603D8C16289D627000A5CBE3 /* LogoutUserRepository.swift */,
+				603D8C1E289D7B1D00A5CBE3 /* RetrieveUserAccessTokenRepository.swift */,
 			);
 			path = Abstractions;
 			sourceTree = "<group>";
@@ -482,6 +495,7 @@
 				607DD9DD2895E79200957EEA /* FetchImageUseCase.swift */,
 				6066F6A9289C467A00A8631C /* LoginUserUseCase.swift */,
 				603D8C14289D624100A5CBE3 /* LogoutUserUseCase.swift */,
+				603D8C1C289D79C500A5CBE3 /* CheckUserAuthenticityUseCase.swift */,
 			);
 			path = Abstractions;
 			sourceTree = "<group>";
@@ -494,6 +508,7 @@
 				607DD9E52895E8C100957EEA /* URLSessionFetchImageRepository.swift */,
 				6066F6D7289C79C800A8631C /* FakeLoginUserRepository.swift */,
 				603D8C1A289D637000A5CBE3 /* FakeLogoutUserRepository.swift */,
+				603D8C22289D7CF500A5CBE3 /* FakeCheckUserAuthenticityRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -1242,15 +1257,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				603D8C25289D81EF00A5CBE3 /* ConcreteCheckUserAuthenticityUseCase.swift in Sources */,
 				604756D328952A1600DE40DE /* FetchRepositoryListUseCase.swift in Sources */,
 				6066F6B9289C4E9500A8631C /* MisformattedPasswordError.swift in Sources */,
 				604756CC289528FA00DE40DE /* Owner.swift in Sources */,
 				603D8C19289D62C400A5CBE3 /* ConcreteLogoutUserUseCase.swift in Sources */,
+				603D8C1D289D79C500A5CBE3 /* CheckUserAuthenticityUseCase.swift in Sources */,
 				6066F6C7289C62A000A8631C /* AnyValidator.swift in Sources */,
 				6066F6B3289C4DF100A8631C /* ConcreteLoginUserUseCase.swift in Sources */,
 				604756CA289528E800DE40DE /* Repository.swift in Sources */,
 				6066F6C5289C624500A8631C /* Validator.swift in Sources */,
 				6048988C2896CBC600EA6E21 /* ConcreteFetchRepositoryDetailsUseCase.swift in Sources */,
+				603D8C1F289D7B1D00A5CBE3 /* RetrieveUserAccessTokenRepository.swift in Sources */,
+				603D8C21289D7C7800A5CBE3 /* AccessToken.swift in Sources */,
 				6066F6CB289C641300A8631C /* BasicPasswordValidator.swift in Sources */,
 				6066F6CF289C67E900A8631C /* PasswordsInput.swift in Sources */,
 				603D8C15289D624100A5CBE3 /* LogoutUserUseCase.swift in Sources */,
@@ -1293,6 +1312,7 @@
 				604756C32895251E00DE40DE /* OwnerResponse.swift in Sources */,
 				607DD9C5289586A800957EEA /* Sequence+Extension.swift in Sources */,
 				603D8C04289D345100A5CBE3 /* LocalRemoving.swift in Sources */,
+				603D8C23289D7CF500A5CBE3 /* FakeCheckUserAuthenticityRepository.swift in Sources */,
 				607DD9D22895BB2700957EEA /* FetchRepositoryListRequestMapper.swift in Sources */,
 				6066F69E289C187000A8631C /* RepositoryDetailsResponse.swift in Sources */,
 				604756DC2895305800DE40DE /* URLSessionFetchRepositoryListRepository.swift in Sources */,

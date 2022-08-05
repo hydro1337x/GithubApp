@@ -34,6 +34,7 @@ final class SearchRepositoriesCoordinator: Coordinator {
     }
 
     func start() {
+        setupNavigationItems()
         setupSubscriptions()
         showSearchRepositoriesScene()
     }
@@ -60,12 +61,19 @@ final class SearchRepositoriesCoordinator: Coordinator {
         let viewController = factory.makeSearchRepositoresViewController(with: selectionRelay)
         viewController.title = "Search Repositories"
         viewController.navigationItem.rightBarButtonItem = logoutButton
-        logoutButton.title = "Logout"
         navigationController.setViewControllers([viewController], animated: true)
     }
 
     private func showRepositoryDetailsScene(with input: FetchRepositoryDetailsInput) {
         let viewController = factory.makeRepositoryDetailsViewController(with: input)
+        viewController.title = "Repository Details"
+        viewController.navigationItem.rightBarButtonItem = logoutButton
         navigationController.pushViewController(viewController, animated: true)
+    }
+}
+
+extension SearchRepositoriesCoordinator {
+    private func setupNavigationItems() {
+        logoutButton.title = "Logout"
     }
 }

@@ -34,12 +34,12 @@ public final class SearchRepositoriesViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
-    deinit {
-        print("Deinited: \(String(describing: self))")
-    }
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        print("Deinited: \(String(describing: self))")
     }
 
     public override func viewDidLoad() {

@@ -9,5 +9,5 @@ import Foundation
 import RxSwift
 
 public protocol LocalRetrieving {
-    func retrieveInstance<T: Decodable>(for key: String) -> Single<T>
+    func retrieveInstance<T: Decodable>(ofType: T.Type, for key: String) -> Single<T>
 }

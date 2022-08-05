@@ -34,6 +34,10 @@ public final class LoginViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit {
+        print("Deinited: \(String(describing: self))")
+    }
+
     public override func viewDidLoad() {
         super.viewDidLoad()
         setupLayout()

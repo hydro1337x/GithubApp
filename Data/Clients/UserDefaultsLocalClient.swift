@@ -43,7 +43,7 @@ extension UserDefaultsLocalClient: LocalStoring {
 }
 
 extension UserDefaultsLocalClient: LocalRetrieving {
-    public func retrieveInstance<T: Decodable>(for key: String) -> Single<T> {
+    public func retrieveInstance<T: Decodable>(ofType: T.Type, for key: String) -> Single<T> {
         guard let encoded = userDefaults.object(forKey: key) as? Data else { return .error(NotFoundError()) }
 
         let decoded: T
