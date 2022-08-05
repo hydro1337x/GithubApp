@@ -22,6 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let decoder = JSONDecoder()
     let urlSession = URLSession(configuration: .default)
     let paginator = Paginator<Repository>(limit: 10, initialPage: 1)
+    let biometricsAuthenticator = BiometricsAuthenticator()
     lazy var localStorageClient = UserDefaultsLocalClient(
         userDefaults: .standard,
         encoder: encoder,
@@ -53,15 +54,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     lazy var fetchImageRepository = URLSessionFetchImageRepository(session: urlSession)
     lazy var fetchImageUseCase = ConcreteFetchImageUseCase(repository: fetchImageRepository)
     lazy var logoutUserCase = ConcreteLogoutUserUseCase(repository: logoutUserRepository)
-    lazy var checkUserAuthenticityUseCase = ConcreteCheckUserAuthenticityUseCase(
+    lazy var evaluateUserAuthenticityUseCase = ConcreteEvaluateUserAuthenticityUseCase(
         repository: retrieveUserAccessTokenRepository,
         emailValidator: BasicEmailValidator().eraseToAnyValidator
+    )
+    lazy var evaluateUserAuthenticityUseCaseDecorator = EvaluateUserAuthenticityUseCaseDecorator(
+        evaluateUserAuthenticityUseCase,
+        authenticator: biometricsAuthenticator
     )
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-
-        setupNavigationBarAppearance()
 
         window = UIWindow(windowScene: windowScene)
 
@@ -75,18 +78,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window: window!,
             factory: rootSceneFactory,
             logoutUserCase: logoutUserCase,
-            checkUserAuthenticityUseCase: checkUserAuthenticityUseCase
+            evaluateUserAuthenticityUseCase: evaluateUserAuthenticityUseCaseDecorator
         )
         self.coordinator = coordinator
         
         coordinator.start()
     }
-}
-
-private func setupNavigationBarAppearance() {
-    let navBarAppearance = UINavigationBarAppearance()
-    navBarAppearance.configureWithOpaqueBackground()
-    UINavigationBar.appearance().standardAppearance = navBarAppearance
-    UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
 }
 

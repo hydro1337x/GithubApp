@@ -83,7 +83,8 @@ extension RepositoryDetailsViewController: ViewConstructing {
     }
 
     func setupStyle() {
-        view.backgroundColor = .red
+        view.backgroundColor = .systemBackground
+        
         stackView.axis = .vertical
         stackView.distribution = .equalCentering
     }

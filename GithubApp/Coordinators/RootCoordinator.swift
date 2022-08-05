@@ -20,18 +20,18 @@ final class RootCoordinator: Coordinator {
     private let disposeBag = DisposeBag()
     private let factory: RootSceneFactory
     private let logoutUserCase: LogoutUserUseCase
-    private let checkUserAuthenticityUseCase: CheckUserAuthenticityUseCase
+    private let evaluateUserAuthenticityUseCase: EvaluateUserAuthenticityUseCase
 
     init(
         window: UIWindow,
         factory: RootSceneFactory,
         logoutUserCase: LogoutUserUseCase,
-        checkUserAuthenticityUseCase: CheckUserAuthenticityUseCase
+        evaluateUserAuthenticityUseCase: EvaluateUserAuthenticityUseCase
     ) {
         self.window = window
         self.factory = factory
         self.logoutUserCase = logoutUserCase
-        self.checkUserAuthenticityUseCase = checkUserAuthenticityUseCase
+        self.evaluateUserAuthenticityUseCase = evaluateUserAuthenticityUseCase
     }
 
     deinit {
@@ -40,7 +40,7 @@ final class RootCoordinator: Coordinator {
 
     func start() {
         setupSubscriptions()
-        window.backgroundColor = .white
+        window.backgroundColor = .systemBackground
         window.makeKeyAndVisible()
     }
 
@@ -65,7 +65,7 @@ final class RootCoordinator: Coordinator {
             })
             .disposed(by: disposeBag)
 
-        checkUserAuthenticityUseCase
+        evaluateUserAuthenticityUseCase
             .execute()
             .observe(on: MainScheduler.instance)
             .subscribe(onCompleted: { [unowned self] in

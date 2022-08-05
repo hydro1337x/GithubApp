@@ -1,5 +1,5 @@
 //
-//  FakeCheckUserAuthenticityRepository.swift
+//  FakeRetrieveUserAccessTokenRepository.swift
 //  Data
 //
 //  Created by Benjamin Mecanović on 05.08.2022..

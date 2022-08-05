@@ -224,6 +224,8 @@ extension SearchRepositoriesViewController: ViewConstructing {
     }
 
     func setupStyle() {
+        view.backgroundColor = .systemBackground
+        
         activityIndicatorView.style = .large
 
         emptyStateButton.setTitle("Nothing to show for now...", for: .normal)

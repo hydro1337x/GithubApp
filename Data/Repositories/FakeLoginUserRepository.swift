@@ -21,7 +21,7 @@ public final class FakeLoginUserRepository: LoginUserRepository {
         let payload = AccessTokenResponse(value: input.email)
 
         let response = Single<AccessTokenResponse>.deferred {
-            Bool.random() ? .just(payload) : .error(LoginFailedError())
+            Bool.random() ? .just(payload) : .error(AuthenticationFailedError())
         }
         .delay(.seconds(1), scheduler: SerialDispatchQueueScheduler(qos: .userInitiated))
         .flatMapCompletable { [weak self] payload in

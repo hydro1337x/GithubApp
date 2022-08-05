@@ -1,5 +1,5 @@
 //
-//  ConcreteCheckUserAuthenticityUseCase.swift
+//  ConcreteEvaluateUserAuthenticityUseCase.swift
 //  Domain
 //
 //  Created by Benjamin Mecanović on 05.08.2022..
@@ -8,7 +8,7 @@
 import Foundation
 import RxSwift
 
-public final class ConcreteCheckUserAuthenticityUseCase: CheckUserAuthenticityUseCase {
+public final class ConcreteEvaluateUserAuthenticityUseCase: EvaluateUserAuthenticityUseCase {
     private let repository: RetrieveUserAccessTokenRepository
     private let emailValidator: AnyValidator<String>
 

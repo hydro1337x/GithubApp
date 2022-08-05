@@ -210,7 +210,8 @@ extension LoginViewController: ViewConstructing {
     }
 
     func setupStyle() {
-        view.backgroundColor = .white
+
+        view.backgroundColor = .systemBackground
 
         stackView.axis = .vertical
         stackView.spacing = 8
