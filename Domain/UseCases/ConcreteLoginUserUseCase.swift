@@ -16,6 +16,6 @@ public final class ConcreteLoginUserUseCase: LoginUserUseCase {
     }
 
     public func execute(input: LoginUserInput) -> Completable {
-        repository.login(input: input).delay(.seconds(10), scheduler: SerialDispatchQueueScheduler.init(qos: .userInitiated))
+        repository.login(input: input)
     }
 }

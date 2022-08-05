@@ -18,8 +18,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     var coordinator: Coordinator?
 
+    let encoder = JSONEncoder()
+    let decoder = JSONDecoder()
     let urlSession = URLSession(configuration: .default)
     let paginator = Paginator<Repository>(limit: 10, initialPage: 1)
+    lazy var localStorageClient = UserDefaultsLocalClient(
+        userDefaults: .standard,
+        encoder: encoder,
+        decoder: decoder
+    )
     lazy var repositoryListRequestMapper = FetchRepositoryListRequestMapper().eraseToAnyMapper
     lazy var repositoryDetailsRequestMapper = FetchRepositoryDetailsRequestMapper().eraseToAnyMapper
     lazy var ownerResponseMapper = OwnerResponseMapper().eraseToAnyMapper
@@ -40,9 +47,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         requestMapper: repositoryDetailsRequestMapper,
         responseMapper: repositoryDetailsResponseMapper
     )
-    lazy var loginUserRepository = URLSessionLoginUserRepository()
+    lazy var loginUserRepository = FakeLoginUserRepository(localClient: localStorageClient)
+    lazy var logoutUserRepository = FakeLogoutUserRepository(localClient: localStorageClient)
     lazy var fetchImageRepository = URLSessionFetchImageRepository(session: urlSession)
     lazy var fetchImageUseCase = ConcreteFetchImageUseCase(repository: fetchImageRepository)
+    lazy var logoutUserCase = ConcreteLogoutUserUseCase(repository: logoutUserRepository)
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
@@ -53,12 +62,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let rootSceneFactory = RootSceneFactory(
             fetchRepositoryListRepository: fetchRepositoryListRepository,
+            fetchImageUseCase: fetchImageUseCase,
             fetchRepositoryDetailsRepository: fetchRepositoryDetailsRepository,
-            loginUserRepository: loginUserRepository,
-            fetchImageUseCase: fetchImageUseCase
+            loginUserRepository: loginUserRepository
         )
-        let coordinator = RootCoordinator(window: window!, factory: rootSceneFactory)
+        let coordinator = RootCoordinator(
+            window: window!,
+            factory: rootSceneFactory,
+            logoutUserCase: logoutUserCase
+        )
         self.coordinator = coordinator
+        
         coordinator.start()
     }
 }

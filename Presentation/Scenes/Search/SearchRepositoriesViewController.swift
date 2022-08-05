@@ -34,6 +34,10 @@ public final class SearchRepositoriesViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
+    deinit {
+        print("Deinited: \(String(describing: self))")
+    }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -134,9 +138,10 @@ public final class SearchRepositoriesViewController: UIViewController {
 
         tableView.rx
             .contentOffset
-            .subscribe { [unowned self] _ in
+            .asDriver()
+            .drive(onNext: { [unowned self] _ in
                 dismissKeyboard()
-            }
+            })
             .disposed(by: disposeBag)
     }
 

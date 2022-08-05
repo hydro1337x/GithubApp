@@ -5,7 +5,6 @@
 //  Created by Benjamin Mecanović on 31.07.2022..
 //
 
-import Foundation
 import UIKit
 import RxSwift
 import RxCocoa
@@ -14,56 +13,67 @@ import Domain
 
 final class RootCoordinator: Coordinator {
     let window: UIWindow
-    let navigationController = UINavigationController()
 
-    private let selectionRelay = PublishRelay<RepositoryViewModel>()
+    private var children: [Coordinator] = []
     private let loginRelay = PublishRelay<Void>()
+    private let logoutRelay = PublishRelay<Void>()
     private let disposeBag = DisposeBag()
     private let factory: RootSceneFactory
+    private let logoutUserCase: LogoutUserUseCase
 
     init(
         window: UIWindow,
-        factory: RootSceneFactory
+        factory: RootSceneFactory,
+        logoutUserCase: LogoutUserUseCase
     ) {
         self.window = window
         self.factory = factory
+        self.logoutUserCase = logoutUserCase
+    }
+
+    deinit {
+        print("Deinited: \(String(describing: self))")
     }
 
     func start() {
         setupSubscriptions()
-        showRootScene()
+        showLoginScene()
     }
 
     private func setupSubscriptions() {
         loginRelay
             .asSignal()
             .emit(onNext: { [unowned self] in
-                print("Logged in")
+                showSearchRepositoriesScene()
             })
             .disposed(by: disposeBag)
 
-        selectionRelay
-            .asSignal()
-            .emit(onNext: { [unowned self] input in
-                let input = FetchRepositoryDetailsInput(
-                    name: input.name,
-                    owner: input.ownerName
-                )
-                showRepositoryDetailsScene(with: input)
+        logoutRelay
+            .flatMap { [unowned self] in
+                logoutUserCase.execute()
+                    .andThen(Observable<Void>.just(()))
+                    .catchAndReturn(())
+            }
+            .asDriver(onErrorDriveWith: .empty())
+            .drive(onNext: { [unowned self] in
+                showLoginScene()
+                children.removeAll()
             })
             .disposed(by: disposeBag)
     }
 
-    private func showRootScene() {
+    private func showLoginScene() {
         let viewController = factory.makeLoginUserViewController(with: loginRelay)
-//        viewController.title = "Search Repositores"
-        navigationController.setViewControllers([viewController], animated: false)
+        let navigationController = UINavigationController(rootViewController: viewController)
+        viewController.title = "Login"
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
     }
 
-    private func showRepositoryDetailsScene(with input: FetchRepositoryDetailsInput) {
-        let viewController = factory.makeRepositoryDetailsViewController(with: input)
-        navigationController.pushViewController(viewController, animated: true)
+    private func showSearchRepositoriesScene() {
+        let coordinator = factory.makeSearchRepositoriesCoordinator(with: logoutRelay)
+        children.append(coordinator)
+        window.rootViewController = coordinator.navigationController
+        coordinator.start()
     }
 }
