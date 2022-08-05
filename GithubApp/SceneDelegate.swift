@@ -40,6 +40,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         requestMapper: repositoryDetailsRequestMapper,
         responseMapper: repositoryDetailsResponseMapper
     )
+    lazy var loginUserRepository = URLSessionLoginUserRepository()
     lazy var fetchImageRepository = URLSessionFetchImageRepository(session: urlSession)
     lazy var fetchImageUseCase = ConcreteFetchImageUseCase(repository: fetchImageRepository)
 
@@ -53,6 +54,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let rootSceneFactory = RootSceneFactory(
             fetchRepositoryListRepository: fetchRepositoryListRepository,
             fetchRepositoryDetailsRepository: fetchRepositoryDetailsRepository,
+            loginUserRepository: loginUserRepository,
             fetchImageUseCase: fetchImageUseCase
         )
         let coordinator = RootCoordinator(window: window!, factory: rootSceneFactory)

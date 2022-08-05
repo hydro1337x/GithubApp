@@ -26,6 +26,7 @@ final class AsyncImageViewModel {
     }
 
     func transform(input: Input) -> Output {
+        // TODO: - can be removed, jsut use materialize and map events there..
         let failureTracker = FailureTracker()
 
         let data = Observable.merge(input.retryTrigger.asObservable(), input.initialTrigger.asObservable())

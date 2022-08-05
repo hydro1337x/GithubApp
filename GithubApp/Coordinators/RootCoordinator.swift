@@ -17,6 +17,7 @@ final class RootCoordinator: Coordinator {
     let navigationController = UINavigationController()
 
     private let selectionRelay = PublishRelay<RepositoryViewModel>()
+    private let loginRelay = PublishRelay<Void>()
     private let disposeBag = DisposeBag()
     private let factory: RootSceneFactory
 
@@ -34,6 +35,13 @@ final class RootCoordinator: Coordinator {
     }
 
     private func setupSubscriptions() {
+        loginRelay
+            .asSignal()
+            .emit(onNext: { [unowned self] in
+                print("Logged in")
+            })
+            .disposed(by: disposeBag)
+
         selectionRelay
             .asSignal()
             .emit(onNext: { [unowned self] input in
@@ -47,8 +55,8 @@ final class RootCoordinator: Coordinator {
     }
 
     private func showRootScene() {
-        let viewController = factory.makeSearchRepositoresViewController(with: selectionRelay)
-        viewController.title = "Search Repositores"
+        let viewController = factory.makeLoginUserViewController(with: loginRelay)
+//        viewController.title = "Search Repositores"
         navigationController.setViewControllers([viewController], animated: false)
         window.rootViewController = navigationController
         window.makeKeyAndVisible()

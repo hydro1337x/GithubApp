@@ -17,15 +17,38 @@ struct RootSceneFactory {
     let fetchRepositoryListRepository: FetchRepositoryListRepository
     let fetchImageUseCase: FetchImageUseCase
     let fetchRepositoryDetailsRepository: FetchRepositoryDetailsRepository
+    let loginUserRepository: LoginUserRepository
 
     init(
         fetchRepositoryListRepository: FetchRepositoryListRepository,
         fetchRepositoryDetailsRepository: FetchRepositoryDetailsRepository,
+        loginUserRepository: LoginUserRepository,
         fetchImageUseCase: FetchImageUseCase
     ) {
         self.fetchRepositoryListRepository = fetchRepositoryListRepository
         self.fetchRepositoryDetailsRepository = fetchRepositoryDetailsRepository
+        self.loginUserRepository = loginUserRepository
         self.fetchImageUseCase = fetchImageUseCase
+    }
+
+    func makeLoginUserViewController(with loginRelay: PublishRelay<Void>) -> UIViewController {
+        let emailValidator = BasicEmailValidator().eraseToAnyValidator
+        let passwordValidator = BasicPasswordValidator().eraseToAnyValidator
+        let passwordMismatchValidator = PasswordsMatchingValidator().eraseToAnyValidator
+        let loginUserUseCase = ConcreteLoginUserUseCase(repository: loginUserRepository)
+        let loginUserUseCaseDecorator = LoginUserUseCaseDecorator(
+            loginUserUseCase,
+            completionRelay: loginRelay
+        )
+        let viewModel = LoginViewModel(
+            loginUserUseCase: loginUserUseCaseDecorator,
+            emailValidator: emailValidator,
+            passwordValidator: passwordValidator,
+            passwordsMatchingValidator: passwordMismatchValidator
+        )
+        let viewController = LoginViewController(viewModel: viewModel)
+
+        return viewController
     }
 
     func makeSearchRepositoresViewController(

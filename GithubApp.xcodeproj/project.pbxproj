@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		603D8BF8289D101D00A5CBE3 /* ValidationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D8BF7289D101D00A5CBE3 /* ValidationState.swift */; };
+		603D8BFA289D298800A5CBE3 /* LoginState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D8BF9289D298800A5CBE3 /* LoginState.swift */; };
 		604756C1289523B200DE40DE /* RepositoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756C0289523B200DE40DE /* RepositoryResponse.swift */; };
 		604756C32895251E00DE40DE /* OwnerResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756C22895251E00DE40DE /* OwnerResponse.swift */; };
 		604756C52895282100DE40DE /* RepositoryListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756C42895282100DE40DE /* RepositoryListResponse.swift */; };
@@ -46,6 +48,23 @@
 		6066F6A4289C1BD600A8631C /* URLSessionFetchRepositoryDetailsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6066F6A3289C1BD600A8631C /* URLSessionFetchRepositoryDetailsRepository.swift */; };
 		6066F6A6289C1C0500A8631C /* FetchRepositoryDetailsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6066F6A5289C1C0500A8631C /* FetchRepositoryDetailsUseCase.swift */; };
 		6066F6A8289C1ED700A8631C /* FetchRepositoryDetailsRequestMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6066F6A7289C1ED700A8631C /* FetchRepositoryDetailsRequestMapper.swift */; };
+		6066F6AA289C467A00A8631C /* LoginUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6066F6A9289C467A00A8631C /* LoginUserUseCase.swift */; };
+		6066F6AC289C48B700A8631C /* LoginUserInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6066F6AB289C48B700A8631C /* LoginUserInput.swift */; };
+		6066F6B3289C4DF100A8631C /* ConcreteLoginUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6066F6B2289C4DF100A8631C /* ConcreteLoginUserUseCase.swift */; };
+		6066F6B9289C4E9500A8631C /* MisformattedPasswordError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6066F6B8289C4E9500A8631C /* MisformattedPasswordError.swift */; };
+		6066F6BB289C4EA100A8631C /* MisformattedEmailError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6066F6BA289C4EA100A8631C /* MisformattedEmailError.swift */; };
+		6066F6BF289C503400A8631C /* PasswordsMismatchError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6066F6BE289C503400A8631C /* PasswordsMismatchError.swift */; };
+		6066F6C1289C5B9600A8631C /* LoginUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6066F6C0289C5B9600A8631C /* LoginUserRepository.swift */; };
+		6066F6C5289C624500A8631C /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6066F6C4289C624500A8631C /* Validator.swift */; };
+		6066F6C7289C62A000A8631C /* AnyValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6066F6C6289C62A000A8631C /* AnyValidator.swift */; };
+		6066F6C9289C635B00A8631C /* BasicEmailValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6066F6C8289C635B00A8631C /* BasicEmailValidator.swift */; };
+		6066F6CB289C641300A8631C /* BasicPasswordValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6066F6CA289C641300A8631C /* BasicPasswordValidator.swift */; };
+		6066F6CD289C67A300A8631C /* PasswordsMatchingValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6066F6CC289C67A300A8631C /* PasswordsMatchingValidator.swift */; };
+		6066F6CF289C67E900A8631C /* PasswordsInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6066F6CE289C67E900A8631C /* PasswordsInput.swift */; };
+		6066F6D2289C6A1C00A8631C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6066F6D1289C6A1C00A8631C /* LoginViewController.swift */; };
+		6066F6D4289C6A2900A8631C /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6066F6D3289C6A2900A8631C /* LoginViewModel.swift */; };
+		6066F6D8289C79C800A8631C /* URLSessionLoginUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6066F6D7289C79C800A8631C /* URLSessionLoginUserRepository.swift */; };
+		6066F6DB289C961D00A8631C /* LoginUserUseCaseDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6066F6DA289C961D00A8631C /* LoginUserUseCaseDecorator.swift */; };
 		607DD9C5289586A800957EEA /* Sequence+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9C4289586A800957EEA /* Sequence+Extension.swift */; };
 		607DD9C82895912C00957EEA /* Repository+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9C72895912C00957EEA /* Repository+Extension.swift */; };
 		607DD9CA2895AD5700957EEA /* ActivityTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9C92895AD5700957EEA /* ActivityTracker.swift */; };
@@ -170,6 +189,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		603D8BF7289D101D00A5CBE3 /* ValidationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationState.swift; sourceTree = "<group>"; };
+		603D8BF9289D298800A5CBE3 /* LoginState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginState.swift; sourceTree = "<group>"; };
 		604756C0289523B200DE40DE /* RepositoryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryResponse.swift; sourceTree = "<group>"; };
 		604756C22895251E00DE40DE /* OwnerResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerResponse.swift; sourceTree = "<group>"; };
 		604756C42895282100DE40DE /* RepositoryListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryListResponse.swift; sourceTree = "<group>"; };
@@ -209,6 +230,23 @@
 		6066F6A3289C1BD600A8631C /* URLSessionFetchRepositoryDetailsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionFetchRepositoryDetailsRepository.swift; sourceTree = "<group>"; };
 		6066F6A5289C1C0500A8631C /* FetchRepositoryDetailsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRepositoryDetailsUseCase.swift; sourceTree = "<group>"; };
 		6066F6A7289C1ED700A8631C /* FetchRepositoryDetailsRequestMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRepositoryDetailsRequestMapper.swift; sourceTree = "<group>"; };
+		6066F6A9289C467A00A8631C /* LoginUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUserUseCase.swift; sourceTree = "<group>"; };
+		6066F6AB289C48B700A8631C /* LoginUserInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUserInput.swift; sourceTree = "<group>"; };
+		6066F6B2289C4DF100A8631C /* ConcreteLoginUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteLoginUserUseCase.swift; sourceTree = "<group>"; };
+		6066F6B8289C4E9500A8631C /* MisformattedPasswordError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MisformattedPasswordError.swift; sourceTree = "<group>"; };
+		6066F6BA289C4EA100A8631C /* MisformattedEmailError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MisformattedEmailError.swift; sourceTree = "<group>"; };
+		6066F6BE289C503400A8631C /* PasswordsMismatchError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordsMismatchError.swift; sourceTree = "<group>"; };
+		6066F6C0289C5B9600A8631C /* LoginUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUserRepository.swift; sourceTree = "<group>"; };
+		6066F6C4289C624500A8631C /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
+		6066F6C6289C62A000A8631C /* AnyValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyValidator.swift; sourceTree = "<group>"; };
+		6066F6C8289C635B00A8631C /* BasicEmailValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicEmailValidator.swift; sourceTree = "<group>"; };
+		6066F6CA289C641300A8631C /* BasicPasswordValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicPasswordValidator.swift; sourceTree = "<group>"; };
+		6066F6CC289C67A300A8631C /* PasswordsMatchingValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordsMatchingValidator.swift; sourceTree = "<group>"; };
+		6066F6CE289C67E900A8631C /* PasswordsInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordsInput.swift; sourceTree = "<group>"; };
+		6066F6D1289C6A1C00A8631C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		6066F6D3289C6A2900A8631C /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		6066F6D7289C79C800A8631C /* URLSessionLoginUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionLoginUserRepository.swift; sourceTree = "<group>"; };
+		6066F6DA289C961D00A8631C /* LoginUserUseCaseDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUserUseCaseDecorator.swift; sourceTree = "<group>"; };
 		607DD9C4289586A800957EEA /* Sequence+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Extension.swift"; sourceTree = "<group>"; };
 		607DD9C72895912C00957EEA /* Repository+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Repository+Extension.swift"; sourceTree = "<group>"; };
 		607DD9C92895AD5700957EEA /* ActivityTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTracker.swift; sourceTree = "<group>"; };
@@ -348,10 +386,9 @@
 		604756C8289528DB00DE40DE /* ValueObjects */ = {
 			isa = PBXGroup;
 			children = (
+				6066F6B5289C4E6A00A8631C /* Errors */,
+				6066F6B4289C4E6100A8631C /* Inputs */,
 				604756CB289528FA00DE40DE /* Owner.swift */,
-				604756D428952A7A00DE40DE /* FetchRepositoryListInput.swift */,
-				604898872896CA9200EA6E21 /* FetchRepositoryDetailsInput.swift */,
-				607DD9DF2895E7BC00957EEA /* FetchImageInput.swift */,
 			);
 			path = ValueObjects;
 			sourceTree = "<group>";
@@ -363,6 +400,7 @@
 				604756D628952B1C00DE40DE /* ConcreteFetchRepositoryListUseCase.swift */,
 				6048988B2896CBC600EA6E21 /* ConcreteFetchRepositoryDetailsUseCase.swift */,
 				607DD9E12895E81000957EEA /* ConcreteFetchImageUseCase.swift */,
+				6066F6B2289C4DF100A8631C /* ConcreteLoginUserUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -381,6 +419,7 @@
 				604756D828952B5A00DE40DE /* FetchRepositoryListRepository.swift */,
 				604898892896CB1E00EA6E21 /* FetchRepositoryDetailsRepository.swift */,
 				607DD9E32895E83A00957EEA /* FetchImageRepository.swift */,
+				6066F6C0289C5B9600A8631C /* LoginUserRepository.swift */,
 			);
 			path = Abstractions;
 			sourceTree = "<group>";
@@ -391,6 +430,7 @@
 				604756D228952A1600DE40DE /* FetchRepositoryListUseCase.swift */,
 				6066F6A5289C1C0500A8631C /* FetchRepositoryDetailsUseCase.swift */,
 				607DD9DD2895E79200957EEA /* FetchImageUseCase.swift */,
+				6066F6A9289C467A00A8631C /* LoginUserUseCase.swift */,
 			);
 			path = Abstractions;
 			sourceTree = "<group>";
@@ -401,6 +441,7 @@
 				604756DB2895305800DE40DE /* URLSessionFetchRepositoryListRepository.swift */,
 				6066F6A3289C1BD600A8631C /* URLSessionFetchRepositoryDetailsRepository.swift */,
 				607DD9E52895E8C100957EEA /* URLSessionFetchImageRepository.swift */,
+				6066F6D7289C79C800A8631C /* URLSessionLoginUserRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -447,6 +488,7 @@
 		604756F228954B2B00DE40DE /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				6066F6D0289C69EE00A8631C /* Login */,
 				604756F328954B4200DE40DE /* Search */,
 				604898802896C57F00EA6E21 /* Details */,
 			);
@@ -551,6 +593,65 @@
 			path = Details;
 			sourceTree = "<group>";
 		};
+		6066F6B4289C4E6100A8631C /* Inputs */ = {
+			isa = PBXGroup;
+			children = (
+				604756D428952A7A00DE40DE /* FetchRepositoryListInput.swift */,
+				604898872896CA9200EA6E21 /* FetchRepositoryDetailsInput.swift */,
+				607DD9DF2895E7BC00957EEA /* FetchImageInput.swift */,
+				6066F6AB289C48B700A8631C /* LoginUserInput.swift */,
+				6066F6CE289C67E900A8631C /* PasswordsInput.swift */,
+			);
+			path = Inputs;
+			sourceTree = "<group>";
+		};
+		6066F6B5289C4E6A00A8631C /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				6066F6BA289C4EA100A8631C /* MisformattedEmailError.swift */,
+				6066F6B8289C4E9500A8631C /* MisformattedPasswordError.swift */,
+				6066F6BE289C503400A8631C /* PasswordsMismatchError.swift */,
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
+		6066F6C2289C622400A8631C /* Validators */ = {
+			isa = PBXGroup;
+			children = (
+				6066F6C3289C623A00A8631C /* Abstractions */,
+				6066F6C8289C635B00A8631C /* BasicEmailValidator.swift */,
+				6066F6CA289C641300A8631C /* BasicPasswordValidator.swift */,
+				6066F6CC289C67A300A8631C /* PasswordsMatchingValidator.swift */,
+			);
+			path = Validators;
+			sourceTree = "<group>";
+		};
+		6066F6C3289C623A00A8631C /* Abstractions */ = {
+			isa = PBXGroup;
+			children = (
+				6066F6C4289C624500A8631C /* Validator.swift */,
+				6066F6C6289C62A000A8631C /* AnyValidator.swift */,
+			);
+			path = Abstractions;
+			sourceTree = "<group>";
+		};
+		6066F6D0289C69EE00A8631C /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				6066F6D1289C6A1C00A8631C /* LoginViewController.swift */,
+				6066F6D3289C6A2900A8631C /* LoginViewModel.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		6066F6D9289C95E100A8631C /* Decorators */ = {
+			isa = PBXGroup;
+			children = (
+				6066F6DA289C961D00A8631C /* LoginUserUseCaseDecorator.swift */,
+			);
+			path = Decorators;
+			sourceTree = "<group>";
+		};
 		607DD9C32895869700957EEA /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -591,6 +692,8 @@
 			children = (
 				607DD9D62895E42300957EEA /* AsyncImageState.swift */,
 				606546FA289AC7B200B01432 /* SearchRepositoriesItem.swift */,
+				603D8BF7289D101D00A5CBE3 /* ValidationState.swift */,
+				603D8BF9289D298800A5CBE3 /* LoginState.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -639,6 +742,7 @@
 			children = (
 				60D77132289447890027CD4C /* AppDelegate.swift */,
 				60D7716528944A4D0027CD4C /* SceneDelegate.swift */,
+				6066F6D9289C95E100A8631C /* Decorators */,
 				6048987B2896A1BF00EA6E21 /* Factories */,
 				604898752896A10E00EA6E21 /* Coordinators */,
 				60D77162289448320027CD4C /* SupportingFiles */,
@@ -668,6 +772,7 @@
 			isa = PBXGroup;
 			children = (
 				604756C6289528C200DE40DE /* Models */,
+				6066F6C2289C622400A8631C /* Validators */,
 				604756CE289529BB00DE40DE /* UseCases */,
 				604756CF289529C300DE40DE /* Repositories */,
 			);
@@ -1057,6 +1162,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6048987D2896A1E100EA6E21 /* RootSceneFactory.swift in Sources */,
+				6066F6DB289C961D00A8631C /* LoginUserUseCaseDecorator.swift in Sources */,
 				6048987A2896A13700EA6E21 /* Coordinator.swift in Sources */,
 				60D77133289447890027CD4C /* AppDelegate.swift in Sources */,
 				604898772896A12500EA6E21 /* RootCoordinator.swift in Sources */,
@@ -1077,20 +1183,33 @@
 			buildActionMask = 2147483647;
 			files = (
 				604756D328952A1600DE40DE /* FetchRepositoryListUseCase.swift in Sources */,
+				6066F6B9289C4E9500A8631C /* MisformattedPasswordError.swift in Sources */,
 				604756CC289528FA00DE40DE /* Owner.swift in Sources */,
+				6066F6C7289C62A000A8631C /* AnyValidator.swift in Sources */,
+				6066F6B3289C4DF100A8631C /* ConcreteLoginUserUseCase.swift in Sources */,
 				604756CA289528E800DE40DE /* Repository.swift in Sources */,
+				6066F6C5289C624500A8631C /* Validator.swift in Sources */,
 				6048988C2896CBC600EA6E21 /* ConcreteFetchRepositoryDetailsUseCase.swift in Sources */,
+				6066F6CB289C641300A8631C /* BasicPasswordValidator.swift in Sources */,
+				6066F6CF289C67E900A8631C /* PasswordsInput.swift in Sources */,
 				604756D528952A7A00DE40DE /* FetchRepositoryListInput.swift in Sources */,
+				6066F6BF289C503400A8631C /* PasswordsMismatchError.swift in Sources */,
 				6066F6A0289C199B00A8631C /* RepositoryDetails.swift in Sources */,
 				607DD9E22895E81000957EEA /* ConcreteFetchImageUseCase.swift in Sources */,
 				604756D928952B5A00DE40DE /* FetchRepositoryListRepository.swift in Sources */,
 				604898882896CA9200EA6E21 /* FetchRepositoryDetailsInput.swift in Sources */,
 				607DD9E42895E83A00957EEA /* FetchImageRepository.swift in Sources */,
+				6066F6CD289C67A300A8631C /* PasswordsMatchingValidator.swift in Sources */,
 				6048988A2896CB1E00EA6E21 /* FetchRepositoryDetailsRepository.swift in Sources */,
+				6066F6C9289C635B00A8631C /* BasicEmailValidator.swift in Sources */,
+				6066F6C1289C5B9600A8631C /* LoginUserRepository.swift in Sources */,
 				607DD9E02895E7BC00957EEA /* FetchImageInput.swift in Sources */,
 				607DD9DE2895E79200957EEA /* FetchImageUseCase.swift in Sources */,
 				604756D728952B1C00DE40DE /* ConcreteFetchRepositoryListUseCase.swift in Sources */,
 				6066F6A6289C1C0500A8631C /* FetchRepositoryDetailsUseCase.swift in Sources */,
+				6066F6AC289C48B700A8631C /* LoginUserInput.swift in Sources */,
+				6066F6AA289C467A00A8631C /* LoginUserUseCase.swift in Sources */,
+				6066F6BB289C4EA100A8631C /* MisformattedEmailError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1126,6 +1245,7 @@
 				604756EB289538E200DE40DE /* Pagination.swift in Sources */,
 				6066F6A4289C1BD600A8631C /* URLSessionFetchRepositoryDetailsRepository.swift in Sources */,
 				604756E8289538AC00DE40DE /* PaginatedResponse.swift in Sources */,
+				6066F6D8289C79C800A8631C /* URLSessionLoginUserRepository.swift in Sources */,
 				604756C52895282100DE40DE /* RepositoryListResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1144,6 +1264,7 @@
 			files = (
 				6047570228954E1700DE40DE /* RepositoryViewModel.swift in Sources */,
 				606546FD289B1B8500B01432 /* ActivityIndicatorTableViewCell.swift in Sources */,
+				6066F6D4289C6A2900A8631C /* LoginViewModel.swift in Sources */,
 				604756F528954B5C00DE40DE /* SearchRepositoriesViewController.swift in Sources */,
 				604756FB28954C9300DE40DE /* SearchRepositoriesViewModel.swift in Sources */,
 				604898842896C5AB00EA6E21 /* RepositoryDetailsViewModel.swift in Sources */,
@@ -1154,9 +1275,12 @@
 				607DD9D42895E3FE00957EEA /* AsyncImageView.swift in Sources */,
 				60475705289551CD00DE40DE /* RepositoryTableViewCell.swift in Sources */,
 				604756F928954B7600DE40DE /* ViewConstructing.swift in Sources */,
+				6066F6D2289C6A1C00A8631C /* LoginViewController.swift in Sources */,
 				607DD9CC2895AD6000957EEA /* FailureTracker.swift in Sources */,
 				607DD9D72895E42300957EEA /* AsyncImageState.swift in Sources */,
+				603D8BF8289D101D00A5CBE3 /* ValidationState.swift in Sources */,
 				607DD9CA2895AD5700957EEA /* ActivityTracker.swift in Sources */,
+				603D8BFA289D298800A5CBE3 /* LoginState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
