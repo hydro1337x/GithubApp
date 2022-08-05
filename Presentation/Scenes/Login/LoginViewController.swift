@@ -42,7 +42,7 @@ public final class LoginViewController: UIViewController {
     }
 
     private func setupSubscriptions() {
-        // TODO: enable scroll if layout changes or it doesnt fit..
+
         let email = emailTextField.rx
             .text
             .orEmpty
@@ -124,14 +124,14 @@ public final class LoginViewController: UIViewController {
             })
             .disposed(by: disposeBag)
 
-        output.state
+        output.loginState
             .drive(onNext: { [unowned self] state in
-                handleState(state)
+                handleLoginState(state)
             })
             .disposed(by: disposeBag)
     }
 
-    private func handleState(_ state: LoginState) {
+    private func handleLoginState(_ state: LoginState) {
         switch state {
         case .initial:
             break

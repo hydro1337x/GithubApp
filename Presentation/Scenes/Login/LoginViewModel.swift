@@ -25,7 +25,7 @@ public final class LoginViewModel {
         let repeatedPasswordValidation: Driver<ValidationState>
         let passwordsMatchValidation: Driver<ValidationState>
         let areInputsValid: Driver<Bool>
-        let state: Driver<LoginState>
+        let loginState: Driver<LoginState>
     }
 
     private let loginUserUseCase: LoginUserUseCase
@@ -172,7 +172,7 @@ public final class LoginViewModel {
             repeatedPasswordValidation: repeatedPasswordValidation.asDriver(onErrorDriveWith: .empty()),
             passwordsMatchValidation: passwordsMatchValidation.asDriver(onErrorDriveWith: .empty()),
             areInputsValid: areInputsValid.asDriver(onErrorDriveWith: .empty()),
-            state: state.asDriver(onErrorDriveWith: .empty())
+            loginState: state.asDriver(onErrorDriveWith: .empty())
         )
     }
 }
