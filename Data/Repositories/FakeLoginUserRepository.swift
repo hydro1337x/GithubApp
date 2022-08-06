@@ -28,7 +28,7 @@ public final class FakeLoginUserRepository: LoginUserRepository {
             guard let self = self else { return .empty() }
 
             return self.localClient
-                .store(payload, for: LoginLocalStorageKey.accessToken)
+                .store(payload, for: LocalStorageKey.accessToken)
                 .catch { _ in
                     // We should just log that an error occurred,
                     // since otherwise it would prevent logging in a user if there is

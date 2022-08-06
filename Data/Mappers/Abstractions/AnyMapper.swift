@@ -9,7 +9,7 @@ import Foundation
 
 public final class AnyMapper<Input, Output>: Mapper {
 
-    let handler: (Input) -> Output
+    private let handler: (Input) -> Output
 
     public init<Base: Mapper>(_ base: Base) where Base.Input == Input, Base.Output == Output {
         self.handler = base.map(input:)

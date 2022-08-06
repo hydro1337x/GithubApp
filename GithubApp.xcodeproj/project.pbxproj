@@ -16,7 +16,7 @@
 		603D8C06289D34DB00A5CBE3 /* UserDefaultsLocalClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D8C05289D34DB00A5CBE3 /* UserDefaultsLocalClient.swift */; };
 		603D8C0B289D36DA00A5CBE3 /* NotFoundError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D8C0A289D36DA00A5CBE3 /* NotFoundError.swift */; };
 		603D8C0D289D3EB100A5CBE3 /* AuthenticationFailedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D8C0C289D3EB100A5CBE3 /* AuthenticationFailedError.swift */; };
-		603D8C0F289D438200A5CBE3 /* LoginLocalStorageKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D8C0E289D438200A5CBE3 /* LoginLocalStorageKey.swift */; };
+		603D8C0F289D438200A5CBE3 /* LocalStorageKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D8C0E289D438200A5CBE3 /* LocalStorageKey.swift */; };
 		603D8C11289D5C5500A5CBE3 /* SearchRepositoriesSceneFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D8C10289D5C5500A5CBE3 /* SearchRepositoriesSceneFactory.swift */; };
 		603D8C13289D5D1900A5CBE3 /* SearchRepositoriesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D8C12289D5D1900A5CBE3 /* SearchRepositoriesCoordinator.swift */; };
 		603D8C15289D624100A5CBE3 /* LogoutUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D8C14289D624100A5CBE3 /* LogoutUserUseCase.swift */; };
@@ -37,11 +37,11 @@
 		604756C52895282100DE40DE /* RepositoryListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756C42895282100DE40DE /* RepositoryListResponse.swift */; };
 		604756CA289528E800DE40DE /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756C9289528E800DE40DE /* Repository.swift */; };
 		604756CC289528FA00DE40DE /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756CB289528FA00DE40DE /* Owner.swift */; };
-		604756D328952A1600DE40DE /* FetchRepositoryListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756D228952A1600DE40DE /* FetchRepositoryListUseCase.swift */; };
+		604756D328952A1600DE40DE /* FetchSearchedRepositoryListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756D228952A1600DE40DE /* FetchSearchedRepositoryListUseCase.swift */; };
 		604756D528952A7A00DE40DE /* FetchRepositoryListInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756D428952A7A00DE40DE /* FetchRepositoryListInput.swift */; };
-		604756D728952B1C00DE40DE /* ConcreteFetchRepositoryListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756D628952B1C00DE40DE /* ConcreteFetchRepositoryListUseCase.swift */; };
-		604756D928952B5A00DE40DE /* FetchRepositoryListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756D828952B5A00DE40DE /* FetchRepositoryListRepository.swift */; };
-		604756DC2895305800DE40DE /* RemoteFetchRepositoryListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756DB2895305800DE40DE /* RemoteFetchRepositoryListRepository.swift */; };
+		604756D728952B1C00DE40DE /* ConcreteFetchSearchedRepositoryListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756D628952B1C00DE40DE /* ConcreteFetchSearchedRepositoryListUseCase.swift */; };
+		604756D928952B5A00DE40DE /* FetchSearchedRepositoryListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756D828952B5A00DE40DE /* FetchSearchedRepositoryListRepository.swift */; };
+		604756DC2895305800DE40DE /* RemoteFetchSearchedRepositoryListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756DB2895305800DE40DE /* RemoteFetchSearchedRepositoryListRepository.swift */; };
 		604756E12895315D00DE40DE /* AnyMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756E02895315D00DE40DE /* AnyMapper.swift */; };
 		604756E32895319300DE40DE /* Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756E22895319300DE40DE /* Mapper.swift */; };
 		604756E6289536A600DE40DE /* Paginator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756E5289536A600DE40DE /* Paginator.swift */; };
@@ -110,6 +110,16 @@
 		60C8D95B289E8F6F00798A14 /* URLSessionRemoteClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D95A289E8F6F00798A14 /* URLSessionRemoteClient.swift */; };
 		60C8D95D289E921700798A14 /* RemoteCompletableFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D95C289E921700798A14 /* RemoteCompletableFetching.swift */; };
 		60C8D961289EEE8300798A14 /* SubsequentTriggerInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D960289EEE8300798A14 /* SubsequentTriggerInput.swift */; };
+		60C8D964289EF4C000798A14 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D963289EF4C000798A14 /* FavoritesViewController.swift */; };
+		60C8D966289EF4E400798A14 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D965289EF4E400798A14 /* FavoritesViewModel.swift */; };
+		60C8D968289EFD4500798A14 /* FetchFavoriteRepositoryListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D967289EFD4500798A14 /* FetchFavoriteRepositoryListUseCase.swift */; };
+		60C8D96A289EFD7700798A14 /* ConcreteFetchFavoriteRepositoryListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D969289EFD7700798A14 /* ConcreteFetchFavoriteRepositoryListUseCase.swift */; };
+		60C8D96C289EFF3400798A14 /* FetchFavoriteRepositoryListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D96B289EFF3400798A14 /* FetchFavoriteRepositoryListRepository.swift */; };
+		60C8D96E289EFFD200798A14 /* LocalFetchFavoriteRepositoryListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D96D289EFFD200798A14 /* LocalFetchFavoriteRepositoryListRepository.swift */; };
+		60C8D970289F089600798A14 /* RepositoryDetailsResponseListMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D96F289F089600798A14 /* RepositoryDetailsResponseListMapper.swift */; };
+		60C8D973289F0F7600798A14 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D972289F0F7600798A14 /* DependencyContainer.swift */; };
+		60C8D975289F100300798A14 /* Repositories+Injectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D974289F100300798A14 /* Repositories+Injectable.swift */; };
+		60C8D977289F10BF00798A14 /* Mappers+Injectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D976289F10BF00798A14 /* Mappers+Injectable.swift */; };
 		60D77133289447890027CD4C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D77132289447890027CD4C /* AppDelegate.swift */; };
 		60D7713C2894478C0027CD4C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60D7713B2894478C0027CD4C /* Assets.xcassets */; };
 		60D7713F2894478C0027CD4C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60D7713D2894478C0027CD4C /* LaunchScreen.storyboard */; };
@@ -228,7 +238,7 @@
 		603D8C05289D34DB00A5CBE3 /* UserDefaultsLocalClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsLocalClient.swift; sourceTree = "<group>"; };
 		603D8C0A289D36DA00A5CBE3 /* NotFoundError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotFoundError.swift; sourceTree = "<group>"; };
 		603D8C0C289D3EB100A5CBE3 /* AuthenticationFailedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationFailedError.swift; sourceTree = "<group>"; };
-		603D8C0E289D438200A5CBE3 /* LoginLocalStorageKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginLocalStorageKey.swift; sourceTree = "<group>"; };
+		603D8C0E289D438200A5CBE3 /* LocalStorageKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageKey.swift; sourceTree = "<group>"; };
 		603D8C10289D5C5500A5CBE3 /* SearchRepositoriesSceneFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepositoriesSceneFactory.swift; sourceTree = "<group>"; };
 		603D8C12289D5D1900A5CBE3 /* SearchRepositoriesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepositoriesCoordinator.swift; sourceTree = "<group>"; };
 		603D8C14289D624100A5CBE3 /* LogoutUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutUserUseCase.swift; sourceTree = "<group>"; };
@@ -249,11 +259,11 @@
 		604756C42895282100DE40DE /* RepositoryListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryListResponse.swift; sourceTree = "<group>"; };
 		604756C9289528E800DE40DE /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		604756CB289528FA00DE40DE /* Owner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
-		604756D228952A1600DE40DE /* FetchRepositoryListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRepositoryListUseCase.swift; sourceTree = "<group>"; };
+		604756D228952A1600DE40DE /* FetchSearchedRepositoryListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchSearchedRepositoryListUseCase.swift; sourceTree = "<group>"; };
 		604756D428952A7A00DE40DE /* FetchRepositoryListInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRepositoryListInput.swift; sourceTree = "<group>"; };
-		604756D628952B1C00DE40DE /* ConcreteFetchRepositoryListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteFetchRepositoryListUseCase.swift; sourceTree = "<group>"; };
-		604756D828952B5A00DE40DE /* FetchRepositoryListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRepositoryListRepository.swift; sourceTree = "<group>"; };
-		604756DB2895305800DE40DE /* RemoteFetchRepositoryListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFetchRepositoryListRepository.swift; sourceTree = "<group>"; };
+		604756D628952B1C00DE40DE /* ConcreteFetchSearchedRepositoryListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteFetchSearchedRepositoryListUseCase.swift; sourceTree = "<group>"; };
+		604756D828952B5A00DE40DE /* FetchSearchedRepositoryListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchSearchedRepositoryListRepository.swift; sourceTree = "<group>"; };
+		604756DB2895305800DE40DE /* RemoteFetchSearchedRepositoryListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFetchSearchedRepositoryListRepository.swift; sourceTree = "<group>"; };
 		604756E02895315D00DE40DE /* AnyMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyMapper.swift; sourceTree = "<group>"; };
 		604756E22895319300DE40DE /* Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mapper.swift; sourceTree = "<group>"; };
 		604756E5289536A600DE40DE /* Paginator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paginator.swift; sourceTree = "<group>"; };
@@ -322,6 +332,16 @@
 		60C8D95A289E8F6F00798A14 /* URLSessionRemoteClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionRemoteClient.swift; sourceTree = "<group>"; };
 		60C8D95C289E921700798A14 /* RemoteCompletableFetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCompletableFetching.swift; sourceTree = "<group>"; };
 		60C8D960289EEE8300798A14 /* SubsequentTriggerInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubsequentTriggerInput.swift; sourceTree = "<group>"; };
+		60C8D963289EF4C000798A14 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
+		60C8D965289EF4E400798A14 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
+		60C8D967289EFD4500798A14 /* FetchFavoriteRepositoryListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchFavoriteRepositoryListUseCase.swift; sourceTree = "<group>"; };
+		60C8D969289EFD7700798A14 /* ConcreteFetchFavoriteRepositoryListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteFetchFavoriteRepositoryListUseCase.swift; sourceTree = "<group>"; };
+		60C8D96B289EFF3400798A14 /* FetchFavoriteRepositoryListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchFavoriteRepositoryListRepository.swift; sourceTree = "<group>"; };
+		60C8D96D289EFFD200798A14 /* LocalFetchFavoriteRepositoryListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFetchFavoriteRepositoryListRepository.swift; sourceTree = "<group>"; };
+		60C8D96F289F089600798A14 /* RepositoryDetailsResponseListMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailsResponseListMapper.swift; sourceTree = "<group>"; };
+		60C8D972289F0F7600798A14 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
+		60C8D974289F100300798A14 /* Repositories+Injectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Repositories+Injectable.swift"; sourceTree = "<group>"; };
+		60C8D976289F10BF00798A14 /* Mappers+Injectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Mappers+Injectable.swift"; sourceTree = "<group>"; };
 		60D7712F289447890027CD4C /* GithubApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60D77132289447890027CD4C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		60D7713B2894478C0027CD4C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -443,7 +463,7 @@
 				607DD9D02895B96700957EEA /* Response */,
 				604756EE2895447C00DE40DE /* DefaultPagination.swift */,
 				604756E7289538AC00DE40DE /* PaginatedResponse.swift */,
-				603D8C0E289D438200A5CBE3 /* LoginLocalStorageKey.swift */,
+				603D8C0E289D438200A5CBE3 /* LocalStorageKey.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -481,12 +501,13 @@
 			isa = PBXGroup;
 			children = (
 				604756D1289529FB00DE40DE /* Abstractions */,
-				604756D628952B1C00DE40DE /* ConcreteFetchRepositoryListUseCase.swift */,
+				604756D628952B1C00DE40DE /* ConcreteFetchSearchedRepositoryListUseCase.swift */,
 				6048988B2896CBC600EA6E21 /* ConcreteFetchRepositoryDetailsUseCase.swift */,
 				607DD9E12895E81000957EEA /* ConcreteFetchImageUseCase.swift */,
 				6066F6B2289C4DF100A8631C /* ConcreteLoginUserUseCase.swift */,
 				603D8C18289D62C400A5CBE3 /* ConcreteLogoutUserUseCase.swift */,
 				603D8C24289D81EF00A5CBE3 /* ConcreteEvaluateUserAuthenticityUseCase.swift */,
+				60C8D969289EFD7700798A14 /* ConcreteFetchFavoriteRepositoryListUseCase.swift */,
 			);
 			path = UseCases;
 			sourceTree = "<group>";
@@ -502,12 +523,13 @@
 		604756D0289529ED00DE40DE /* Abstractions */ = {
 			isa = PBXGroup;
 			children = (
-				604756D828952B5A00DE40DE /* FetchRepositoryListRepository.swift */,
+				604756D828952B5A00DE40DE /* FetchSearchedRepositoryListRepository.swift */,
 				604898892896CB1E00EA6E21 /* FetchRepositoryDetailsRepository.swift */,
 				607DD9E32895E83A00957EEA /* FetchImageRepository.swift */,
 				6066F6C0289C5B9600A8631C /* LoginUserRepository.swift */,
 				603D8C16289D627000A5CBE3 /* LogoutUserRepository.swift */,
 				603D8C1E289D7B1D00A5CBE3 /* RetrieveUserAccessTokenRepository.swift */,
+				60C8D96B289EFF3400798A14 /* FetchFavoriteRepositoryListRepository.swift */,
 			);
 			path = Abstractions;
 			sourceTree = "<group>";
@@ -515,12 +537,13 @@
 		604756D1289529FB00DE40DE /* Abstractions */ = {
 			isa = PBXGroup;
 			children = (
-				604756D228952A1600DE40DE /* FetchRepositoryListUseCase.swift */,
+				604756D228952A1600DE40DE /* FetchSearchedRepositoryListUseCase.swift */,
 				6066F6A5289C1C0500A8631C /* FetchRepositoryDetailsUseCase.swift */,
 				607DD9DD2895E79200957EEA /* FetchImageUseCase.swift */,
 				6066F6A9289C467A00A8631C /* LoginUserUseCase.swift */,
 				603D8C14289D624100A5CBE3 /* LogoutUserUseCase.swift */,
 				603D8C1C289D79C500A5CBE3 /* EvaluateUserAuthenticityUseCase.swift */,
+				60C8D967289EFD4500798A14 /* FetchFavoriteRepositoryListUseCase.swift */,
 			);
 			path = Abstractions;
 			sourceTree = "<group>";
@@ -528,9 +551,10 @@
 		604756DA2895302F00DE40DE /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
-				604756DB2895305800DE40DE /* RemoteFetchRepositoryListRepository.swift */,
+				604756DB2895305800DE40DE /* RemoteFetchSearchedRepositoryListRepository.swift */,
 				6066F6A3289C1BD600A8631C /* RemoteFetchRepositoryDetailsRepository.swift */,
 				607DD9E52895E8C100957EEA /* RemoteFetchImageRepository.swift */,
+				60C8D96D289EFFD200798A14 /* LocalFetchFavoriteRepositoryListRepository.swift */,
 				6066F6D7289C79C800A8631C /* FakeLoginUserRepository.swift */,
 				603D8C1A289D637000A5CBE3 /* FakeLogoutUserRepository.swift */,
 				603D8C22289D7CF500A5CBE3 /* FakeCheckUserAuthenticityRepository.swift */,
@@ -544,6 +568,7 @@
 				604756DF2895315300DE40DE /* Abstractions */,
 				604756EC2895440600DE40DE /* RepositoryListResponseMapper.swift */,
 				6066F6A1289C1A3A00A8631C /* RepositoryDetailsResponseMapper.swift */,
+				60C8D96F289F089600798A14 /* RepositoryDetailsResponseListMapper.swift */,
 				604756F02895457000DE40DE /* OwnerResponseMapper.swift */,
 				607DD9D12895BB2700957EEA /* FetchRepositoryListRequestMapper.swift */,
 				6066F6A7289C1ED700A8631C /* FetchRepositoryDetailsRequestMapper.swift */,
@@ -582,6 +607,7 @@
 			children = (
 				6066F6D0289C69EE00A8631C /* Login */,
 				604756F328954B4200DE40DE /* Search */,
+				60C8D962289EF48400798A14 /* Favorites */,
 				604898802896C57F00EA6E21 /* Details */,
 			);
 			path = Scenes;
@@ -825,6 +851,25 @@
 			path = Abstractions;
 			sourceTree = "<group>";
 		};
+		60C8D962289EF48400798A14 /* Favorites */ = {
+			isa = PBXGroup;
+			children = (
+				60C8D963289EF4C000798A14 /* FavoritesViewController.swift */,
+				60C8D965289EF4E400798A14 /* FavoritesViewModel.swift */,
+			);
+			path = Favorites;
+			sourceTree = "<group>";
+		};
+		60C8D971289F0F1B00798A14 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				60C8D972289F0F7600798A14 /* DependencyContainer.swift */,
+				60C8D974289F100300798A14 /* Repositories+Injectable.swift */,
+				60C8D976289F10BF00798A14 /* Mappers+Injectable.swift */,
+			);
+			path = Dependencies;
+			sourceTree = "<group>";
+		};
 		60D77126289447890027CD4C = {
 			isa = PBXGroup;
 			children = (
@@ -861,10 +906,11 @@
 			children = (
 				60D77132289447890027CD4C /* AppDelegate.swift */,
 				60D7716528944A4D0027CD4C /* SceneDelegate.swift */,
+				603D8C26289DA7A500A5CBE3 /* BiometricsAuthenticator.swift */,
+				60C8D971289F0F1B00798A14 /* Dependencies */,
 				6066F6D9289C95E100A8631C /* Decorators */,
 				6048987B2896A1BF00EA6E21 /* Factories */,
 				604898752896A10E00EA6E21 /* Coordinators */,
-				603D8C26289DA7A500A5CBE3 /* BiometricsAuthenticator.swift */,
 				60D77162289448320027CD4C /* SupportingFiles */,
 			);
 			path = GithubApp;
@@ -1283,11 +1329,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60C8D975289F100300798A14 /* Repositories+Injectable.swift in Sources */,
 				603D8C29289DAF2B00A5CBE3 /* EvaluateUserAuthenticityUseCaseDecorator.swift in Sources */,
 				603D8C13289D5D1900A5CBE3 /* SearchRepositoriesCoordinator.swift in Sources */,
 				6048987D2896A1E100EA6E21 /* RootSceneFactory.swift in Sources */,
+				60C8D977289F10BF00798A14 /* Mappers+Injectable.swift in Sources */,
 				603D8C27289DA7A500A5CBE3 /* BiometricsAuthenticator.swift in Sources */,
 				603D8C11289D5C5500A5CBE3 /* SearchRepositoriesSceneFactory.swift in Sources */,
+				60C8D973289F0F7600798A14 /* DependencyContainer.swift in Sources */,
 				6066F6DB289C961D00A8631C /* LoginUserUseCaseDecorator.swift in Sources */,
 				6048987A2896A13700EA6E21 /* Coordinator.swift in Sources */,
 				60D77133289447890027CD4C /* AppDelegate.swift in Sources */,
@@ -1309,10 +1358,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				603D8C25289D81EF00A5CBE3 /* ConcreteEvaluateUserAuthenticityUseCase.swift in Sources */,
-				604756D328952A1600DE40DE /* FetchRepositoryListUseCase.swift in Sources */,
+				604756D328952A1600DE40DE /* FetchSearchedRepositoryListUseCase.swift in Sources */,
 				6066F6B9289C4E9500A8631C /* MisformattedPasswordError.swift in Sources */,
 				604756CC289528FA00DE40DE /* Owner.swift in Sources */,
 				603D8C19289D62C400A5CBE3 /* ConcreteLogoutUserUseCase.swift in Sources */,
+				60C8D96A289EFD7700798A14 /* ConcreteFetchFavoriteRepositoryListUseCase.swift in Sources */,
 				603D8C1D289D79C500A5CBE3 /* EvaluateUserAuthenticityUseCase.swift in Sources */,
 				6066F6C7289C62A000A8631C /* AnyValidator.swift in Sources */,
 				6066F6B3289C4DF100A8631C /* ConcreteLoginUserUseCase.swift in Sources */,
@@ -1322,6 +1372,7 @@
 				603D8C1F289D7B1D00A5CBE3 /* RetrieveUserAccessTokenRepository.swift in Sources */,
 				603D8C21289D7C7800A5CBE3 /* AccessToken.swift in Sources */,
 				6066F6CB289C641300A8631C /* BasicPasswordValidator.swift in Sources */,
+				60C8D968289EFD4500798A14 /* FetchFavoriteRepositoryListUseCase.swift in Sources */,
 				603D8C15289D624100A5CBE3 /* LogoutUserUseCase.swift in Sources */,
 				603D8C0B289D36DA00A5CBE3 /* NotFoundError.swift in Sources */,
 				604756D528952A7A00DE40DE /* FetchRepositoryListInput.swift in Sources */,
@@ -1329,7 +1380,7 @@
 				603D8C0D289D3EB100A5CBE3 /* AuthenticationFailedError.swift in Sources */,
 				6066F6A0289C199B00A8631C /* RepositoryDetails.swift in Sources */,
 				607DD9E22895E81000957EEA /* ConcreteFetchImageUseCase.swift in Sources */,
-				604756D928952B5A00DE40DE /* FetchRepositoryListRepository.swift in Sources */,
+				604756D928952B5A00DE40DE /* FetchSearchedRepositoryListRepository.swift in Sources */,
 				604898882896CA9200EA6E21 /* FetchRepositoryDetailsInput.swift in Sources */,
 				607DD9E42895E83A00957EEA /* FetchImageRepository.swift in Sources */,
 				6048988A2896CB1E00EA6E21 /* FetchRepositoryDetailsRepository.swift in Sources */,
@@ -1337,7 +1388,8 @@
 				6066F6C1289C5B9600A8631C /* LoginUserRepository.swift in Sources */,
 				607DD9E02895E7BC00957EEA /* FetchImageInput.swift in Sources */,
 				607DD9DE2895E79200957EEA /* FetchImageUseCase.swift in Sources */,
-				604756D728952B1C00DE40DE /* ConcreteFetchRepositoryListUseCase.swift in Sources */,
+				60C8D96C289EFF3400798A14 /* FetchFavoriteRepositoryListRepository.swift in Sources */,
+				604756D728952B1C00DE40DE /* ConcreteFetchSearchedRepositoryListUseCase.swift in Sources */,
 				6066F6A6289C1C0500A8631C /* FetchRepositoryDetailsUseCase.swift in Sources */,
 				6066F6AC289C48B700A8631C /* LoginUserInput.swift in Sources */,
 				6066F6AA289C467A00A8631C /* LoginUserUseCase.swift in Sources */,
@@ -1359,17 +1411,18 @@
 			files = (
 				604756C32895251E00DE40DE /* OwnerResponse.swift in Sources */,
 				607DD9C5289586A800957EEA /* Sequence+Extension.swift in Sources */,
+				60C8D970289F089600798A14 /* RepositoryDetailsResponseListMapper.swift in Sources */,
 				603D8C04289D345100A5CBE3 /* LocalRemoving.swift in Sources */,
 				603D8C23289D7CF500A5CBE3 /* FakeCheckUserAuthenticityRepository.swift in Sources */,
 				607DD9D22895BB2700957EEA /* FetchRepositoryListRequestMapper.swift in Sources */,
 				6066F69E289C187000A8631C /* RepositoryDetailsResponse.swift in Sources */,
-				604756DC2895305800DE40DE /* RemoteFetchRepositoryListRepository.swift in Sources */,
+				604756DC2895305800DE40DE /* RemoteFetchSearchedRepositoryListRepository.swift in Sources */,
 				603D8C02289D344900A5CBE3 /* LocalRetrieving.swift in Sources */,
 				604756C1289523B200DE40DE /* RepositoryResponse.swift in Sources */,
 				6066F6A8289C1ED700A8631C /* FetchRepositoryDetailsRequestMapper.swift in Sources */,
 				607DD9CE2895B95700957EEA /* FetchRepositoryListRequest.swift in Sources */,
 				604756ED2895440600DE40DE /* RepositoryListResponseMapper.swift in Sources */,
-				603D8C0F289D438200A5CBE3 /* LoginLocalStorageKey.swift in Sources */,
+				603D8C0F289D438200A5CBE3 /* LocalStorageKey.swift in Sources */,
 				604756E6289536A600DE40DE /* Paginator.swift in Sources */,
 				603D8C06289D34DB00A5CBE3 /* UserDefaultsLocalClient.swift in Sources */,
 				603D8BFC289D323100A5CBE3 /* AccessTokenResponse.swift in Sources */,
@@ -1387,6 +1440,7 @@
 				6066F6A4289C1BD600A8631C /* RemoteFetchRepositoryDetailsRepository.swift in Sources */,
 				604756E8289538AC00DE40DE /* PaginatedResponse.swift in Sources */,
 				6066F6D8289C79C800A8631C /* FakeLoginUserRepository.swift in Sources */,
+				60C8D96E289EFFD200798A14 /* LocalFetchFavoriteRepositoryListRepository.swift in Sources */,
 				603D8C00289D343400A5CBE3 /* LocalStoring.swift in Sources */,
 				604756C52895282100DE40DE /* RepositoryListResponse.swift in Sources */,
 				60C8D95D289E921700798A14 /* RemoteCompletableFetching.swift in Sources */,
@@ -1405,6 +1459,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60C8D966289EF4E400798A14 /* FavoritesViewModel.swift in Sources */,
 				603D8C2B289DCB9600A5CBE3 /* RepositoryDetailsModel.swift in Sources */,
 				6047570228954E1700DE40DE /* RepositoryViewModel.swift in Sources */,
 				606546FD289B1B8500B01432 /* ActivityIndicatorTableViewCell.swift in Sources */,
@@ -1428,6 +1483,7 @@
 				6066F6D2289C6A1C00A8631C /* LoginViewController.swift in Sources */,
 				607DD9CC2895AD6000957EEA /* FailureTracker.swift in Sources */,
 				607DD9D72895E42300957EEA /* AsyncImageState.swift in Sources */,
+				60C8D964289EF4C000798A14 /* FavoritesViewController.swift in Sources */,
 				603D8BF8289D101D00A5CBE3 /* ValidationState.swift in Sources */,
 				607DD9CA2895AD5700957EEA /* ActivityTracker.swift in Sources */,
 				603D8BFA289D298800A5CBE3 /* DiscardableDataState.swift in Sources */,

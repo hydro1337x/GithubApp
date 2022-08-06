@@ -61,9 +61,9 @@ public final class RepositoryDetailsViewModel {
             }
             .share()
 
-        let state = Observable<DataState<RepositoryDetailsModel>>
+        let state = Observable
             .merge(
-                input.trigger.asObservable().map { .loading },
+                input.trigger.asObservable().map { DataState.loading },
                 partialState
             )
             .startWith(.initial)

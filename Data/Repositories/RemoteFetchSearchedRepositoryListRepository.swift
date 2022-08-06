@@ -1,5 +1,5 @@
 //
-//  RemoteFetchRepositoryListRepository.swift
+//  RemoteFetchSearchedRepositoryListRepository.swift
 //  Data
 //
 //  Created by Benjamin Mecanović on 30.07.2022..
@@ -9,7 +9,7 @@ import Foundation
 import Domain
 import RxSwift
 
-public final class RemoteFetchRepositoryListRepository: FetchRepositoryListRepository {
+public final class RemoteFetchSearchedRepositoryListRepository: FetchSearchedRepositoryListRepository {
 
     let paginator: Paginator<Repository>
 

@@ -19,18 +19,18 @@ final class RootCoordinator: Coordinator {
     private let logoutRelay = PublishRelay<Void>()
     private let disposeBag = DisposeBag()
     private let factory: RootSceneFactory
-    private let logoutUserCase: LogoutUserUseCase
+    private let logoutUserUseCase: LogoutUserUseCase
     private let evaluateUserAuthenticityUseCase: EvaluateUserAuthenticityUseCase
 
     init(
         window: UIWindow,
         factory: RootSceneFactory,
-        logoutUserCase: LogoutUserUseCase,
+        logoutUserUseCase: LogoutUserUseCase,
         evaluateUserAuthenticityUseCase: EvaluateUserAuthenticityUseCase
     ) {
         self.window = window
         self.factory = factory
-        self.logoutUserCase = logoutUserCase
+        self.logoutUserUseCase = logoutUserUseCase
         self.evaluateUserAuthenticityUseCase = evaluateUserAuthenticityUseCase
     }
 
@@ -54,7 +54,7 @@ final class RootCoordinator: Coordinator {
 
         logoutRelay
             .flatMap { [unowned self] in
-                logoutUserCase.execute()
+                logoutUserUseCase.execute()
                     .andThen(Observable<Void>.just(()))
                     .catchAndReturn(())
             }

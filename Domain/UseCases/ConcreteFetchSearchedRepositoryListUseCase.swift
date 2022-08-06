@@ -1,5 +1,5 @@
 //
-//  ConcreteFetchRepositoryListUseCase.swift
+//  ConcreteFetchSearchedRepositoryListUseCase.swift
 //  Domain
 //
 //  Created by Benjamin Mecanović on 30.07.2022..
@@ -8,11 +8,11 @@
 import Foundation
 import RxSwift
 
-public final class ConcreteFetchRepositoryListUseCase: FetchRepositoryListUseCase {
+public final class ConcreteFetchSearchedRepositoryListUseCase: FetchSearchedRepositoryListUseCase {
 
-    private let repository: FetchRepositoryListRepository
+    private let repository: FetchSearchedRepositoryListRepository
 
-    public init(repository: FetchRepositoryListRepository) {
+    public init(repository: FetchSearchedRepositoryListRepository) {
         self.repository = repository
     }
 

@@ -13,19 +13,21 @@ import RxSwift
 import RxRelay
 
 struct SearchRepositoriesSceneFactory {
+    typealias Dependencies =
+    FetchRepositoryDetailsRepositoryInjectable &
+    FetchSearchedRepositoryListRepositoryInjectable &
+    RepositoryListMapperInjectable &
+    RepositoryDetailsMapperInjectable
 
-    let fetchRepositoryDetailsRepository: FetchRepositoryDetailsRepository
-    let fetchRepositoryListRepository: FetchRepositoryListRepository
-    let repositoryListMapper: Presentation.AnyMapper<[Repository], [RepositoryViewModel]>
-    let repositoryDetailsMapper: Presentation.AnyMapper<RepositoryDetails, RepositoryDetailsModel>
+    let dependencies: Dependencies
 
     func makeRepositoryDetailsViewController(with input: FetchRepositoryDetailsInput) -> UIViewController {
-        let useCase = ConcreteFetchRepositoryDetailsUseCase(repository: fetchRepositoryDetailsRepository)
+        let useCase = ConcreteFetchRepositoryDetailsUseCase(repository: dependencies.fetchRepositoryDetailsRepository)
         let viewModel = RepositoryDetailsViewModel(
             name: input.name,
             owner: input.owner,
             fetchRepositoryDetailsUseCase: useCase,
-            repositoryDetailsMapper: repositoryDetailsMapper
+            repositoryDetailsMapper: dependencies.repositoryDetailsMapper
         )
         let viewController = RepositoryDetailsViewController(viewModel: viewModel)
 
@@ -36,10 +38,10 @@ struct SearchRepositoriesSceneFactory {
         with selectionRelay: PublishRelay<RepositoryViewModel>
     ) -> UIViewController {
         let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated)
-        let fetchRepositoryListUseCase = ConcreteFetchRepositoryListUseCase(repository: fetchRepositoryListRepository)
+        let fetchSearchedRepositoryListUseCase = ConcreteFetchSearchedRepositoryListUseCase(repository: dependencies.fetchSearchedRepositoryListRepository)
         let viewModel = SearchRepositoriesViewModel(
-            fetchRepositoryListUseCase: fetchRepositoryListUseCase,
-            repositoryListMapper: repositoryListMapper,
+            fetchSearchedRepositoryListUseCase: fetchSearchedRepositoryListUseCase,
+            repositoryListMapper: dependencies.repositoryListMapper,
             scheduler: scheduler
         )
         let viewController = SearchRepositoriesViewController(

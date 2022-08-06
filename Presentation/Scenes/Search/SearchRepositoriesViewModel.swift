@@ -24,16 +24,16 @@ public final class SearchRepositoriesViewModel {
         let failureMessage: Signal<String>
     }
 
-    private let fetchRepositoryListUseCase: FetchRepositoryListUseCase
+    private let fetchSearchedRepositoryListUseCase: FetchSearchedRepositoryListUseCase
     private let repositoryListMapper: AnyMapper<[Repository], [RepositoryViewModel]>
     private let scheduler: SchedulerType
 
     public init(
-        fetchRepositoryListUseCase: FetchRepositoryListUseCase,
+        fetchSearchedRepositoryListUseCase: FetchSearchedRepositoryListUseCase,
         repositoryListMapper: AnyMapper<[Repository], [RepositoryViewModel]>,
         scheduler: SchedulerType
     ) {
-        self.fetchRepositoryListUseCase = fetchRepositoryListUseCase
+        self.fetchSearchedRepositoryListUseCase = fetchSearchedRepositoryListUseCase
         self.repositoryListMapper = repositoryListMapper
         self.scheduler = scheduler
     }
@@ -108,7 +108,7 @@ public final class SearchRepositoriesViewModel {
     }
 
     private func fetch(with input: FetchRepositoryListInput, using activityTracker: ActivityTracker, and failureTracker: FailureTracker) -> Observable<[Repository]> {
-        fetchRepositoryListUseCase.execute(with: input)
+        fetchSearchedRepositoryListUseCase.execute(with: input)
             .trackActivity(activityTracker)
             .trackFailure(failureTracker)
             .map { Optional($0) }

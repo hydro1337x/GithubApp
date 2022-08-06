@@ -24,7 +24,7 @@ public final class FakeLogoutUserRepository: LogoutUserRepository {
             .flatMapCompletable { [weak self] in
                 guard let self = self else { return .empty() }
 
-                return self.localClient.removeInstance(for: LoginLocalStorageKey.accessToken)
+                return self.localClient.removeInstance(for: LocalStorageKey.accessToken)
                     .catch { _ in
                         // Same practice as with login
                         Completable.empty()

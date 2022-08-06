@@ -21,7 +21,7 @@ public final class FakeRetrieveUserAccessTokenRepository: RetrieveUserAccessToke
             guard let self = self else { return Observable.empty().asSingle() }
             
             return self.localClient
-                .retrieveInstance(ofType: AccessTokenResponse.self, for: LoginLocalStorageKey.accessToken)
+                .retrieveInstance(ofType: AccessTokenResponse.self, for: LocalStorageKey.accessToken)
         }
 
         return response

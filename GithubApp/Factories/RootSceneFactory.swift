@@ -13,16 +13,16 @@ import Data
 import Presentation
 
 struct RootSceneFactory {
-    let fetchRepositoryListRepository: FetchRepositoryListRepository
-    let fetchRepositoryDetailsRepository: FetchRepositoryDetailsRepository
-    let loginUserRepository: LoginUserRepository
-    let repositoryListMapper: Presentation.AnyMapper<[Repository], [RepositoryViewModel]>
-    let repositoryDetailsMapper: Presentation.AnyMapper<RepositoryDetails, RepositoryDetailsModel>
+    typealias Dependencies =
+    LoginUserRepositoryInjectable &
+    SearchRepositoriesSceneFactory.Dependencies
+
+    let dependencies: Dependencies
 
     func makeLoginUserViewController(with loginRelay: PublishRelay<Void>) -> UIViewController {
         let emailValidator = BasicEmailValidator().eraseToAnyValidator
         let passwordValidator = BasicPasswordValidator().eraseToAnyValidator
-        let loginUserUseCase = ConcreteLoginUserUseCase(repository: loginUserRepository)
+        let loginUserUseCase = ConcreteLoginUserUseCase(repository: dependencies.loginUserRepository)
         let loginUserUseCaseDecorator = LoginUserUseCaseDecorator(
             loginUserUseCase,
             completionRelay: loginRelay
@@ -38,12 +38,7 @@ struct RootSceneFactory {
     }
 
     func makeSearchRepositoriesCoordinator(with logoutRelay: PublishRelay<Void>) -> SearchRepositoriesCoordinator {
-        let factory = SearchRepositoriesSceneFactory(
-            fetchRepositoryDetailsRepository: fetchRepositoryDetailsRepository,
-            fetchRepositoryListRepository: fetchRepositoryListRepository,
-            repositoryListMapper: repositoryListMapper,
-            repositoryDetailsMapper: repositoryDetailsMapper
-        )
+        let factory = SearchRepositoriesSceneFactory(dependencies: dependencies)
         let coordinator = SearchRepositoriesCoordinator(
             factory: factory,
             logoutRelay: logoutRelay
