@@ -861,8 +861,8 @@
 				6066F6D9289C95E100A8631C /* Decorators */,
 				6048987B2896A1BF00EA6E21 /* Factories */,
 				604898752896A10E00EA6E21 /* Coordinators */,
-				60D77162289448320027CD4C /* SupportingFiles */,
 				603D8C26289DA7A500A5CBE3 /* BiometricsAuthenticator.swift */,
+				60D77162289448320027CD4C /* SupportingFiles */,
 			);
 			path = GithubApp;
 			sourceTree = "<group>";

@@ -129,7 +129,6 @@ public final class LoginViewController: UIViewController {
             [emailTextField, passwordTextField].forEach {
                 $0.isEnabled = true
             }
-            // TODO: - Handle error and test it
             print("ERROR: ", message)
         }
     }

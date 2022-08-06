@@ -39,7 +39,6 @@ final class RepositoryTableViewCell: UITableViewCell {
         stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
     }
 
-    // TODO: - Refactor with stackviews
     func configure(with viewModel: RepositoryViewModel) {
         self.nameLabel.text = viewModel.name
         self.ownerNameLabel.text = viewModel.ownerName
