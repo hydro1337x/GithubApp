@@ -50,17 +50,6 @@ final class AsyncImageView: UIView {
         let output = viewModel.transform(input: input)
 
         output.state
-            .asObservable()
-            .take(1)
-            .asDriver(onErrorDriveWith: .empty())
-            .drive(onNext: { [weak self] state in
-                guard let self = self else { return }
-                self.handleStateTransition(state)
-            })
-            .disposed(by: disposeBag)
-
-        output.state
-            .skip(1)
             .drive(onNext: { [weak self] state in
                 guard let self = self else { return }
                 self.animateStateTransition(state)
@@ -83,7 +72,6 @@ final class AsyncImageView: UIView {
     }
 
     private func animateStateTransition(_ state: AsyncImageState) {
-        self.handleStateTransition(state)
         UIView.transition(with: self, duration: 0.3, options: .transitionCrossDissolve, animations: { [self] in
             handleStateTransition(state)
             layoutIfNeeded()
