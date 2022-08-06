@@ -54,25 +54,26 @@ public final class SearchRepositoriesViewController: UIViewController {
 
         let refreshTrigger = refreshControl.rx
             .controlEvent(.valueChanged)
-            .map { [unowned self] _ in searchBar.text }
+            .map { [unowned self] _ in searchBar.text ?? "" }
             .asSignal(onErrorSignalWith: .empty())
 
         let searchTrigger = searchBar.rx
             .text
+            .orEmpty
             .distinctUntilChanged()
             .skip(1)
             .asSignal(onErrorSignalWith: .empty())
 
         let subsequentTrigger = tableView.rx
             .willDisplayCell
-            .compactMap { [unowned self] input -> TriggerInput? in
+            .compactMap { [unowned self] input -> SubsequentTriggerInput? in
                 guard let last = dataSource.snapshot().itemIdentifiers.indices.last else { return nil }
-                return TriggerInput(currentIndex: input.indexPath.row, lastIndex: last)
+                return SubsequentTriggerInput(currentIndex: input.indexPath.row, lastIndex: last)
             }
             .filter { input in
                 input.currentIndex == input.lastIndex
             }
-            .map { [unowned self] _ in searchBar.text }
+            .map { [unowned self] _ in searchBar.text ?? "" }
             .asSignal(onErrorSignalWith: .empty())
 
         let input = SearchRepositoriesViewModel.Input(
@@ -228,7 +229,7 @@ extension SearchRepositoriesViewController: ViewConstructing {
         
         activityIndicatorView.style = .large
 
-        emptyStateButton.setTitle("Nothing to show for now...", for: .normal)
+        emptyStateButton.setTitle("Nothing to show, for now...", for: .normal)
         emptyStateButton.setTitleColor(.systemGray, for: .normal)
     }
 }

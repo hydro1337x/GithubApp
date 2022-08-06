@@ -109,6 +109,7 @@
 		60C8D959289E8C2D00798A14 /* RemoteSingleFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D958289E8C2D00798A14 /* RemoteSingleFetching.swift */; };
 		60C8D95B289E8F6F00798A14 /* URLSessionRemoteClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D95A289E8F6F00798A14 /* URLSessionRemoteClient.swift */; };
 		60C8D95D289E921700798A14 /* RemoteCompletableFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D95C289E921700798A14 /* RemoteCompletableFetching.swift */; };
+		60C8D961289EEE8300798A14 /* SubsequentTriggerInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D960289EEE8300798A14 /* SubsequentTriggerInput.swift */; };
 		60D77133289447890027CD4C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D77132289447890027CD4C /* AppDelegate.swift */; };
 		60D7713C2894478C0027CD4C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60D7713B2894478C0027CD4C /* Assets.xcassets */; };
 		60D7713F2894478C0027CD4C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60D7713D2894478C0027CD4C /* LaunchScreen.storyboard */; };
@@ -320,6 +321,7 @@
 		60C8D958289E8C2D00798A14 /* RemoteSingleFetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteSingleFetching.swift; sourceTree = "<group>"; };
 		60C8D95A289E8F6F00798A14 /* URLSessionRemoteClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionRemoteClient.swift; sourceTree = "<group>"; };
 		60C8D95C289E921700798A14 /* RemoteCompletableFetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCompletableFetching.swift; sourceTree = "<group>"; };
+		60C8D960289EEE8300798A14 /* SubsequentTriggerInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubsequentTriggerInput.swift; sourceTree = "<group>"; };
 		60D7712F289447890027CD4C /* GithubApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60D77132289447890027CD4C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		60D7713B2894478C0027CD4C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -789,6 +791,7 @@
 				603D8C2C289DD04E00A5CBE3 /* DataState.swift */,
 				603D8BF9289D298800A5CBE3 /* DiscardableDataState.swift */,
 				603D8C2A289DCB9600A5CBE3 /* RepositoryDetailsModel.swift */,
+				60C8D960289EEE8300798A14 /* SubsequentTriggerInput.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1412,6 +1415,7 @@
 				60C8D953289E715100798A14 /* RepositoryDetailsMapper.swift in Sources */,
 				604898842896C5AB00EA6E21 /* RepositoryDetailsViewModel.swift in Sources */,
 				607DD9DC2895E50D00957EEA /* NSLayoutConstraint+Extension.swift in Sources */,
+				60C8D961289EEE8300798A14 /* SubsequentTriggerInput.swift in Sources */,
 				607DD9D92895E45E00957EEA /* AsyncImageViewModel.swift in Sources */,
 				60C8D951289E708300798A14 /* ImageURLMapper.swift in Sources */,
 				603D8C2D289DD04E00A5CBE3 /* DataState.swift in Sources */,

@@ -10,16 +10,11 @@ import RxSwift
 import RxCocoa
 import Domain
 
-struct TriggerInput {
-    let currentIndex: Int
-    let lastIndex: Int
-}
-
 public final class SearchRepositoriesViewModel {
     struct Input {
-        let searchTrigger: Signal<String?>
-        let refreshTrigger: Signal<String?>
-        let subsequentTrigger: Signal<String?>
+        let searchTrigger: Signal<String>
+        let refreshTrigger: Signal<String>
+        let subsequentTrigger: Signal<String>
     }
 
     struct Output {
@@ -47,44 +42,25 @@ public final class SearchRepositoriesViewModel {
         let failureTracker = FailureTracker()
         let refreshActivityTracker = ActivityTracker()
         let searchActivityTracker = ActivityTracker()
-        let loadActivityTracker = ActivityTracker()
+        let subsequentActivityTracker = ActivityTracker()
         var isSubsequentFetchInProgress = false
 
-        let refreshTrigger = input.refreshTrigger.asObservable()
-
-        let searchTrigger = input.searchTrigger
+        let refreshedRepositories = input.refreshTrigger
             .asObservable()
-            .debounce(.milliseconds(500), scheduler: scheduler)
-
-        let refreshedRepositories = refreshTrigger
             .observe(on: scheduler)
-            .compactMap { $0 }
-            .flatMap { [unowned self] input in
-                fetchRepositoryListUseCase.execute(with: FetchRepositoryListInput(searchInput: input,
-                                                                                  isInitialFetch: true))
-                    .trackActivity(refreshActivityTracker)
-                    .trackFailure(failureTracker)
-                    .map { Optional($0) }
-                    .catch { _ in
-                        Observable<[Repository]?>.just(nil)
-                    }
-                    .compactMap { $0 }
+            .flatMap { [unowned self] input -> Observable<[Repository]> in
+                let input = FetchRepositoryListInput(searchInput: input, isInitialFetch: true)
+                return fetch(with: input, using: refreshActivityTracker, and: failureTracker)
             }
             .share()
 
-        let searchedRepositories = searchTrigger
+        let searchedRepositories = input.searchTrigger
+            .asObservable()
+            .debounce(.milliseconds(500), scheduler: scheduler)
             .observe(on: scheduler)
-            .compactMap { $0 }
-            .flatMap { [unowned self] input in
-                fetchRepositoryListUseCase.execute(with: FetchRepositoryListInput(searchInput: input,
-                                                                                  isInitialFetch: true))
-                    .trackActivity(searchActivityTracker)
-                    .trackFailure(failureTracker)
-                    .map { Optional($0) }
-                    .catch { _ in
-                        Observable<[Repository]?>.just(nil)
-                    }
-                    .compactMap { $0 }
+            .flatMap { [unowned self] input -> Observable<[Repository]> in
+                let input = FetchRepositoryListInput(searchInput: input, isInitialFetch: true)
+                return fetch(with: input, using: searchActivityTracker, and: failureTracker)
             }
             .share()
 
@@ -95,17 +71,9 @@ public final class SearchRepositoriesViewModel {
             .do(onNext: { _ in
                 isSubsequentFetchInProgress = true
             })
-            .compactMap { $0 }
-            .flatMap { [unowned self] input in
-                fetchRepositoryListUseCase.execute(with: FetchRepositoryListInput(searchInput: input,
-                                                                                  isInitialFetch: false))
-                    .trackActivity(loadActivityTracker)
-                    .trackFailure(failureTracker)
-                    .map { Optional($0) }
-                    .catch { _ in
-                        Observable<[Repository]?>.just(nil)
-                    }
-                    .compactMap { $0 }
+            .flatMap { [unowned self] input -> Observable<[Repository]> in
+                let input = FetchRepositoryListInput(searchInput: input, isInitialFetch: false)
+                return fetch(with: input, using: subsequentActivityTracker, and: failureTracker)
             }
             .share()
             .do(onNext: { _ in
@@ -118,7 +86,7 @@ public final class SearchRepositoriesViewModel {
                 repositoryListMapper.map(input: repositories)
             }
 
-        let items = Observable.combineLatest(repositories, loadActivityTracker.asObservable())
+        let items = Observable.combineLatest(repositories, subsequentActivityTracker.asObservable())
             .map { repositories, isLoading -> [SearchRepositoriesItem] in
                 var items = repositories.map { SearchRepositoriesItem.item($0) }
                 if isLoading {
@@ -126,20 +94,27 @@ public final class SearchRepositoriesViewModel {
                 }
                 return items
             }
-            .asDriver(onErrorDriveWith: .empty())
-
-        let refreshActivity = refreshActivityTracker.asDriver()
-        let searchActivity = searchActivityTracker.asDriver()
 
         let failureMessage = failureTracker
             .map { $0.localizedDescription }
-            .asSignal(onErrorSignalWith: .empty())
+
 
         return Output(
-            items: items,
-            refreshActivity: refreshActivity,
-            searchActivity: searchActivity,
-            failureMessage: failureMessage
+            items: items.asDriver(onErrorDriveWith: .empty()),
+            refreshActivity: refreshActivityTracker.asDriver(),
+            searchActivity: searchActivityTracker.asDriver(),
+            failureMessage: failureMessage.asSignal(onErrorSignalWith: .empty())
         )
+    }
+
+    private func fetch(with input: FetchRepositoryListInput, using activityTracker: ActivityTracker, and failureTracker: FailureTracker) -> Observable<[Repository]> {
+        fetchRepositoryListUseCase.execute(with: input)
+            .trackActivity(activityTracker)
+            .trackFailure(failureTracker)
+            .map { Optional($0) }
+            .catch { _ in
+                Observable<[Repository]?>.just(nil)
+            }
+            .compactMap { $0 }
     }
 }
