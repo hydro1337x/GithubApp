@@ -14,9 +14,10 @@ import Presentation
 
 struct RootSceneFactory {
     let fetchRepositoryListRepository: FetchRepositoryListRepository
-    let fetchImageUseCase: FetchImageUseCase
     let fetchRepositoryDetailsRepository: FetchRepositoryDetailsRepository
     let loginUserRepository: LoginUserRepository
+    let repositoryListMapper: Presentation.AnyMapper<[Repository], [RepositoryViewModel]>
+    let repositoryDetailsMapper: Presentation.AnyMapper<RepositoryDetails, RepositoryDetailsModel>
 
     func makeLoginUserViewController(with loginRelay: PublishRelay<Void>) -> UIViewController {
         let emailValidator = BasicEmailValidator().eraseToAnyValidator
@@ -42,7 +43,8 @@ struct RootSceneFactory {
         let factory = SearchRepositoriesSceneFactory(
             fetchRepositoryDetailsRepository: fetchRepositoryDetailsRepository,
             fetchRepositoryListRepository: fetchRepositoryListRepository,
-            fetchImageUseCase: fetchImageUseCase
+            repositoryListMapper: repositoryListMapper,
+            repositoryDetailsMapper: repositoryDetailsMapper
         )
         let coordinator = SearchRepositoriesCoordinator(
             factory: factory,

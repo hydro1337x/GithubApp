@@ -17,9 +17,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     var coordinator: Coordinator?
-
+    
     let encoder = JSONEncoder()
     let decoder = JSONDecoder()
+    lazy var dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en")
+        return dateFormatter
+    }()
     let urlSession = URLSession(configuration: .default)
     let paginator = Paginator<Repository>(limit: 10, initialPage: 1)
     let biometricsAuthenticator = BiometricsAuthenticator()
@@ -62,6 +67,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         evaluateUserAuthenticityUseCase,
         authenticator: biometricsAuthenticator
     )
+    lazy var imageURLMapper = ImageURLMapper(fetchImageUseCase: fetchImageUseCase).eraseToAnyMapper
+    lazy var dateMapper = DateMapper(
+        dateFormatter: dateFormatter,
+        inputFormat: "yyyy-MM-dd'T'HH:mm:ssZ",
+        outputFormat: "MMM d, yyyy"
+    ).eraseToAnyMapper
+    lazy var repositoryListMapper = RepositoryListMapper(imageURLMapper: imageURLMapper).eraseToAnyMapper
+    lazy var repositoryDetailsMapper = RepositoryDetailsMapper(
+        imageURLMapper: imageURLMapper,
+        dateMapper: dateMapper
+    ).eraseToAnyMapper
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
@@ -70,9 +86,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let rootSceneFactory = RootSceneFactory(
             fetchRepositoryListRepository: fetchRepositoryListRepository,
-            fetchImageUseCase: fetchImageUseCase,
             fetchRepositoryDetailsRepository: fetchRepositoryDetailsRepository,
-            loginUserRepository: loginUserRepository
+            loginUserRepository: loginUserRepository,
+            repositoryListMapper: repositoryListMapper,
+            repositoryDetailsMapper: repositoryDetailsMapper
         )
         let coordinator = RootCoordinator(
             window: window!,

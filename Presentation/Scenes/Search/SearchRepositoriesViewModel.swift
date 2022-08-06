@@ -30,16 +30,16 @@ public final class SearchRepositoriesViewModel {
     }
 
     private let fetchRepositoryListUseCase: FetchRepositoryListUseCase
-    private let fetchImageUseCase: FetchImageUseCase
+    private let repositoryListMapper: AnyMapper<[Repository], [RepositoryViewModel]>
     private let scheduler: SchedulerType
 
     public init(
         fetchRepositoryListUseCase: FetchRepositoryListUseCase,
-        fetchImageUseCase: FetchImageUseCase,
+        repositoryListMapper: AnyMapper<[Repository], [RepositoryViewModel]>,
         scheduler: SchedulerType
     ) {
         self.fetchRepositoryListUseCase = fetchRepositoryListUseCase
-        self.fetchImageUseCase = fetchImageUseCase
+        self.repositoryListMapper = repositoryListMapper
         self.scheduler = scheduler
     }
 
@@ -118,7 +118,7 @@ public final class SearchRepositoriesViewModel {
 
         let repositories = Observable.merge(refreshedRepositories, searchedRepositories, subsequentRepositories)
             .map { [unowned self] repositories in
-                map(repositories)
+                repositoryListMapper.map(input: repositories)
             }
 
         let items = Observable.combineLatest(repositories, loadActivityTracker.asObservable())
@@ -144,28 +144,5 @@ public final class SearchRepositoriesViewModel {
             searchActivity: searchActivity,
             failureMessage: failureMessage
         )
-    }
-
-    private func map(_ repositories: [Repository]) -> [RepositoryViewModel] {
-        repositories.map {
-            RepositoryViewModel(
-                id: $0.id,
-                ownerName: $0.owner.name,
-                name: $0.name,
-                stargazersCount: $0.stargazersCount.description,
-                watchersCount: $0.watchersCount.description,
-                forksCount: $0.forksCount.description,
-                openIssuesCount: $0.openIssuesCount.description,
-                imageViewModel: map(imageURL: $0.owner.avatarURL)
-            )
-        }
-    }
-
-    private func map(imageURL: String) -> AsyncImageViewModel {
-        let input = FetchImageInput(url: imageURL)
-        let imageConvertible = fetchImageUseCase
-            .execute(with: input)
-            .asObservable()
-        return AsyncImageViewModel(with: imageConvertible)
     }
 }

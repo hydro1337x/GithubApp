@@ -135,7 +135,7 @@ public final class LoginViewController: UIViewController {
             .disposed(by: disposeBag)
     }
 
-    private func handleLoginState(_ state: LoginState) {
+    private func handleLoginState(_ state: DiscardableDataState) {
         switch state {
         case .initial:
             break

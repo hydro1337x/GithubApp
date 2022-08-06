@@ -16,40 +16,58 @@ public final class RepositoryDetailsViewModel {
         let trigger: Signal<Void>
     }
     struct Output {
-        let imageViewModel: Driver<AsyncImageViewModel>
+        let state: Driver<DataState<RepositoryDetailsModel>>
     }
+
+    let ownerTitle = "Owner:"
+    let createdAtTitle = "Created at:"
+    let updatedAtTitle = "Updated at:"
 
     private let name: String
     private let owner: String
     private let fetchRepositoryDetailsUseCase: FetchRepositoryDetailsUseCase
-    private let fetchImageUseCase: FetchImageUseCase
+    private let repositoryDetailsMapper: AnyMapper<RepositoryDetails, RepositoryDetailsModel>
 
     public init(
         name: String,
         owner: String,
         fetchRepositoryDetailsUseCase: FetchRepositoryDetailsUseCase,
-        fetchImageUseCase: FetchImageUseCase
+        repositoryDetailsMapper: AnyMapper<RepositoryDetails, RepositoryDetailsModel>
     ) {
         self.name = name
         self.owner = owner
         self.fetchRepositoryDetailsUseCase = fetchRepositoryDetailsUseCase
-        self.fetchImageUseCase = fetchImageUseCase
+        self.repositoryDetailsMapper = repositoryDetailsMapper
     }
 
     func transform(input: Input) -> Output {
-        let imageViewModel = input.trigger
+        let partialState = input.trigger
             .asObservable()
             .flatMap { [unowned self] in
                 fetchRepositoryDetailsUseCase.execute(with: FetchRepositoryDetailsInput(name: name, owner: owner))
-            }
-            .map { [unowned self] value -> AsyncImageViewModel in
-                let imageConvertible = fetchImageUseCase
-                    .execute(with: FetchImageInput(url: value.owner.avatarURL))
+                    .map(repositoryDetailsMapper.map(input:))
                     .asObservable()
-                return AsyncImageViewModel(with: imageConvertible)
+                    .materialize()
+                    .compactMap { event -> DataState<RepositoryDetailsModel>? in
+                        switch event {
+                        case .error(let error):
+                            return .failed(error.localizedDescription)
+                        case .next(let data):
+                            return .loaded(data)
+                        case .completed:
+                            return nil
+                        }
+                    }
             }
-            .asDriver(onErrorDriveWith: .empty())
+            .share()
 
-        return Output(imageViewModel: imageViewModel)
+        let state = Observable<DataState<RepositoryDetailsModel>>
+            .merge(
+                input.trigger.asObservable().map { .loading },
+                partialState
+            )
+            .startWith(.initial)
+
+        return Output(state: state.asDriver(onErrorDriveWith: .empty()))
     }
 }

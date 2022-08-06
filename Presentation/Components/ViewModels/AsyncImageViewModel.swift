@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-final class AsyncImageViewModel {
+public final class AsyncImageViewModel {
     struct Input {
         let initialTrigger: Signal<Void>
         let retryTrigger: Signal<Void>

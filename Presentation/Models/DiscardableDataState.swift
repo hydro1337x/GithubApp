@@ -1,5 +1,5 @@
 //
-//  LoginState.swift
+//  DiscardableDataState.swift
 //  Presentation
 //
 //  Created by Benjamin Mecanović on 05.08.2022..
@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum LoginState: Equatable {
+enum DiscardableDataState: Hashable {
     case initial
     case loading
     case loaded

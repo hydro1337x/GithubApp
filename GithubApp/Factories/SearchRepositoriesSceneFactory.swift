@@ -16,7 +16,8 @@ struct SearchRepositoriesSceneFactory {
 
     let fetchRepositoryDetailsRepository: FetchRepositoryDetailsRepository
     let fetchRepositoryListRepository: FetchRepositoryListRepository
-    let fetchImageUseCase: FetchImageUseCase
+    let repositoryListMapper: Presentation.AnyMapper<[Repository], [RepositoryViewModel]>
+    let repositoryDetailsMapper: Presentation.AnyMapper<RepositoryDetails, RepositoryDetailsModel>
 
     func makeRepositoryDetailsViewController(with input: FetchRepositoryDetailsInput) -> UIViewController {
         let useCase = ConcreteFetchRepositoryDetailsUseCase(repository: fetchRepositoryDetailsRepository)
@@ -24,7 +25,7 @@ struct SearchRepositoriesSceneFactory {
             name: input.name,
             owner: input.owner,
             fetchRepositoryDetailsUseCase: useCase,
-            fetchImageUseCase: fetchImageUseCase
+            repositoryDetailsMapper: repositoryDetailsMapper
         )
         let viewController = RepositoryDetailsViewController(viewModel: viewModel)
 
@@ -38,7 +39,7 @@ struct SearchRepositoriesSceneFactory {
         let fetchRepositoryListUseCase = ConcreteFetchRepositoryListUseCase(repository: fetchRepositoryListRepository)
         let viewModel = SearchRepositoriesViewModel(
             fetchRepositoryListUseCase: fetchRepositoryListUseCase,
-            fetchImageUseCase: fetchImageUseCase,
+            repositoryListMapper: repositoryListMapper,
             scheduler: scheduler
         )
         let viewController = SearchRepositoriesViewController(

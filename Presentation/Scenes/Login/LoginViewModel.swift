@@ -25,7 +25,7 @@ public final class LoginViewModel {
         let repeatedPasswordValidation: Driver<ValidationState>
         let passwordsMatchValidation: Driver<ValidationState>
         let areInputsValid: Driver<Bool>
-        let loginState: Driver<LoginState>
+        let loginState: Driver<DiscardableDataState>
     }
 
     private let loginUserUseCase: LoginUserUseCase
@@ -142,10 +142,10 @@ public final class LoginViewModel {
             .withLatestFrom(
                 Observable.combineLatest(input.email.asObservable(), input.password.asObservable())
             )
-            .flatMap { [unowned self] email, password -> Observable<LoginState> in
+            .flatMap { [unowned self] email, password -> Observable<DiscardableDataState> in
                 let input = LoginUserInput(email: email, password: password)
                 return loginUserUseCase.execute(input: input)
-                    .andThen(Observable<LoginState>.just(.loaded))
+                    .andThen(Observable<DiscardableDataState>.just(.loaded))
                     .materialize()
                     .map { event in
                         switch event {
@@ -161,7 +161,7 @@ public final class LoginViewModel {
 
         let state = Observable
             .merge(
-                input.loginTap.asObservable().map { LoginState.loading },
+                input.loginTap.asObservable().map { DiscardableDataState.loading },
                 login
             )
             .startWith(.initial)
