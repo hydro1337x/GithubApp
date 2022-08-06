@@ -26,29 +26,24 @@ public final class AsyncImageViewModel {
     }
 
     func transform(input: Input) -> Output {
-        // TODO: - can be removed, jsut use materialize and map events there..
-        let failureTracker = FailureTracker()
-
-        let data = Observable.merge(input.retryTrigger.asObservable(), input.initialTrigger.asObservable())
-            .flatMapLatest { [weak self] _ -> Observable<Data?> in
+        let state = Observable.merge(input.retryTrigger.asObservable(), input.initialTrigger.asObservable())
+            .flatMapLatest { [weak self] _ -> Observable<AsyncImageState> in
                 guard let self = self else { return .empty() }
+
                 return self.imageConvertible
-                    .map { data -> Data? in return data }
-                    .trackFailure(failureTracker)
-                    .catchAndReturn(nil)
+                    .materialize()
+                    .compactMap { event -> AsyncImageState? in
+                        switch event {
+                        case .next(let data):
+                            return .loaded(data)
+                        case .error:
+                            return .failed
+                        case .completed:
+                            return nil
+                        }
+                    }
             }
-            .compactMap { $0 }
-            .map { AsyncImageState.loaded($0) }
 
-        let failure = failureTracker
-            .asObservable()
-            .map { _ in AsyncImageState.failed }
-
-
-        let state = Observable.merge(data, failure)
-            .startWith(.initial)
-            .asDriver(onErrorDriveWith: .empty())
-
-        return Output(state: state)
+        return Output(state: state.startWith(.initial).asDriver(onErrorDriveWith: .empty()))
     }
 }
