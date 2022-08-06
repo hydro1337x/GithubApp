@@ -26,6 +26,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return dateFormatter
     }()
     let urlSession = URLSession(configuration: .default)
+    lazy var urlSessionWithCache: URLSession = {
+        let megabyte = 1024 * 1024
+        let memoryCapacity: Int = 50 * megabyte
+        let diskCapacity: Int = 200 * megabyte
+        let cache = URLCache(memoryCapacity: memoryCapacity, diskCapacity: diskCapacity)
+        let session = URLSession(configuration: .default)
+        session.configuration.requestCachePolicy = .reloadRevalidatingCacheData
+        session.configuration.urlCache = cache
+        return session
+    }()
     let paginator = Paginator<Repository>(limit: 10, initialPage: 1)
     let biometricsAuthenticator = BiometricsAuthenticator()
     lazy var localStorageClient = UserDefaultsLocalClient(
@@ -59,7 +69,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     lazy var loginUserRepository = FakeLoginUserRepository(localClient: localStorageClient)
     lazy var logoutUserRepository = FakeLogoutUserRepository(localClient: localStorageClient)
     lazy var retrieveUserAccessTokenRepository = FakeRetrieveUserAccessTokenRepository(localClient: localStorageClient)
-    lazy var fetchImageRepository = RemoteFetchImageRepository(remoteClient: remoteClient)
+    lazy var fetchImageRepository = RemoteFetchImageRepository(
+        remoteClient: URLSessionRemoteClient(
+            session: urlSessionWithCache,
+            decoder: decoder
+        )
+    )
     lazy var fetchImageUseCase = ConcreteFetchImageUseCase(repository: fetchImageRepository)
     lazy var logoutUserCase = ConcreteLogoutUserUseCase(repository: logoutUserRepository)
     lazy var evaluateUserAuthenticityUseCase = ConcreteEvaluateUserAuthenticityUseCase(
