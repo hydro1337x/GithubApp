@@ -22,7 +22,6 @@ struct RootSceneFactory {
     func makeLoginUserViewController(with loginRelay: PublishRelay<Void>) -> UIViewController {
         let emailValidator = BasicEmailValidator().eraseToAnyValidator
         let passwordValidator = BasicPasswordValidator().eraseToAnyValidator
-        let passwordMismatchValidator = PasswordsMatchingValidator().eraseToAnyValidator
         let loginUserUseCase = ConcreteLoginUserUseCase(repository: loginUserRepository)
         let loginUserUseCaseDecorator = LoginUserUseCaseDecorator(
             loginUserUseCase,
@@ -31,8 +30,7 @@ struct RootSceneFactory {
         let viewModel = LoginViewModel(
             loginUserUseCase: loginUserUseCaseDecorator,
             emailValidator: emailValidator,
-            passwordValidator: passwordValidator,
-            passwordsMatchingValidator: passwordMismatchValidator
+            passwordValidator: passwordValidator
         )
         let viewController = LoginViewController(viewModel: viewModel)
 

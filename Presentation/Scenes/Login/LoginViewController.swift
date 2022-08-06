@@ -16,9 +16,6 @@ public final class LoginViewController: UIViewController {
     let emailValidityLabel = UILabel()
     let passwordTextField = UITextField()
     let passwordValidityLabel = UILabel()
-    let repeatedPasswordTextField = UITextField()
-    let repeatedPasswordValidityLabel = UILabel()
-    let passwordsMatchValidityLabel = UILabel()
     let loginButton = UIButton(type: .system)
     let activityIndicatorView = UIActivityIndicatorView()
 
@@ -61,13 +58,6 @@ public final class LoginViewController: UIViewController {
             .asDriver(onErrorDriveWith: .empty())
             .distinctUntilChanged()
 
-        let repeatedPassword = repeatedPasswordTextField.rx
-            .text
-            .orEmpty
-            .skip(1)
-            .asDriver(onErrorDriveWith: .empty())
-            .distinctUntilChanged()
-
         let loginTap = loginButton.rx
             .tap
             .asSignal()
@@ -75,7 +65,6 @@ public final class LoginViewController: UIViewController {
         let input = LoginViewModel.Input(
             email: email,
             password: password,
-            repeatedPassword: repeatedPassword,
             loginTap: loginTap
         )
 
@@ -97,26 +86,6 @@ public final class LoginViewController: UIViewController {
                 case .empty: break
                 case .valid: passwordValidityLabel.text = ""
                 case .invalid(let message): passwordValidityLabel.text = message
-                }
-            })
-            .disposed(by: disposeBag)
-
-        output.repeatedPasswordValidation
-            .drive(onNext: { [unowned self] state in
-                switch state {
-                case .empty: break
-                case .valid: repeatedPasswordValidityLabel.text = ""
-                case .invalid(let message): repeatedPasswordValidityLabel.text = message
-                }
-            })
-            .disposed(by: disposeBag)
-
-        output.passwordsMatchValidation
-            .drive(onNext: { [unowned self] state in
-                switch state {
-                case .empty: break
-                case .valid: passwordsMatchValidityLabel.text = ""
-                case .invalid(let message): passwordsMatchValidityLabel.text = message
                 }
             })
             .disposed(by: disposeBag)
@@ -143,21 +112,21 @@ public final class LoginViewController: UIViewController {
             activityIndicatorView.startAnimating()
             loginButton.isEnabled = false
             loginButton.alpha = 0.5
-            [emailTextField, passwordTextField, repeatedPasswordTextField].forEach {
+            [emailTextField, passwordTextField].forEach {
                 $0.isEnabled = false
             }
         case .loaded:
             activityIndicatorView.stopAnimating()
             loginButton.isEnabled = true
             loginButton.alpha = 1
-            [emailTextField, passwordTextField, repeatedPasswordTextField].forEach {
+            [emailTextField, passwordTextField].forEach {
                 $0.isEnabled = true
             }
         case .failed(let message):
             activityIndicatorView.stopAnimating()
             loginButton.isEnabled = true
             loginButton.alpha = 1
-            [emailTextField, passwordTextField, repeatedPasswordTextField].forEach {
+            [emailTextField, passwordTextField].forEach {
                 $0.isEnabled = true
             }
             // TODO: - Handle error and test it
@@ -188,7 +157,7 @@ extension LoginViewController: ViewConstructing {
             stackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor)
         ])
 
-        [emailTextField, passwordTextField, repeatedPasswordTextField].forEach {
+        [emailTextField, passwordTextField].forEach {
             $0.heightAnchor.constraint(equalToConstant: 44).isActive = true
         }
 
@@ -196,9 +165,6 @@ extension LoginViewController: ViewConstructing {
         stackView.addArrangedSubview(emailSubStackView)
         let passwordSubStackView = makeSubStackView(with: passwordTextField, passwordValidityLabel)
         stackView.addArrangedSubview(passwordSubStackView)
-        let repeatedPasswordSubStackView = makeSubStackView(with: repeatedPasswordTextField, repeatedPasswordValidityLabel)
-        stackView.addArrangedSubview(repeatedPasswordSubStackView)
-        stackView.addArrangedSubview(passwordsMatchValidityLabel)
         stackView.addArrangedSubview(loginButton)
 
         view.addSubview(activityIndicatorView)
@@ -222,13 +188,11 @@ extension LoginViewController: ViewConstructing {
 
         passwordTextField.placeholder = "Password"
 
-        repeatedPasswordTextField.placeholder = "Repeated password"
-
-        [emailTextField, passwordTextField, repeatedPasswordTextField].forEach {
+        [emailTextField, passwordTextField].forEach {
             $0.borderStyle = .roundedRect
         }
 
-        [emailValidityLabel, passwordValidityLabel, repeatedPasswordValidityLabel, passwordsMatchValidityLabel].forEach {
+        [emailValidityLabel, passwordValidityLabel].forEach {
             $0.font = UIFont.systemFont(ofSize: 12, weight: .light)
         }
 
