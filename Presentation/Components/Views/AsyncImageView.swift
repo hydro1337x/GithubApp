@@ -99,7 +99,7 @@ extension AsyncImageView: ViewConstructing {
             blurView.widthAnchor.constraint(equalTo: blurView.heightAnchor, multiplier: 1),
             blurView.topAnchor.constraint(lessThanOrEqualTo: topAnchor).withPriority(.defaultHigh),
             blurView.leadingAnchor.constraint(lessThanOrEqualTo: leadingAnchor).withPriority(.defaultHigh),
-            blurView.trailingAnchor.constraint(lessThanOrEqualTo: leadingAnchor).withPriority(.defaultHigh),
+            blurView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor).withPriority(.defaultHigh),
             blurView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor).withPriority(.defaultHigh)
         ])
 

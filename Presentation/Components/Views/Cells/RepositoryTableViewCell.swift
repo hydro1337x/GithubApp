@@ -72,7 +72,7 @@ extension RepositoryTableViewCell: ViewConstructing {
             avatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: Dimension.padding),
             avatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Dimension.padding),
             avatarImageView.heightAnchor.constraint(equalToConstant: Dimension.imageSpan),
-            avatarImageView.widthAnchor.constraint(equalToConstant: Dimension.imageSpan)
+            avatarImageView.widthAnchor.constraint(equalTo: avatarImageView.heightAnchor)
         ])
 
         ownerNameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -92,13 +92,12 @@ extension RepositoryTableViewCell: ViewConstructing {
         ])
 
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.spacing = Dimension.spacing
         contentView.addSubview(stackView)
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: Dimension.padding),
             stackView.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             stackView.trailingAnchor.constraint(lessThanOrEqualTo: nameLabel.trailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Dimension.padding)
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Dimension.padding).withPriority(.defaultHigh)
         ])
     }
 
@@ -110,6 +109,8 @@ extension RepositoryTableViewCell: ViewConstructing {
 
         nameLabel.numberOfLines = 2
         nameLabel.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+
+        stackView.spacing = Dimension.spacing
     }
 
     private func makeTupleView(imageName: String, text: String) -> UIView {

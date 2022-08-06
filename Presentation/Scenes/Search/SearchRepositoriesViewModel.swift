@@ -50,9 +50,6 @@ public final class SearchRepositoriesViewModel {
         let loadActivityTracker = ActivityTracker()
         var isSubsequentFetchInProgress = false
 
-        // TODO: Split repository entities to Repository and Repository details, make Dates in domain entities not strings
-        // TODO: - Make repo details api call
-
         let refreshTrigger = input.refreshTrigger.asObservable()
 
         let searchTrigger = input.searchTrigger

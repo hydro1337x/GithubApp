@@ -92,20 +92,21 @@ public final class LoginViewModel {
             .withLatestFrom(
                 Observable.combineLatest(input.email.asObservable(), input.password.asObservable())
             )
-            .flatMap { [unowned self] email, password -> Observable<DiscardableDataState> in
+            .flatMap { [unowned self] email, password -> Observable<Event<Void>> in
                 let input = LoginUserInput(email: email, password: password)
                 return loginUserUseCase.execute(input: input)
-                    .andThen(Observable<DiscardableDataState>.just(.loaded))
+                    .andThen(Observable<Void>.just(()))
                     .materialize()
-                    .map { event in
-                        switch event {
-                        case .error(let error):
-                            return .failed(error.localizedDescription)
-                        case .next, .completed:
-                            return .loaded
-                        }
-                    }
-                    .distinctUntilChanged()
+            }
+            .compactMap { event -> DiscardableDataState? in
+                switch event {
+                case .error(let error):
+                    return .failed(error.localizedDescription)
+                case .next:
+                    return .loaded
+                case .completed:
+                    return nil
+                }
             }
             .share()
 

@@ -48,16 +48,16 @@ public final class RepositoryDetailsViewModel {
                     .map(repositoryDetailsMapper.map(input:))
                     .asObservable()
                     .materialize()
-                    .compactMap { event -> DataState<RepositoryDetailsModel>? in
-                        switch event {
-                        case .error(let error):
-                            return .failed(error.localizedDescription)
-                        case .next(let data):
-                            return .loaded(data)
-                        case .completed:
-                            return nil
-                        }
-                    }
+            }
+            .compactMap { event -> DataState<RepositoryDetailsModel>? in
+                switch event {
+                case .error(let error):
+                    return .failed(error.localizedDescription)
+                case .next(let data):
+                    return .loaded(data)
+                case .completed:
+                    return nil
+                }
             }
             .share()
 
