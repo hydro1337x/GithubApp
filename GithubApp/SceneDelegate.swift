@@ -33,6 +33,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         encoder: encoder,
         decoder: decoder
     )
+    lazy var remoteClient = URLSessionRemoteClient(session: urlSession, decoder: decoder)
     lazy var repositoryListRequestMapper = FetchRepositoryListRequestMapper().eraseToAnyMapper
     lazy var repositoryDetailsRequestMapper = FetchRepositoryDetailsRequestMapper().eraseToAnyMapper
     lazy var ownerResponseMapper = OwnerResponseMapper().eraseToAnyMapper
@@ -42,21 +43,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     lazy var repositoryDetailsResponseMapper = RepositoryDetailsResponseMapper(
         ownerResponseMapper: ownerResponseMapper
     ).eraseToAnyMapper
-    lazy var fetchRepositoryListRepository = URLSessionFetchRepositoryListRepository(
-        session: urlSession,
+    lazy var fetchRepositoryListRepository = RemoteFetchRepositoryListRepository(
+        remoteClient: remoteClient,
         paginator: paginator,
         requestMapper: repositoryListRequestMapper,
-        responseMapper: repositoryListResponseMapper
+        responseMapper: repositoryListResponseMapper,
+        decoder: decoder
     )
-    lazy var fetchRepositoryDetailsRepository = URLSessionFetchRepositoryDetailsRepository(
-        session: urlSession,
+    lazy var fetchRepositoryDetailsRepository = RemoteFetchRepositoryDetailsRepository(
+        remoteClient: remoteClient,
         requestMapper: repositoryDetailsRequestMapper,
-        responseMapper: repositoryDetailsResponseMapper
+        responseMapper: repositoryDetailsResponseMapper,
+        decoder: decoder
     )
     lazy var loginUserRepository = FakeLoginUserRepository(localClient: localStorageClient)
     lazy var logoutUserRepository = FakeLogoutUserRepository(localClient: localStorageClient)
     lazy var retrieveUserAccessTokenRepository = FakeRetrieveUserAccessTokenRepository(localClient: localStorageClient)
-    lazy var fetchImageRepository = URLSessionFetchImageRepository(session: urlSession)
+    lazy var fetchImageRepository = RemoteFetchImageRepository(remoteClient: remoteClient)
     lazy var fetchImageUseCase = ConcreteFetchImageUseCase(repository: fetchImageRepository)
     lazy var logoutUserCase = ConcreteLogoutUserUseCase(repository: logoutUserRepository)
     lazy var evaluateUserAuthenticityUseCase = ConcreteEvaluateUserAuthenticityUseCase(

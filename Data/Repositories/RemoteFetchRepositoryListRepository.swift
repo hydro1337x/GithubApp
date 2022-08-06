@@ -1,5 +1,5 @@
 //
-//  URLSessionFetchRepositoryListRepository.swift
+//  RemoteFetchRepositoryListRepository.swift
 //  Data
 //
 //  Created by Benjamin Mecanović on 30.07.2022..
@@ -9,24 +9,26 @@ import Foundation
 import Domain
 import RxSwift
 
-public final class URLSessionFetchRepositoryListRepository: FetchRepositoryListRepository {
+public final class RemoteFetchRepositoryListRepository: FetchRepositoryListRepository {
 
     let paginator: Paginator<Repository>
 
-    private let session: URLSession
+    private let remoteClient: RemoteSingleFetching
     private let requestMapper: AnyMapper<FetchRepositoryListRequest, URLRequest?>
     private let responseMapper: AnyMapper<RepositoryListResponse, PaginatedResponse<Repository>>
-    private let decoder = JSONDecoder()
+    private let decoder: JSONDecoder
 
-    public init(session: URLSession,
+    public init(remoteClient: RemoteSingleFetching,
                 paginator: Paginator<Repository>,
                 requestMapper: AnyMapper<FetchRepositoryListRequest, URLRequest?>,
-                responseMapper: AnyMapper<RepositoryListResponse, PaginatedResponse<Repository>>
+                responseMapper: AnyMapper<RepositoryListResponse, PaginatedResponse<Repository>>,
+                decoder: JSONDecoder
     ) {
-        self.session = session
+        self.remoteClient = remoteClient
         self.paginator = paginator
         self.requestMapper = requestMapper
         self.responseMapper = responseMapper
+        self.decoder = decoder
     }
 
     public func fetch(with input: FetchRepositoryListInput) -> Single<[Repository]> {
@@ -42,8 +44,8 @@ public final class URLSessionFetchRepositoryListRepository: FetchRepositoryListR
             )
         ) else { return .error(URLError(.badURL)) }
 
-        let response = fetch(request)
-            .compactMap { [weak self] response -> PaginatedResponse<Repository>? in
+        let response = remoteClient.fetch(request)
+            .compactMap { [weak self] (response: RepositoryListResponse) -> PaginatedResponse<Repository>? in
                 guard let self = self else { return nil }
 
                 return self.responseMapper.map(input: response)
@@ -54,30 +56,5 @@ public final class URLSessionFetchRepositoryListRepository: FetchRepositoryListR
         return paginator
             .paginate(response)
             .map { $0.uniqued() }
-    }
-
-    private func fetch(_ request: URLRequest) -> Single<RepositoryListResponse> {
-        Single.create { [weak self] single in
-            guard let self = self else { return Disposables.create() }
-
-            let task = self.session.dataTask(with: request) { [weak self] data, _, error in
-                guard let self = self, let data = data else {
-                    return single(.failure(error ?? URLError(.badServerResponse)))
-                }
-
-                do {
-                    let response = try self.decoder.decode(RepositoryListResponse.self, from: data)
-                    single(.success(response))
-                } catch {
-                    single(.failure(error))
-                }
-            }
-
-            task.resume()
-
-            return Disposables.create {
-                task.cancel()
-            }
-        }
     }
 }
