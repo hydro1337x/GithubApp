@@ -10,9 +10,9 @@ import Domain
 import RxSwift
 
 public final class FakeRetrieveUserAccessTokenRepository: RetrieveUserAccessTokenRepository {
-    private let localClient: LocalRetrieving
+    private let localClient: LocalFetching
 
-    public init(localClient: LocalRetrieving) {
+    public init(localClient: LocalFetching) {
         self.localClient = localClient
     }
 
@@ -21,7 +21,7 @@ public final class FakeRetrieveUserAccessTokenRepository: RetrieveUserAccessToke
             guard let self = self else { return Observable.empty().asSingle() }
             
             return self.localClient
-                .retrieveInstance(ofType: AccessTokenResponse.self, for: LocalStorageKey.accessToken)
+                .fetchInstance(ofType: AccessTokenResponse.self, for: LocalStorageKey.accessToken)
         }
 
         return response

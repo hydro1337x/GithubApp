@@ -48,13 +48,11 @@ public final class RepositoryDetailsViewController: UIViewController {
     }
 
     private func setupSubscriptions() {
-        let trigger = Signal.just(())
-
         let favoriteTrigger = favoriteButton.rx
             .tap
             .asSignal()
 
-        let input = RepositoryDetailsViewModel.Input(trigger: trigger, favoriteTrigger: favoriteTrigger)
+        let input = RepositoryDetailsViewModel.Input(favoriteTrigger: favoriteTrigger)
 
         let output = viewModel.transform(input: input)
 
@@ -75,11 +73,11 @@ public final class RepositoryDetailsViewController: UIViewController {
             })
             .disposed(by: disposeBag)
 
-        output.isFavoritedState
+        output.isFavoriteToggleState
             .drive(onNext: { [unowned self] state in
                 switch state {
                 case .initial:
-                    break
+                    setFavoriteButtonImage("heart")
                 case .loading:
                     break
                 case .loaded(let value):
@@ -87,6 +85,12 @@ public final class RepositoryDetailsViewController: UIViewController {
                 case .failed(let message):
                     print("ERROR: ", message)
                 }
+            })
+            .disposed(by: disposeBag)
+
+        output.isFavoriteInitially
+            .drive(onNext: { [unowned self] isFavorite in
+                setFavoriteButtonImage(isFavorite ? "heart.fill" : "heart")
             })
             .disposed(by: disposeBag)
     }
@@ -139,9 +143,6 @@ extension RepositoryDetailsViewController: ViewConstructing {
 
         activityIndicatorView.style = .large
         activityIndicatorView.hidesWhenStopped = true
-
-        setFavoriteButtonImage("heart")
-
     }
 
     private func makeLoadedStateLayout(with model: RepositoryDetailsModel) {

@@ -10,11 +10,11 @@ import Domain
 import RxSwift
 
 public final class LocalFetchFavoriteRepositoriesRepository: FetchFavoriteRepositoriesRepository {
-    private let localClient: LocalRetrieving
+    private let localClient: LocalFetching
     private let responseMapper: AnyMapper<[RepositoryDetailsResponse], [Repository]>
 
     public init(
-        localClient: LocalRetrieving,
+        localClient: LocalFetching,
         responseMapper: AnyMapper<[RepositoryDetailsResponse], [Repository]>
     ) {
         self.localClient = localClient
@@ -22,7 +22,7 @@ public final class LocalFetchFavoriteRepositoriesRepository: FetchFavoriteReposi
     }
 
     public func fetch() -> Single<[Repository]> {
-        localClient.retrieveInstance(ofType: [RepositoryDetailsResponse].self, for: LocalStorageKey.favoriteRepositories)
+        localClient.fetchInstance(ofType: [RepositoryDetailsResponse].self, for: LocalStorageKey.favoriteRepositories)
             .map(responseMapper.map(input:))
             .map { $0.uniqued() }
     }

@@ -12,12 +12,12 @@ import Domain
 
 public final class RepositoryDetailsViewModel {
     struct Input {
-        let trigger: Signal<Void>
         let favoriteTrigger: Signal<Void>
     }
     struct Output {
         let repositoryDetailsState: Driver<DataState<RepositoryDetailsModel>>
-        let isFavoritedState: Driver<DataState<Bool>>
+        let isFavoriteInitially: Driver<Bool>
+        let isFavoriteToggleState: Driver<DataState<Bool>>
     }
 
     let createdAtTitle = "Created at:"
@@ -26,7 +26,8 @@ public final class RepositoryDetailsViewModel {
     private let name: String
     private let owner: String
     private let fetchRepositoryDetailsUseCase: FetchRepositoryDetailsUseCase
-    private let addFavoriteRepositoryUseCase: AddFavoriteRepositoryUseCase
+    private let toggleFavoriteRepositoryUseCase: ToggleFavoriteRepositoryUseCase
+    private let checkIfRepositoryIsFavoriteUseCase: CheckIfRepositoryIsFavoriteUseCase
     private let repositoryDetailsToRepositoryDetailsModelMapper: AnyMapper<RepositoryDetails, RepositoryDetailsModel>
     private let repositoryDetailsModelToRepositoryDetailsMapper: AnyMapper<RepositoryDetailsModel, RepositoryDetails>
     private let scheduler: SchedulerType
@@ -35,7 +36,8 @@ public final class RepositoryDetailsViewModel {
         name: String,
         owner: String,
         fetchRepositoryDetailsUseCase: FetchRepositoryDetailsUseCase,
-        addFavoriteRepositoryUseCase: AddFavoriteRepositoryUseCase,
+        toggleFavoriteRepositoryUseCase: ToggleFavoriteRepositoryUseCase,
+        checkIfRepositoryIsFavoriteUseCase: CheckIfRepositoryIsFavoriteUseCase,
         repositoryDetailsToRepositoryDetailsModelMapper: AnyMapper<RepositoryDetails, RepositoryDetailsModel>,
         repositoryDetailsModelToRepositoryDetailsMapper: AnyMapper<RepositoryDetailsModel, RepositoryDetails>,
         scheduler: SchedulerType
@@ -43,7 +45,8 @@ public final class RepositoryDetailsViewModel {
         self.name = name
         self.owner = owner
         self.fetchRepositoryDetailsUseCase = fetchRepositoryDetailsUseCase
-        self.addFavoriteRepositoryUseCase = addFavoriteRepositoryUseCase
+        self.toggleFavoriteRepositoryUseCase = toggleFavoriteRepositoryUseCase
+        self.checkIfRepositoryIsFavoriteUseCase = checkIfRepositoryIsFavoriteUseCase
         self.repositoryDetailsToRepositoryDetailsModelMapper = repositoryDetailsToRepositoryDetailsModelMapper
         self.repositoryDetailsModelToRepositoryDetailsMapper = repositoryDetailsModelToRepositoryDetailsMapper
         self.scheduler = scheduler
@@ -51,15 +54,13 @@ public final class RepositoryDetailsViewModel {
 
     func transform(input: Input) -> Output {
         var repositoryDetailsModel: RepositoryDetailsModel?
+        var toggle = false
 
-        let repositoryDetailsPartialState = input.trigger
+        let fetchRepositoryDetailsInput = FetchRepositoryDetailsInput(name: name, owner: owner)
+        let repositoryDetailsPartialState = fetchRepositoryDetailsUseCase.execute(with: fetchRepositoryDetailsInput)
+            .map(repositoryDetailsToRepositoryDetailsModelMapper.map(input:))
             .asObservable()
-            .flatMap { [unowned self] in
-                fetchRepositoryDetailsUseCase.execute(with: FetchRepositoryDetailsInput(name: name, owner: owner))
-                    .map(repositoryDetailsToRepositoryDetailsModelMapper.map(input:))
-                    .asObservable()
-                    .materialize()
-            }
+            .materialize()
             .compactMap { event -> DataState<RepositoryDetailsModel>? in
                 switch event {
                 case .error(let error):
@@ -75,7 +76,7 @@ public final class RepositoryDetailsViewModel {
 
         let repositoryDetailsState = Observable
             .merge(
-                input.trigger.asObservable().map { DataState.loading },
+                .just(DataState.loading),
                 repositoryDetailsPartialState
             )
             .startWith(.initial)
@@ -83,40 +84,54 @@ public final class RepositoryDetailsViewModel {
         let debouncedFavoriteTrigger = input.favoriteTrigger
             .asObservable()
             .delay(.milliseconds(500), scheduler: scheduler)
-
-
-        let isFavoritedPartialState = debouncedFavoriteTrigger
             .observe(on: scheduler)
-            .compactMap { repositoryDetailsModel }
-            .map { [unowned self] input in
-                repositoryDetailsModelToRepositoryDetailsMapper.map(input: input)
+
+        let isFavoriteTogglePartialState = debouncedFavoriteTrigger
+            .compactMap { [unowned self] in
+                guard let repositoryDetailsModel = repositoryDetailsModel else {
+                    return nil
+                }
+
+                let repositoryDetails = repositoryDetailsModelToRepositoryDetailsMapper.map(input: repositoryDetailsModel)
+                
+                return ToggleFavoriteRepositoryInput(toggle: toggle, repositoryDetails: repositoryDetails)
             }
             .flatMap { [unowned self] input in
-                addFavoriteRepositoryUseCase.execute(input: input)
-                    .andThen(Observable<Bool>.just(true))
+                toggleFavoriteRepositoryUseCase.execute(input: input)
+                    .andThen(Observable<Void>.just(()))
                     .materialize()
             }
             .compactMap { event -> DataState<Bool>? in
                 switch event {
-                case .next(let value):
-                    return .loaded(value)
+                case .next:
+                    toggle = !toggle
+                    return .loaded(toggle)
                 case .error(let error):
                     return .failed(error.localizedDescription)
                 case .completed:
                     return nil
                 }
             }
+            .share()
 
-        let isFavoritedState = Observable
+        let isFavoriteToggleState = Observable
             .merge(
                 debouncedFavoriteTrigger.map { _ in DataState<Bool>.loading },
-                isFavoritedPartialState
+                isFavoriteTogglePartialState
             )
             .startWith(.initial)
 
+        let findRepositoryInput = FindRepositoryInput(name: name, owner: owner)
+        let IsFavoriteInitially = checkIfRepositoryIsFavoriteUseCase.execute(input: findRepositoryInput)
+            .do(onSuccess: { value in
+                toggle = value
+            })
+            .catchAndReturn(false)
+
         return Output(
             repositoryDetailsState: repositoryDetailsState.asDriver(onErrorDriveWith: .empty()),
-            isFavoritedState: isFavoritedState.asDriver(onErrorDriveWith: .empty())
+            isFavoriteInitially: IsFavoriteInitially.asDriver(onErrorDriveWith: .empty()),
+            isFavoriteToggleState: isFavoriteToggleState.asDriver(onErrorDriveWith: .empty())
         )
     }
 }

@@ -10,7 +10,9 @@ import RxSwift
 import RxRelay
 
 struct TabsSceneFactory {
-    typealias Dependencies = SearchRepositoriesSceneFactory.Dependencies & FavoriteRepositoriesSceneFactory.Dependencies
+    typealias Dependencies =
+    SearchRepositoriesSceneFactory.Dependencies &
+    FavoriteRepositoriesSceneFactory.Dependencies
 
     let dependencies: Dependencies
 

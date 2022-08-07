@@ -17,23 +17,25 @@ struct SearchRepositoriesSceneFactory {
     RepositoriesToRepositoryViewModelsMapperInjectable &
     RepositoryDetailsToRepositoryDetailsModelMapperInjectable &
     RepositoryDetailsModelToRepositoryDetailsMapperInjectable &
-    AddFavoriteRepositoryUseCaseInjectable &
+    ToggleFavoriteRepositoryUseCaseInjectable &
     FetchRepositoryDetailsUseCaseInjectable &
-    FetchSearchedRepositoriesUseCaseInjectable
+    FetchSearchedRepositoriesUseCaseInjectable &
+    CheckIfRepositoryIsFavoriteUseCaseInjectable
 
     let dependencies: Dependencies
 
     func makeRepositoryDetailsViewController(with input: FetchRepositoryDetailsInput, refreshRelay: PublishRelay<Void>) -> UIViewController {
         let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated)
-        let addFavoriteRepositoryUseCaseDecorator = AddFavoriteRepositoryUseCaseDecorator(
-            dependencies.addFavoriteRepositoryUseCase,
+        let toggleFavoriteRepositoryUseCaseDecorator = ToggleFavoriteRepositoryUseCaseDecorator(
+            dependencies.toggleFavoriteRepositoryUseCase,
             completionRelay: refreshRelay
         )
         let viewModel = RepositoryDetailsViewModel(
             name: input.name,
             owner: input.owner,
             fetchRepositoryDetailsUseCase: dependencies.fetchRepositoryDetailsUseCase,
-            addFavoriteRepositoryUseCase: addFavoriteRepositoryUseCaseDecorator,
+            toggleFavoriteRepositoryUseCase: toggleFavoriteRepositoryUseCaseDecorator,
+            checkIfRepositoryIsFavoriteUseCase: dependencies.checkIfRepositoryIsFavoriteUseCase,
             repositoryDetailsToRepositoryDetailsModelMapper: dependencies.repositoryDetailsToRepositoryDetailsModelMapper,
             repositoryDetailsModelToRepositoryDetailsMapper: dependencies.repositoryDetailsModelToRepositoryDetailsMapper,
             scheduler: scheduler

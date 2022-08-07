@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct RepositoryDetailsResponse: Codable {
+public struct RepositoryDetailsResponse: Codable, Hashable {
     let id: Int
     let name: String
     let description: String?

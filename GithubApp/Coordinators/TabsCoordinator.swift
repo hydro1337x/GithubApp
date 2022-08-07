@@ -12,7 +12,6 @@ import Presentation
 import Domain
 
 final class TabsCoordinator: Coordinator {
-
     let tabBarController = UITabBarController()
 
     private var children: [Coordinator] = []

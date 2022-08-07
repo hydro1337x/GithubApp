@@ -10,11 +10,11 @@ import Domain
 import RxSwift
 
 public final class LocalStoreFavoriteRepositoryRepository: StoreFavoriteRepositoryRepository {
-    private let localClient: LocalStoring & LocalRetrieving
+    private let localClient: LocalStoring & LocalFetching
     private let requestMapper: AnyMapper<RepositoryDetails, RepositoryDetailsResponse>
 
     public init(
-        localClient: LocalStoring & LocalRetrieving,
+        localClient: LocalStoring & LocalFetching,
         requestMapper: AnyMapper<RepositoryDetails, RepositoryDetailsResponse>
     ) {
         self.localClient = localClient
@@ -24,7 +24,7 @@ public final class LocalStoreFavoriteRepositoryRepository: StoreFavoriteReposito
     public func store(input: RepositoryDetails) -> Completable {
         let newRepository = requestMapper.map(input: input)
 
-        return localClient.retrieveInstance(ofType: [RepositoryDetailsResponse].self, for: LocalStorageKey.favoriteRepositories)
+        return localClient.fetchInstance(ofType: [RepositoryDetailsResponse].self, for: LocalStorageKey.favoriteRepositories)
             .catch { error in
                 if error is NotFoundError {
                     return .just([])

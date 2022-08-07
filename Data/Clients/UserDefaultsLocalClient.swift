@@ -10,7 +10,6 @@ import RxSwift
 import Domain
 
 public final class UserDefaultsLocalClient {
-
     private let userDefaults: UserDefaults
     private let encoder: JSONEncoder
     private let decoder: JSONDecoder
@@ -42,8 +41,8 @@ extension UserDefaultsLocalClient: LocalStoring {
     }
 }
 
-extension UserDefaultsLocalClient: LocalRetrieving {
-    public func retrieveInstance<T: Decodable>(ofType: T.Type, for key: String) -> Single<T> {
+extension UserDefaultsLocalClient: LocalFetching {
+    public func fetchInstance<T: Decodable>(ofType: T.Type, for key: String) -> Single<T> {
         guard let encoded = userDefaults.object(forKey: key) as? Data else { return .error(NotFoundError()) }
 
         let decoded: T

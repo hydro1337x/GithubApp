@@ -1,5 +1,5 @@
 //
-//  AddFavoriteRepositoryUseCaseDecorator.swift
+//  ToggleFavoriteRepositoryUseCaseDecorator.swift
 //  GithubApp
 //
 //  Created by Benjamin Mecanović on 07.08.2022..
@@ -10,16 +10,16 @@ import Domain
 import RxSwift
 import RxRelay
 
-final class AddFavoriteRepositoryUseCaseDecorator: AddFavoriteRepositoryUseCase {
-    private let decoratee: AddFavoriteRepositoryUseCase
+final class ToggleFavoriteRepositoryUseCaseDecorator: ToggleFavoriteRepositoryUseCase {
+    private let decoratee: ToggleFavoriteRepositoryUseCase
     private let completionRelay: PublishRelay<Void>
 
-    init(_ decoratee: AddFavoriteRepositoryUseCase, completionRelay: PublishRelay<Void>) {
+    init(_ decoratee: ToggleFavoriteRepositoryUseCase, completionRelay: PublishRelay<Void>) {
         self.decoratee = decoratee
         self.completionRelay = completionRelay
     }
 
-    func execute(input: RepositoryDetails) -> Completable {
+    func execute(input: ToggleFavoriteRepositoryInput) -> Completable {
         decoratee.execute(input: input)
             .do(afterCompleted: { [weak self] in
                 guard let self = self else { return }
