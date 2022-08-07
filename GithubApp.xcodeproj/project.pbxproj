@@ -42,20 +42,20 @@
 		60456884289FD9A000FFA0EA /* RepositoryDetailsModelToRepositoryDetailsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60456883289FD9A000FFA0EA /* RepositoryDetailsModelToRepositoryDetailsMapper.swift */; };
 		604756C1289523B200DE40DE /* RepositoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756C0289523B200DE40DE /* RepositoryResponse.swift */; };
 		604756C32895251E00DE40DE /* OwnerResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756C22895251E00DE40DE /* OwnerResponse.swift */; };
-		604756C52895282100DE40DE /* RepositoryListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756C42895282100DE40DE /* RepositoryListResponse.swift */; };
+		604756C52895282100DE40DE /* RepositoriesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756C42895282100DE40DE /* RepositoriesResponse.swift */; };
 		604756CA289528E800DE40DE /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756C9289528E800DE40DE /* Repository.swift */; };
 		604756CC289528FA00DE40DE /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756CB289528FA00DE40DE /* Owner.swift */; };
-		604756D328952A1600DE40DE /* FetchSearchedRepositoryListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756D228952A1600DE40DE /* FetchSearchedRepositoryListUseCase.swift */; };
-		604756D528952A7A00DE40DE /* FetchRepositoryListInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756D428952A7A00DE40DE /* FetchRepositoryListInput.swift */; };
-		604756D728952B1C00DE40DE /* ConcreteFetchSearchedRepositoryListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756D628952B1C00DE40DE /* ConcreteFetchSearchedRepositoryListUseCase.swift */; };
-		604756D928952B5A00DE40DE /* FetchSearchedRepositoryListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756D828952B5A00DE40DE /* FetchSearchedRepositoryListRepository.swift */; };
-		604756DC2895305800DE40DE /* RemoteFetchSearchedRepositoryListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756DB2895305800DE40DE /* RemoteFetchSearchedRepositoryListRepository.swift */; };
+		604756D328952A1600DE40DE /* FetchSearchedRepositoriesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756D228952A1600DE40DE /* FetchSearchedRepositoriesUseCase.swift */; };
+		604756D528952A7A00DE40DE /* FetchRepositoriesInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756D428952A7A00DE40DE /* FetchRepositoriesInput.swift */; };
+		604756D728952B1C00DE40DE /* ConcreteFetchSearchedRepositoriesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756D628952B1C00DE40DE /* ConcreteFetchSearchedRepositoriesUseCase.swift */; };
+		604756D928952B5A00DE40DE /* FetchSearchedRepositoriesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756D828952B5A00DE40DE /* FetchSearchedRepositoriesRepository.swift */; };
+		604756DC2895305800DE40DE /* RemoteFetchSearchedRepositoriesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756DB2895305800DE40DE /* RemoteFetchSearchedRepositoriesRepository.swift */; };
 		604756E12895315D00DE40DE /* AnyMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756E02895315D00DE40DE /* AnyMapper.swift */; };
 		604756E32895319300DE40DE /* Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756E22895319300DE40DE /* Mapper.swift */; };
 		604756E6289536A600DE40DE /* Paginator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756E5289536A600DE40DE /* Paginator.swift */; };
 		604756E8289538AC00DE40DE /* PaginatedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756E7289538AC00DE40DE /* PaginatedResponse.swift */; };
 		604756EB289538E200DE40DE /* Pagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756EA289538E200DE40DE /* Pagination.swift */; };
-		604756ED2895440600DE40DE /* RepositoryListResponseMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756EC2895440600DE40DE /* RepositoryListResponseMapper.swift */; };
+		604756ED2895440600DE40DE /* RepositoriesResponseMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756EC2895440600DE40DE /* RepositoriesResponseMapper.swift */; };
 		604756EF2895447C00DE40DE /* DefaultPagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756EE2895447C00DE40DE /* DefaultPagination.swift */; };
 		604756F12895457000DE40DE /* OwnerResponseMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756F02895457000DE40DE /* OwnerResponseMapper.swift */; };
 		604756F528954B5C00DE40DE /* SearchRepositoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604756F428954B5C00DE40DE /* SearchRepositoriesViewController.swift */; };
@@ -97,8 +97,8 @@
 		607DD9C82895912C00957EEA /* Repository+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9C72895912C00957EEA /* Repository+Extension.swift */; };
 		607DD9CA2895AD5700957EEA /* ActivityTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9C92895AD5700957EEA /* ActivityTracker.swift */; };
 		607DD9CC2895AD6000957EEA /* FailureTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9CB2895AD6000957EEA /* FailureTracker.swift */; };
-		607DD9CE2895B95700957EEA /* FetchRepositoryListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9CD2895B95700957EEA /* FetchRepositoryListRequest.swift */; };
-		607DD9D22895BB2700957EEA /* FetchRepositoryListRequestMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9D12895BB2700957EEA /* FetchRepositoryListRequestMapper.swift */; };
+		607DD9CE2895B95700957EEA /* FetchRepositoriesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9CD2895B95700957EEA /* FetchRepositoriesRequest.swift */; };
+		607DD9D22895BB2700957EEA /* FetchRepositoriesRequestMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9D12895BB2700957EEA /* FetchRepositoriesRequestMapper.swift */; };
 		607DD9D42895E3FE00957EEA /* AsyncImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9D32895E3FE00957EEA /* AsyncImageView.swift */; };
 		607DD9D72895E42300957EEA /* AsyncImageState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9D62895E42300957EEA /* AsyncImageState.swift */; };
 		607DD9D92895E45E00957EEA /* AsyncImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9D82895E45E00957EEA /* AsyncImageViewModel.swift */; };
@@ -120,10 +120,10 @@
 		60C8D961289EEE8300798A14 /* SubsequentTriggerInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D960289EEE8300798A14 /* SubsequentTriggerInput.swift */; };
 		60C8D964289EF4C000798A14 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D963289EF4C000798A14 /* FavoritesViewController.swift */; };
 		60C8D966289EF4E400798A14 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D965289EF4E400798A14 /* FavoritesViewModel.swift */; };
-		60C8D968289EFD4500798A14 /* FetchFavoriteRepositoryListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D967289EFD4500798A14 /* FetchFavoriteRepositoryListUseCase.swift */; };
-		60C8D96A289EFD7700798A14 /* ConcreteFetchFavoriteRepositoryListUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D969289EFD7700798A14 /* ConcreteFetchFavoriteRepositoryListUseCase.swift */; };
-		60C8D96C289EFF3400798A14 /* FetchFavoriteRepositoryListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D96B289EFF3400798A14 /* FetchFavoriteRepositoryListRepository.swift */; };
-		60C8D96E289EFFD200798A14 /* LocalFetchFavoriteRepositoryListRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D96D289EFFD200798A14 /* LocalFetchFavoriteRepositoryListRepository.swift */; };
+		60C8D968289EFD4500798A14 /* FetchFavoriteRepositoriesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D967289EFD4500798A14 /* FetchFavoriteRepositoriesUseCase.swift */; };
+		60C8D96A289EFD7700798A14 /* ConcreteFetchFavoriteRepositoriesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D969289EFD7700798A14 /* ConcreteFetchFavoriteRepositoriesUseCase.swift */; };
+		60C8D96C289EFF3400798A14 /* FetchFavoriteRepositoriesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D96B289EFF3400798A14 /* FetchFavoriteRepositoriesRepository.swift */; };
+		60C8D96E289EFFD200798A14 /* LocalFetchFavoriteRepositoriesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D96D289EFFD200798A14 /* LocalFetchFavoriteRepositoriesRepository.swift */; };
 		60C8D970289F089600798A14 /* RepositoryDetailsResponseListMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D96F289F089600798A14 /* RepositoryDetailsResponseListMapper.swift */; };
 		60C8D973289F0F7600798A14 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D972289F0F7600798A14 /* DependencyContainer.swift */; };
 		60C8D975289F100300798A14 /* Repositories+Injectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D974289F100300798A14 /* Repositories+Injectable.swift */; };
@@ -276,20 +276,20 @@
 		60456883289FD9A000FFA0EA /* RepositoryDetailsModelToRepositoryDetailsMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailsModelToRepositoryDetailsMapper.swift; sourceTree = "<group>"; };
 		604756C0289523B200DE40DE /* RepositoryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryResponse.swift; sourceTree = "<group>"; };
 		604756C22895251E00DE40DE /* OwnerResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerResponse.swift; sourceTree = "<group>"; };
-		604756C42895282100DE40DE /* RepositoryListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryListResponse.swift; sourceTree = "<group>"; };
+		604756C42895282100DE40DE /* RepositoriesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesResponse.swift; sourceTree = "<group>"; };
 		604756C9289528E800DE40DE /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		604756CB289528FA00DE40DE /* Owner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
-		604756D228952A1600DE40DE /* FetchSearchedRepositoryListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchSearchedRepositoryListUseCase.swift; sourceTree = "<group>"; };
-		604756D428952A7A00DE40DE /* FetchRepositoryListInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRepositoryListInput.swift; sourceTree = "<group>"; };
-		604756D628952B1C00DE40DE /* ConcreteFetchSearchedRepositoryListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteFetchSearchedRepositoryListUseCase.swift; sourceTree = "<group>"; };
-		604756D828952B5A00DE40DE /* FetchSearchedRepositoryListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchSearchedRepositoryListRepository.swift; sourceTree = "<group>"; };
-		604756DB2895305800DE40DE /* RemoteFetchSearchedRepositoryListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFetchSearchedRepositoryListRepository.swift; sourceTree = "<group>"; };
+		604756D228952A1600DE40DE /* FetchSearchedRepositoriesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchSearchedRepositoriesUseCase.swift; sourceTree = "<group>"; };
+		604756D428952A7A00DE40DE /* FetchRepositoriesInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRepositoriesInput.swift; sourceTree = "<group>"; };
+		604756D628952B1C00DE40DE /* ConcreteFetchSearchedRepositoriesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteFetchSearchedRepositoriesUseCase.swift; sourceTree = "<group>"; };
+		604756D828952B5A00DE40DE /* FetchSearchedRepositoriesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchSearchedRepositoriesRepository.swift; sourceTree = "<group>"; };
+		604756DB2895305800DE40DE /* RemoteFetchSearchedRepositoriesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFetchSearchedRepositoriesRepository.swift; sourceTree = "<group>"; };
 		604756E02895315D00DE40DE /* AnyMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyMapper.swift; sourceTree = "<group>"; };
 		604756E22895319300DE40DE /* Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mapper.swift; sourceTree = "<group>"; };
 		604756E5289536A600DE40DE /* Paginator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paginator.swift; sourceTree = "<group>"; };
 		604756E7289538AC00DE40DE /* PaginatedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginatedResponse.swift; sourceTree = "<group>"; };
 		604756EA289538E200DE40DE /* Pagination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pagination.swift; sourceTree = "<group>"; };
-		604756EC2895440600DE40DE /* RepositoryListResponseMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryListResponseMapper.swift; sourceTree = "<group>"; };
+		604756EC2895440600DE40DE /* RepositoriesResponseMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesResponseMapper.swift; sourceTree = "<group>"; };
 		604756EE2895447C00DE40DE /* DefaultPagination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPagination.swift; sourceTree = "<group>"; };
 		604756F02895457000DE40DE /* OwnerResponseMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerResponseMapper.swift; sourceTree = "<group>"; };
 		604756F428954B5C00DE40DE /* SearchRepositoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepositoriesViewController.swift; sourceTree = "<group>"; };
@@ -331,8 +331,8 @@
 		607DD9C72895912C00957EEA /* Repository+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Repository+Extension.swift"; sourceTree = "<group>"; };
 		607DD9C92895AD5700957EEA /* ActivityTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTracker.swift; sourceTree = "<group>"; };
 		607DD9CB2895AD6000957EEA /* FailureTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailureTracker.swift; sourceTree = "<group>"; };
-		607DD9CD2895B95700957EEA /* FetchRepositoryListRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRepositoryListRequest.swift; sourceTree = "<group>"; };
-		607DD9D12895BB2700957EEA /* FetchRepositoryListRequestMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRepositoryListRequestMapper.swift; sourceTree = "<group>"; };
+		607DD9CD2895B95700957EEA /* FetchRepositoriesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRepositoriesRequest.swift; sourceTree = "<group>"; };
+		607DD9D12895BB2700957EEA /* FetchRepositoriesRequestMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRepositoriesRequestMapper.swift; sourceTree = "<group>"; };
 		607DD9D32895E3FE00957EEA /* AsyncImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncImageView.swift; sourceTree = "<group>"; };
 		607DD9D62895E42300957EEA /* AsyncImageState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncImageState.swift; sourceTree = "<group>"; };
 		607DD9D82895E45E00957EEA /* AsyncImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncImageViewModel.swift; sourceTree = "<group>"; };
@@ -354,10 +354,10 @@
 		60C8D960289EEE8300798A14 /* SubsequentTriggerInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubsequentTriggerInput.swift; sourceTree = "<group>"; };
 		60C8D963289EF4C000798A14 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 		60C8D965289EF4E400798A14 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
-		60C8D967289EFD4500798A14 /* FetchFavoriteRepositoryListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchFavoriteRepositoryListUseCase.swift; sourceTree = "<group>"; };
-		60C8D969289EFD7700798A14 /* ConcreteFetchFavoriteRepositoryListUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteFetchFavoriteRepositoryListUseCase.swift; sourceTree = "<group>"; };
-		60C8D96B289EFF3400798A14 /* FetchFavoriteRepositoryListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchFavoriteRepositoryListRepository.swift; sourceTree = "<group>"; };
-		60C8D96D289EFFD200798A14 /* LocalFetchFavoriteRepositoryListRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFetchFavoriteRepositoryListRepository.swift; sourceTree = "<group>"; };
+		60C8D967289EFD4500798A14 /* FetchFavoriteRepositoriesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchFavoriteRepositoriesUseCase.swift; sourceTree = "<group>"; };
+		60C8D969289EFD7700798A14 /* ConcreteFetchFavoriteRepositoriesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteFetchFavoriteRepositoriesUseCase.swift; sourceTree = "<group>"; };
+		60C8D96B289EFF3400798A14 /* FetchFavoriteRepositoriesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchFavoriteRepositoriesRepository.swift; sourceTree = "<group>"; };
+		60C8D96D289EFFD200798A14 /* LocalFetchFavoriteRepositoriesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFetchFavoriteRepositoriesRepository.swift; sourceTree = "<group>"; };
 		60C8D96F289F089600798A14 /* RepositoryDetailsResponseListMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailsResponseListMapper.swift; sourceTree = "<group>"; };
 		60C8D972289F0F7600798A14 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		60C8D974289F100300798A14 /* Repositories+Injectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Repositories+Injectable.swift"; sourceTree = "<group>"; };
@@ -525,13 +525,13 @@
 			isa = PBXGroup;
 			children = (
 				604756D1289529FB00DE40DE /* Abstractions */,
-				604756D628952B1C00DE40DE /* ConcreteFetchSearchedRepositoryListUseCase.swift */,
+				604756D628952B1C00DE40DE /* ConcreteFetchSearchedRepositoriesUseCase.swift */,
 				6048988B2896CBC600EA6E21 /* ConcreteFetchRepositoryDetailsUseCase.swift */,
 				607DD9E12895E81000957EEA /* ConcreteFetchImageUseCase.swift */,
 				6066F6B2289C4DF100A8631C /* ConcreteLoginUserUseCase.swift */,
 				603D8C18289D62C400A5CBE3 /* ConcreteLogoutUserUseCase.swift */,
 				603D8C24289D81EF00A5CBE3 /* ConcreteEvaluateUserAuthenticityUseCase.swift */,
-				60C8D969289EFD7700798A14 /* ConcreteFetchFavoriteRepositoryListUseCase.swift */,
+				60C8D969289EFD7700798A14 /* ConcreteFetchFavoriteRepositoriesUseCase.swift */,
 				60456879289FBF7400FFA0EA /* ConcreteAddFavoriteRepositoryUseCase.swift */,
 			);
 			path = UseCases;
@@ -548,13 +548,13 @@
 		604756D0289529ED00DE40DE /* Abstractions */ = {
 			isa = PBXGroup;
 			children = (
-				604756D828952B5A00DE40DE /* FetchSearchedRepositoryListRepository.swift */,
+				604756D828952B5A00DE40DE /* FetchSearchedRepositoriesRepository.swift */,
 				604898892896CB1E00EA6E21 /* FetchRepositoryDetailsRepository.swift */,
 				607DD9E32895E83A00957EEA /* FetchImageRepository.swift */,
 				6066F6C0289C5B9600A8631C /* LoginUserRepository.swift */,
 				603D8C16289D627000A5CBE3 /* LogoutUserRepository.swift */,
 				603D8C1E289D7B1D00A5CBE3 /* RetrieveUserAccessTokenRepository.swift */,
-				60C8D96B289EFF3400798A14 /* FetchFavoriteRepositoryListRepository.swift */,
+				60C8D96B289EFF3400798A14 /* FetchFavoriteRepositoriesRepository.swift */,
 				60456877289FBF5400FFA0EA /* StoreFavoriteRepositoryRepository.swift */,
 			);
 			path = Abstractions;
@@ -563,13 +563,13 @@
 		604756D1289529FB00DE40DE /* Abstractions */ = {
 			isa = PBXGroup;
 			children = (
-				604756D228952A1600DE40DE /* FetchSearchedRepositoryListUseCase.swift */,
+				604756D228952A1600DE40DE /* FetchSearchedRepositoriesUseCase.swift */,
 				6066F6A5289C1C0500A8631C /* FetchRepositoryDetailsUseCase.swift */,
 				607DD9DD2895E79200957EEA /* FetchImageUseCase.swift */,
 				6066F6A9289C467A00A8631C /* LoginUserUseCase.swift */,
 				603D8C14289D624100A5CBE3 /* LogoutUserUseCase.swift */,
 				603D8C1C289D79C500A5CBE3 /* EvaluateUserAuthenticityUseCase.swift */,
-				60C8D967289EFD4500798A14 /* FetchFavoriteRepositoryListUseCase.swift */,
+				60C8D967289EFD4500798A14 /* FetchFavoriteRepositoriesUseCase.swift */,
 				60456875289FBEDE00FFA0EA /* AddFavoriteRepositoryUseCase.swift */,
 			);
 			path = Abstractions;
@@ -578,10 +578,10 @@
 		604756DA2895302F00DE40DE /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
-				604756DB2895305800DE40DE /* RemoteFetchSearchedRepositoryListRepository.swift */,
+				604756DB2895305800DE40DE /* RemoteFetchSearchedRepositoriesRepository.swift */,
 				6066F6A3289C1BD600A8631C /* RemoteFetchRepositoryDetailsRepository.swift */,
 				607DD9E52895E8C100957EEA /* RemoteFetchImageRepository.swift */,
-				60C8D96D289EFFD200798A14 /* LocalFetchFavoriteRepositoryListRepository.swift */,
+				60C8D96D289EFFD200798A14 /* LocalFetchFavoriteRepositoriesRepository.swift */,
 				6045687B289FBFB100FFA0EA /* LocalStoreFavoriteRepositoryRepository.swift */,
 				6066F6D7289C79C800A8631C /* FakeLoginUserRepository.swift */,
 				603D8C1A289D637000A5CBE3 /* FakeLogoutUserRepository.swift */,
@@ -594,11 +594,11 @@
 			isa = PBXGroup;
 			children = (
 				604756DF2895315300DE40DE /* Abstractions */,
-				604756EC2895440600DE40DE /* RepositoryListResponseMapper.swift */,
+				604756EC2895440600DE40DE /* RepositoriesResponseMapper.swift */,
 				6066F6A1289C1A3A00A8631C /* RepositoryDetailsResponseToRepositoryDetailsMapper.swift */,
 				60C8D96F289F089600798A14 /* RepositoryDetailsResponseListMapper.swift */,
 				604756F02895457000DE40DE /* OwnerResponseMapper.swift */,
-				607DD9D12895BB2700957EEA /* FetchRepositoryListRequestMapper.swift */,
+				607DD9D12895BB2700957EEA /* FetchRepositoriesRequestMapper.swift */,
 				6066F6A7289C1ED700A8631C /* FetchRepositoryDetailsRequestMapper.swift */,
 				6045687D289FC54E00FFA0EA /* RepositoryDetailsToRepositoryDetailsResponseMapper.swift */,
 				6045687F289FC5CC00FFA0EA /* OwnerToOwnerResponseMapper.swift */,
@@ -750,7 +750,7 @@
 		6066F6B4289C4E6100A8631C /* Inputs */ = {
 			isa = PBXGroup;
 			children = (
-				604756D428952A7A00DE40DE /* FetchRepositoryListInput.swift */,
+				604756D428952A7A00DE40DE /* FetchRepositoriesInput.swift */,
 				604898872896CA9200EA6E21 /* FetchRepositoryDetailsInput.swift */,
 				607DD9DF2895E7BC00957EEA /* FetchImageInput.swift */,
 				6066F6AB289C48B700A8631C /* LoginUserInput.swift */,
@@ -826,7 +826,7 @@
 		607DD9CF2895B96200957EEA /* Request */ = {
 			isa = PBXGroup;
 			children = (
-				607DD9CD2895B95700957EEA /* FetchRepositoryListRequest.swift */,
+				607DD9CD2895B95700957EEA /* FetchRepositoriesRequest.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -834,7 +834,7 @@
 		607DD9D02895B96700957EEA /* Response */ = {
 			isa = PBXGroup;
 			children = (
-				604756C42895282100DE40DE /* RepositoryListResponse.swift */,
+				604756C42895282100DE40DE /* RepositoriesResponse.swift */,
 				604756C0289523B200DE40DE /* RepositoryResponse.swift */,
 				6066F69D289C187000A8631C /* RepositoryDetailsResponse.swift */,
 				604756C22895251E00DE40DE /* OwnerResponse.swift */,
@@ -1399,11 +1399,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				603D8C25289D81EF00A5CBE3 /* ConcreteEvaluateUserAuthenticityUseCase.swift in Sources */,
-				604756D328952A1600DE40DE /* FetchSearchedRepositoryListUseCase.swift in Sources */,
+				604756D328952A1600DE40DE /* FetchSearchedRepositoriesUseCase.swift in Sources */,
 				6066F6B9289C4E9500A8631C /* MisformattedPasswordError.swift in Sources */,
 				604756CC289528FA00DE40DE /* Owner.swift in Sources */,
 				603D8C19289D62C400A5CBE3 /* ConcreteLogoutUserUseCase.swift in Sources */,
-				60C8D96A289EFD7700798A14 /* ConcreteFetchFavoriteRepositoryListUseCase.swift in Sources */,
+				60C8D96A289EFD7700798A14 /* ConcreteFetchFavoriteRepositoriesUseCase.swift in Sources */,
 				603D8C1D289D79C500A5CBE3 /* EvaluateUserAuthenticityUseCase.swift in Sources */,
 				6066F6C7289C62A000A8631C /* AnyValidator.swift in Sources */,
 				6066F6B3289C4DF100A8631C /* ConcreteLoginUserUseCase.swift in Sources */,
@@ -1416,15 +1416,15 @@
 				603D8C21289D7C7800A5CBE3 /* AccessToken.swift in Sources */,
 				6066F6CB289C641300A8631C /* BasicPasswordValidator.swift in Sources */,
 				60456878289FBF5400FFA0EA /* StoreFavoriteRepositoryRepository.swift in Sources */,
-				60C8D968289EFD4500798A14 /* FetchFavoriteRepositoryListUseCase.swift in Sources */,
+				60C8D968289EFD4500798A14 /* FetchFavoriteRepositoriesUseCase.swift in Sources */,
 				603D8C15289D624100A5CBE3 /* LogoutUserUseCase.swift in Sources */,
 				603D8C0B289D36DA00A5CBE3 /* NotFoundError.swift in Sources */,
-				604756D528952A7A00DE40DE /* FetchRepositoryListInput.swift in Sources */,
+				604756D528952A7A00DE40DE /* FetchRepositoriesInput.swift in Sources */,
 				603D8C17289D627000A5CBE3 /* LogoutUserRepository.swift in Sources */,
 				603D8C0D289D3EB100A5CBE3 /* AuthenticationFailedError.swift in Sources */,
 				6066F6A0289C199B00A8631C /* RepositoryDetails.swift in Sources */,
 				607DD9E22895E81000957EEA /* ConcreteFetchImageUseCase.swift in Sources */,
-				604756D928952B5A00DE40DE /* FetchSearchedRepositoryListRepository.swift in Sources */,
+				604756D928952B5A00DE40DE /* FetchSearchedRepositoriesRepository.swift in Sources */,
 				604898882896CA9200EA6E21 /* FetchRepositoryDetailsInput.swift in Sources */,
 				607DD9E42895E83A00957EEA /* FetchImageRepository.swift in Sources */,
 				6048988A2896CB1E00EA6E21 /* FetchRepositoryDetailsRepository.swift in Sources */,
@@ -1432,8 +1432,8 @@
 				6066F6C1289C5B9600A8631C /* LoginUserRepository.swift in Sources */,
 				607DD9E02895E7BC00957EEA /* FetchImageInput.swift in Sources */,
 				607DD9DE2895E79200957EEA /* FetchImageUseCase.swift in Sources */,
-				60C8D96C289EFF3400798A14 /* FetchFavoriteRepositoryListRepository.swift in Sources */,
-				604756D728952B1C00DE40DE /* ConcreteFetchSearchedRepositoryListUseCase.swift in Sources */,
+				60C8D96C289EFF3400798A14 /* FetchFavoriteRepositoriesRepository.swift in Sources */,
+				604756D728952B1C00DE40DE /* ConcreteFetchSearchedRepositoriesUseCase.swift in Sources */,
 				6066F6A6289C1C0500A8631C /* FetchRepositoryDetailsUseCase.swift in Sources */,
 				6066F6AC289C48B700A8631C /* LoginUserInput.swift in Sources */,
 				6066F6AA289C467A00A8631C /* LoginUserUseCase.swift in Sources */,
@@ -1458,14 +1458,14 @@
 				60C8D970289F089600798A14 /* RepositoryDetailsResponseListMapper.swift in Sources */,
 				603D8C04289D345100A5CBE3 /* LocalRemoving.swift in Sources */,
 				603D8C23289D7CF500A5CBE3 /* FakeCheckUserAuthenticityRepository.swift in Sources */,
-				607DD9D22895BB2700957EEA /* FetchRepositoryListRequestMapper.swift in Sources */,
+				607DD9D22895BB2700957EEA /* FetchRepositoriesRequestMapper.swift in Sources */,
 				6066F69E289C187000A8631C /* RepositoryDetailsResponse.swift in Sources */,
-				604756DC2895305800DE40DE /* RemoteFetchSearchedRepositoryListRepository.swift in Sources */,
+				604756DC2895305800DE40DE /* RemoteFetchSearchedRepositoriesRepository.swift in Sources */,
 				603D8C02289D344900A5CBE3 /* LocalRetrieving.swift in Sources */,
 				604756C1289523B200DE40DE /* RepositoryResponse.swift in Sources */,
 				6066F6A8289C1ED700A8631C /* FetchRepositoryDetailsRequestMapper.swift in Sources */,
-				607DD9CE2895B95700957EEA /* FetchRepositoryListRequest.swift in Sources */,
-				604756ED2895440600DE40DE /* RepositoryListResponseMapper.swift in Sources */,
+				607DD9CE2895B95700957EEA /* FetchRepositoriesRequest.swift in Sources */,
+				604756ED2895440600DE40DE /* RepositoriesResponseMapper.swift in Sources */,
 				603D8C0F289D438200A5CBE3 /* LocalStorageKey.swift in Sources */,
 				604756E6289536A600DE40DE /* Paginator.swift in Sources */,
 				603D8C06289D34DB00A5CBE3 /* UserDefaultsLocalClient.swift in Sources */,
@@ -1487,9 +1487,9 @@
 				6066F6A4289C1BD600A8631C /* RemoteFetchRepositoryDetailsRepository.swift in Sources */,
 				604756E8289538AC00DE40DE /* PaginatedResponse.swift in Sources */,
 				6066F6D8289C79C800A8631C /* FakeLoginUserRepository.swift in Sources */,
-				60C8D96E289EFFD200798A14 /* LocalFetchFavoriteRepositoryListRepository.swift in Sources */,
+				60C8D96E289EFFD200798A14 /* LocalFetchFavoriteRepositoriesRepository.swift in Sources */,
 				603D8C00289D343400A5CBE3 /* LocalStoring.swift in Sources */,
-				604756C52895282100DE40DE /* RepositoryListResponse.swift in Sources */,
+				604756C52895282100DE40DE /* RepositoriesResponse.swift in Sources */,
 				60C8D95D289E921700798A14 /* RemoteCompletableFetching.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

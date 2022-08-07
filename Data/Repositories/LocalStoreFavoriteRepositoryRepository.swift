@@ -24,7 +24,7 @@ public final class LocalStoreFavoriteRepositoryRepository: StoreFavoriteReposito
     public func store(input: RepositoryDetails) -> Completable {
         let newRepository = requestMapper.map(input: input)
 
-        return localClient.retrieveInstance(ofType: [RepositoryDetailsResponse].self, for: LocalStorageKey.favoriteRepositoryList)
+        return localClient.retrieveInstance(ofType: [RepositoryDetailsResponse].self, for: LocalStorageKey.favoriteRepositories)
             .catch { error in
                 if error is NotFoundError {
                     return .just([])
@@ -39,7 +39,7 @@ public final class LocalStoreFavoriteRepositoryRepository: StoreFavoriteReposito
             }
             .flatMapCompletable { [weak self] repositories in
                 guard let self = self else { return .empty() }
-                return self.localClient.store(repositories, for: LocalStorageKey.favoriteRepositoryList)
+                return self.localClient.store(repositories, for: LocalStorageKey.favoriteRepositories)
             }
     }
 }

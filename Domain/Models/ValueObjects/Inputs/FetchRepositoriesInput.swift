@@ -1,5 +1,5 @@
 //
-//  FetchRepositoryListInput.swift
+//  FetchRepositoriesInput.swift
 //  Domain
 //
 //  Created by Benjamin Mecanović on 30.07.2022..
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct FetchRepositoryListInput {
+public struct FetchRepositoriesInput {
     public let searchInput: String
     public let isInitialFetch: Bool
 

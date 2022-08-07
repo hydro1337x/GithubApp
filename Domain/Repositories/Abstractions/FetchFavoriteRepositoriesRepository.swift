@@ -1,5 +1,5 @@
 //
-//  FetchFavoriteRepositoryListRepository.swift
+//  FetchFavoriteRepositoriesRepository.swift
 //  Domain
 //
 //  Created by Benjamin Mecanović on 06.08.2022..
@@ -8,6 +8,6 @@
 import Foundation
 import RxSwift
 
-public protocol FetchFavoriteRepositoryListRepository {
+public protocol FetchFavoriteRepositoriesRepository {
     func fetch() -> Single<[Repository]>
 }

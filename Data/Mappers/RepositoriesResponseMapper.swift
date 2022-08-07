@@ -1,5 +1,5 @@
 //
-//  RepositoryListResponseMapper.swift
+//  RepositoriesResponseMapper.swift
 //  Data
 //
 //  Created by Benjamin Mecanović on 30.07.2022..
@@ -8,14 +8,14 @@
 import Foundation
 import Domain
 
-public final class RepositoryListResponseMapper: Mapper {
+public final class RepositoriesResponseMapper: Mapper {
     private let ownerResponseMapper: AnyMapper<OwnerResponse, Owner>
 
     public init(ownerResponseMapper: AnyMapper<OwnerResponse, Owner>) {
         self.ownerResponseMapper = ownerResponseMapper
     }
 
-    public func map(input: RepositoryListResponse) -> PaginatedResponse<Repository> {
+    public func map(input: RepositoriesResponse) -> PaginatedResponse<Repository> {
         let pagination = DefaultPagination(total: input.total_count)
         let page = input
             .items

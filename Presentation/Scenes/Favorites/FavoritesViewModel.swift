@@ -19,16 +19,16 @@ public final class FavoritesViewModel {
         let state: Driver<DataState<[RepositoryViewModel]>>
     }
 
-    private let fetchFavoriteRepositoryListUseCase: FetchFavoriteRepositoryListUseCase
+    private let fetchFavoriteRepositoriesUseCase: FetchFavoriteRepositoriesUseCase
     private let repositoryListMapper: AnyMapper<[Repository], [RepositoryViewModel]>
     private let scheduler: SchedulerType
 
     public init(
-        fetchFavoriteRepositoryListUseCase: FetchFavoriteRepositoryListUseCase,
+        fetchFavoriteRepositoriesUseCase: FetchFavoriteRepositoriesUseCase,
         repositoryListMapper: AnyMapper<[Repository], [RepositoryViewModel]>,
         scheduler: SchedulerType
     ) {
-        self.fetchFavoriteRepositoryListUseCase = fetchFavoriteRepositoryListUseCase
+        self.fetchFavoriteRepositoriesUseCase = fetchFavoriteRepositoriesUseCase
         self.repositoryListMapper = repositoryListMapper
         self.scheduler = scheduler
     }
@@ -39,7 +39,7 @@ public final class FavoritesViewModel {
             .asObservable()
             .observe(on: scheduler)
             .flatMap { [unowned self] in
-                fetchFavoriteRepositoryListUseCase.execute()
+                fetchFavoriteRepositoriesUseCase.execute()
                     .map(repositoryListMapper.map(input:))
                     .asObservable()
                     .materialize()

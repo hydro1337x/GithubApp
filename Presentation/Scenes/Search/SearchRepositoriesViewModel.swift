@@ -24,16 +24,16 @@ public final class SearchRepositoriesViewModel {
         let failureMessage: Signal<String>
     }
 
-    private let fetchSearchedRepositoryListUseCase: FetchSearchedRepositoryListUseCase
+    private let fetchSearchedRepositoriesUseCase: FetchSearchedRepositoriesUseCase
     private let repositoryListMapper: AnyMapper<[Repository], [RepositoryViewModel]>
     private let scheduler: SchedulerType
 
     public init(
-        fetchSearchedRepositoryListUseCase: FetchSearchedRepositoryListUseCase,
+        fetchSearchedRepositoriesUseCase: FetchSearchedRepositoriesUseCase,
         repositoryListMapper: AnyMapper<[Repository], [RepositoryViewModel]>,
         scheduler: SchedulerType
     ) {
-        self.fetchSearchedRepositoryListUseCase = fetchSearchedRepositoryListUseCase
+        self.fetchSearchedRepositoriesUseCase = fetchSearchedRepositoriesUseCase
         self.repositoryListMapper = repositoryListMapper
         self.scheduler = scheduler
     }
@@ -49,7 +49,7 @@ public final class SearchRepositoriesViewModel {
             .asObservable()
             .observe(on: scheduler)
             .flatMap { [unowned self] input -> Observable<[Repository]> in
-                let input = FetchRepositoryListInput(searchInput: input, isInitialFetch: true)
+                let input = FetchRepositoriesInput(searchInput: input, isInitialFetch: true)
                 return fetch(with: input, using: refreshActivityTracker, and: failureTracker)
             }
             .share()
@@ -59,7 +59,7 @@ public final class SearchRepositoriesViewModel {
             .debounce(.milliseconds(500), scheduler: scheduler)
             .observe(on: scheduler)
             .flatMap { [unowned self] input -> Observable<[Repository]> in
-                let input = FetchRepositoryListInput(searchInput: input, isInitialFetch: true)
+                let input = FetchRepositoriesInput(searchInput: input, isInitialFetch: true)
                 return fetch(with: input, using: searchActivityTracker, and: failureTracker)
             }
             .share()
@@ -72,7 +72,7 @@ public final class SearchRepositoriesViewModel {
                 isSubsequentFetchInProgress = true
             })
             .flatMap { [unowned self] input -> Observable<[Repository]> in
-                let input = FetchRepositoryListInput(searchInput: input, isInitialFetch: false)
+                let input = FetchRepositoriesInput(searchInput: input, isInitialFetch: false)
                 return fetch(with: input, using: subsequentActivityTracker, and: failureTracker)
             }
             .share()
@@ -107,8 +107,8 @@ public final class SearchRepositoriesViewModel {
         )
     }
 
-    private func fetch(with input: FetchRepositoryListInput, using activityTracker: ActivityTracker, and failureTracker: FailureTracker) -> Observable<[Repository]> {
-        fetchSearchedRepositoryListUseCase.execute(with: input)
+    private func fetch(with input: FetchRepositoriesInput, using activityTracker: ActivityTracker, and failureTracker: FailureTracker) -> Observable<[Repository]> {
+        fetchSearchedRepositoriesUseCase.execute(with: input)
             .trackActivity(activityTracker)
             .trackFailure(failureTracker)
             .map { Optional($0) }

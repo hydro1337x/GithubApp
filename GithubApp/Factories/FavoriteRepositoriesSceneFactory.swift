@@ -14,7 +14,7 @@ import RxRelay
 
 struct FavoriteRepositoriesSceneFactory {
     typealias Dependencies =
-    FetchFavoriteRepositoryListRepositoryInjectable &
+    FetchFavoriteRepositoriesRepositoryInjectable &
     RepositoryListMapperInjectable &
     FetchRepositoryDetailsRepositoryInjectable &
     RepositoryDetailsToRepositoryDetailsModelMapperInjectable &
@@ -51,10 +51,10 @@ struct FavoriteRepositoriesSceneFactory {
         refreshRelay: PublishRelay<Void>
     ) -> UIViewController {
         let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated)
-        let fetchFavoriteRepositoryListUseCase = ConcreteFetchFavoriteRepositoryListUseCase(
-            repository: dependencies.fetchFavoriteRepositoryListRepository)
+        let fetchFavoriteRepositoriesUseCase = ConcreteFetchFavoriteRepositoriesUseCase(
+            repository: dependencies.fetchFavoriteRepositoriesRepository)
         let viewModel = FavoritesViewModel(
-            fetchFavoriteRepositoryListUseCase: fetchFavoriteRepositoryListUseCase,
+            fetchFavoriteRepositoriesUseCase: fetchFavoriteRepositoriesUseCase,
             repositoryListMapper: dependencies.repositoryListMapper,
             scheduler: scheduler
         )
