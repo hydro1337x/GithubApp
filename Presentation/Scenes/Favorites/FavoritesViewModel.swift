@@ -12,7 +12,7 @@ import Domain
 
 public final class FavoritesViewModel {
     struct Input {
-        let trigger: Signal<Void>
+        let trigger: Driver<Void>
     }
 
     struct Output {
@@ -35,9 +35,11 @@ public final class FavoritesViewModel {
 
     func transform(input: Input) -> Output {
 
-        let partialState = input.trigger
+        let trigger = input.trigger
             .asObservable()
             .observe(on: scheduler)
+
+        let partialState = trigger
             .flatMap { [unowned self] in
                 fetchFavoriteRepositoriesUseCase.execute()
                     .map(repositoriesToRepositoryViewModelsMapper.map(input:))
@@ -57,7 +59,7 @@ public final class FavoritesViewModel {
 
         let state = Observable
             .merge(
-                input.trigger.asObservable().map { _ in DataState.loading },
+                trigger.map { _ in DataState.loading },
                 partialState
             )
             .startWith(.initial)

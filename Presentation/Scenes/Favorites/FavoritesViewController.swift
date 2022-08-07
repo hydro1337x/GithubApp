@@ -52,12 +52,10 @@ public final class FavoritesViewController: UIViewController {
     }
 
     private func setupSubscriptions() {
+        let trigger = refreshRelay
+            .startWith(())
 
-        let initialTriggerRelay = PublishRelay<Void>()
-
-        let trigger = Observable.merge(refreshRelay.asObservable(), initialTriggerRelay.asObservable())
-
-        let input = FavoritesViewModel.Input(trigger: trigger.asSignal(onErrorSignalWith: .empty()))
+        let input = FavoritesViewModel.Input(trigger: trigger.asDriver(onErrorDriveWith: .empty()))
 
         let output = viewModel.transform(input: input)
 
@@ -91,9 +89,6 @@ public final class FavoritesViewController: UIViewController {
             }
             .bind(to: selectionRelay)
             .disposed(by: disposeBag)
-
-        // Needs to be triggered after the subscriptions are made
-        initialTriggerRelay.accept(())
     }
 }
 
