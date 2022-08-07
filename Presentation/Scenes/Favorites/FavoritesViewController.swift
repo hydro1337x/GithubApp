@@ -53,7 +53,9 @@ public final class FavoritesViewController: UIViewController {
 
     private func setupSubscriptions() {
 
-        let trigger = Observable.merge(refreshRelay.asObservable(), .just(()))
+        let initialTriggerRelay = PublishRelay<Void>()
+
+        let trigger = Observable.merge(refreshRelay.asObservable(), initialTriggerRelay.asObservable())
 
         let input = FavoritesViewModel.Input(trigger: trigger.asSignal(onErrorSignalWith: .empty()))
 
@@ -63,7 +65,7 @@ public final class FavoritesViewController: UIViewController {
             .drive(onNext: { [unowned self] state in
                 switch state {
                 case .initial:
-                    break
+                    emptyStateButton.isHidden = false
                 case .loading:
                     activityIndicatorView.startAnimating()
                 case .failed(let message):
@@ -71,6 +73,7 @@ public final class FavoritesViewController: UIViewController {
                     activityIndicatorView.stopAnimating()
                 case .loaded(let viewModels):
                     activityIndicatorView.stopAnimating()
+                    emptyStateButton.isHidden = !viewModels.isEmpty
                     let snapshot = makeSnapshot(with: viewModels)
                     dataSource.apply(snapshot)
                 }
@@ -88,6 +91,9 @@ public final class FavoritesViewController: UIViewController {
             }
             .bind(to: selectionRelay)
             .disposed(by: disposeBag)
+
+        // Needs to be triggered after the subscriptions are made
+        initialTriggerRelay.accept(())
     }
 }
 
@@ -148,7 +154,7 @@ extension FavoritesViewController: ViewConstructing {
 
         activityIndicatorView.style = .large
 
-        emptyStateButton.setTitle("Liked repositories will show up here", for: .normal)
+        emptyStateButton.setTitle("Favorite repositories will show up here", for: .normal)
         emptyStateButton.setTitleColor(.systemGray, for: .normal)
     }
 }

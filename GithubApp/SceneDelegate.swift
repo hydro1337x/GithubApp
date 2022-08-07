@@ -6,12 +6,6 @@
 //
 
 import UIKit
-import Domain
-import Data
-import Presentation
-import RxSwift
-import RxCocoa
-import RxRelay
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 

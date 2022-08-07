@@ -13,9 +13,7 @@ import Data
 import Presentation
 
 struct RootSceneFactory {
-    typealias Dependencies =
-    LoginUserRepositoryInjectable &
-    SearchRepositoriesSceneFactory.Dependencies
+    typealias Dependencies = LoginUserRepositoryInjectable & TabsSceneFactory.Dependencies
 
     let dependencies: Dependencies
 
@@ -37,12 +35,9 @@ struct RootSceneFactory {
         return viewController
     }
 
-    func makeSearchRepositoriesCoordinator(with logoutRelay: PublishRelay<Void>) -> SearchRepositoriesCoordinator {
-        let factory = SearchRepositoriesSceneFactory(dependencies: dependencies)
-        let coordinator = SearchRepositoriesCoordinator(
-            factory: factory,
-            logoutRelay: logoutRelay
-        )
+    func makeTabsCoordinator(logoutRelay: PublishRelay<Void>) -> TabsCoordinator {
+        let factory = TabsSceneFactory(dependencies: dependencies)
+        let coordinator = TabsCoordinator(factory: factory, logoutRelay: logoutRelay)
 
         return coordinator
     }

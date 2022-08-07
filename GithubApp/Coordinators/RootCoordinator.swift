@@ -48,7 +48,7 @@ final class RootCoordinator: Coordinator {
         loginRelay
             .asSignal()
             .emit(onNext: { [unowned self] in
-                showSearchRepositoriesScene()
+                showTabsScene()
             })
             .disposed(by: disposeBag)
 
@@ -69,8 +69,8 @@ final class RootCoordinator: Coordinator {
             .execute()
             .observe(on: MainScheduler.instance)
             .subscribe(onCompleted: { [unowned self] in
-                showSearchRepositoriesScene()
-            }, onError: { [unowned self] _ in
+                showTabsScene()
+            }, onError: { [unowned self] error in
                 showLoginScene()
             })
             .disposed(by: disposeBag)
@@ -83,10 +83,10 @@ final class RootCoordinator: Coordinator {
         window.rootViewController = navigationController
     }
 
-    private func showSearchRepositoriesScene() {
-        let coordinator = factory.makeSearchRepositoriesCoordinator(with: logoutRelay)
+    private func showTabsScene() {
+        let coordinator = factory.makeTabsCoordinator(logoutRelay: logoutRelay)
         children.append(coordinator)
-        window.rootViewController = coordinator.navigationController
+        window.rootViewController = coordinator.tabBarController
         coordinator.start()
     }
 }

@@ -14,8 +14,7 @@ public final class Paginator<PageType> {
     private(set) var currentPage: Int
     private(set) var pages: [PageType] = []
 
-    public init(limit: Int,
-                initialPage: Int) {
+    public init(limit: Int, initialPage: Int) {
         self.limit = limit
         self.currentPage = initialPage
     }

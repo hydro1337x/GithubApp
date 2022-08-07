@@ -120,6 +120,10 @@
 		60C8D973289F0F7600798A14 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D972289F0F7600798A14 /* DependencyContainer.swift */; };
 		60C8D975289F100300798A14 /* Repositories+Injectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D974289F100300798A14 /* Repositories+Injectable.swift */; };
 		60C8D977289F10BF00798A14 /* Mappers+Injectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D976289F10BF00798A14 /* Mappers+Injectable.swift */; };
+		60C8D979289F198A00798A14 /* TabsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D978289F198A00798A14 /* TabsCoordinator.swift */; };
+		60C8D97B289F19A900798A14 /* TabsSceneFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D97A289F19A900798A14 /* TabsSceneFactory.swift */; };
+		60C8D97D289F1A7300798A14 /* FavoriteRepositoriesSceneFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D97C289F1A7300798A14 /* FavoriteRepositoriesSceneFactory.swift */; };
+		60C8D97F289F1F5C00798A14 /* FavoriteRepositoriesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D97E289F1F5C00798A14 /* FavoriteRepositoriesCoordinator.swift */; };
 		60D77133289447890027CD4C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D77132289447890027CD4C /* AppDelegate.swift */; };
 		60D7713C2894478C0027CD4C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60D7713B2894478C0027CD4C /* Assets.xcassets */; };
 		60D7713F2894478C0027CD4C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60D7713D2894478C0027CD4C /* LaunchScreen.storyboard */; };
@@ -342,6 +346,10 @@
 		60C8D972289F0F7600798A14 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		60C8D974289F100300798A14 /* Repositories+Injectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Repositories+Injectable.swift"; sourceTree = "<group>"; };
 		60C8D976289F10BF00798A14 /* Mappers+Injectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Mappers+Injectable.swift"; sourceTree = "<group>"; };
+		60C8D978289F198A00798A14 /* TabsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsCoordinator.swift; sourceTree = "<group>"; };
+		60C8D97A289F19A900798A14 /* TabsSceneFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsSceneFactory.swift; sourceTree = "<group>"; };
+		60C8D97C289F1A7300798A14 /* FavoriteRepositoriesSceneFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRepositoriesSceneFactory.swift; sourceTree = "<group>"; };
+		60C8D97E289F1F5C00798A14 /* FavoriteRepositoriesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRepositoriesCoordinator.swift; sourceTree = "<group>"; };
 		60D7712F289447890027CD4C /* GithubApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60D77132289447890027CD4C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		60D7713B2894478C0027CD4C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -682,7 +690,9 @@
 			children = (
 				604898782896A12900EA6E21 /* Abstractions */,
 				604898762896A12500EA6E21 /* RootCoordinator.swift */,
+				60C8D978289F198A00798A14 /* TabsCoordinator.swift */,
 				603D8C12289D5D1900A5CBE3 /* SearchRepositoriesCoordinator.swift */,
+				60C8D97E289F1F5C00798A14 /* FavoriteRepositoriesCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -699,7 +709,9 @@
 			isa = PBXGroup;
 			children = (
 				6048987C2896A1E100EA6E21 /* RootSceneFactory.swift */,
+				60C8D97A289F19A900798A14 /* TabsSceneFactory.swift */,
 				603D8C10289D5C5500A5CBE3 /* SearchRepositoriesSceneFactory.swift */,
+				60C8D97C289F1A7300798A14 /* FavoriteRepositoriesSceneFactory.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -1333,15 +1345,19 @@
 				603D8C29289DAF2B00A5CBE3 /* EvaluateUserAuthenticityUseCaseDecorator.swift in Sources */,
 				603D8C13289D5D1900A5CBE3 /* SearchRepositoriesCoordinator.swift in Sources */,
 				6048987D2896A1E100EA6E21 /* RootSceneFactory.swift in Sources */,
+				60C8D97B289F19A900798A14 /* TabsSceneFactory.swift in Sources */,
 				60C8D977289F10BF00798A14 /* Mappers+Injectable.swift in Sources */,
 				603D8C27289DA7A500A5CBE3 /* BiometricsAuthenticator.swift in Sources */,
+				60C8D97F289F1F5C00798A14 /* FavoriteRepositoriesCoordinator.swift in Sources */,
 				603D8C11289D5C5500A5CBE3 /* SearchRepositoriesSceneFactory.swift in Sources */,
 				60C8D973289F0F7600798A14 /* DependencyContainer.swift in Sources */,
 				6066F6DB289C961D00A8631C /* LoginUserUseCaseDecorator.swift in Sources */,
 				6048987A2896A13700EA6E21 /* Coordinator.swift in Sources */,
+				60C8D979289F198A00798A14 /* TabsCoordinator.swift in Sources */,
 				60D77133289447890027CD4C /* AppDelegate.swift in Sources */,
 				604898772896A12500EA6E21 /* RootCoordinator.swift in Sources */,
 				60D7716628944A4D0027CD4C /* SceneDelegate.swift in Sources */,
+				60C8D97D289F1A7300798A14 /* FavoriteRepositoriesSceneFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

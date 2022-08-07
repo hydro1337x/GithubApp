@@ -1,8 +1,8 @@
 //
-//  SearchRepositoriesCoordinator.swift
+//  FavoriteRepositoriesCoordinator.swift
 //  GithubApp
 //
-//  Created by Benjamin Mecanović on 05.08.2022..
+//  Created by Benjamin Mecanović on 07.08.2022..
 //
 
 import UIKit
@@ -11,22 +11,25 @@ import RxRelay
 import Domain
 import Presentation
 
-final class SearchRepositoriesCoordinator: Coordinator {
+final class FavoriteRepositoriesCoordinator: Coordinator {
 
     let navigationController = UINavigationController()
     private let logoutButton = UIBarButtonItem()
 
     private let selectionRelay = PublishRelay<RepositoryViewModel>()
     private let disposeBag = DisposeBag()
-    private let factory: SearchRepositoriesSceneFactory
+    private let factory: FavoriteRepositoriesSceneFactory
     private let logoutRelay: PublishRelay<Void>
+    private let refreshRelay: PublishRelay<Void>
 
     init(
-        factory: SearchRepositoriesSceneFactory,
-        logoutRelay: PublishRelay<Void>
+        factory: FavoriteRepositoriesSceneFactory,
+        logoutRelay: PublishRelay<Void>,
+        refreshRelay: PublishRelay<Void>
     ) {
         self.factory = factory
         self.logoutRelay = logoutRelay
+        self.refreshRelay = refreshRelay
     }
 
     deinit {
@@ -36,7 +39,7 @@ final class SearchRepositoriesCoordinator: Coordinator {
     func start() {
         setupNavigationItems()
         setupSubscriptions()
-        showSearchRepositoriesScene()
+        showFavoriteRepositoriesScene()
     }
 
     private func setupSubscriptions() {
@@ -57,9 +60,12 @@ final class SearchRepositoriesCoordinator: Coordinator {
             .disposed(by: disposeBag)
     }
 
-    private func showSearchRepositoriesScene() {
-        let viewController = factory.makeSearchRepositoresViewController(with: selectionRelay)
-        viewController.title = "Search Repositories"
+    private func showFavoriteRepositoriesScene() {
+        let viewController = factory.makeFavoriteRepositoriesViewController(
+            selectionRelay: selectionRelay,
+            refreshRelay: refreshRelay
+        )
+        viewController.title = "Favorite Repositories"
         viewController.navigationItem.rightBarButtonItem = logoutButton
         navigationController.setViewControllers([viewController], animated: true)
     }
@@ -68,12 +74,11 @@ final class SearchRepositoriesCoordinator: Coordinator {
         let viewController = factory.makeRepositoryDetailsViewController(with: input)
         viewController.title = "Repository Details"
         viewController.navigationItem.rightBarButtonItem = logoutButton
-        viewController.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(viewController, animated: true)
     }
 }
 
-extension SearchRepositoriesCoordinator {
+extension FavoriteRepositoriesCoordinator {
     private func setupNavigationItems() {
         logoutButton.title = "Logout"
     }

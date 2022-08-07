@@ -15,7 +15,7 @@ public final class RepositoryDetailsViewController: UIViewController {
         static let imageSpan: CGFloat = 150
         static let spacing: CGFloat = 8
         static let tupleViewSpacing: CGFloat = 2
-        static let likeButtonPointSize: CGFloat = 30
+        static let likeButtonPointSize: CGFloat = 24
     }
 
     let scrollView = UIScrollView()
@@ -63,52 +63,7 @@ public final class RepositoryDetailsViewController: UIViewController {
                     activityIndicatorView.startAnimating()
                 case .loaded(let model):
                     activityIndicatorView.stopAnimating()
-                    avatarImageView.configure(with: model.ownerImageViewModel, disposeBag: disposeBag)
-
-                    let imageConfiguration = UIImage.SymbolConfiguration(pointSize: Dimension.likeButtonPointSize)
-                    likeButton.setImage(UIImage(systemName: "heart", withConfiguration: imageConfiguration), for: .normal)
-                    stackView.addArrangedSubview(likeButton)
-
-                    stackView.addArrangedSubview(makeLabel(with: model.name, font: .systemFont(ofSize: 20, weight: .medium)))
-
-                    stackView.addArrangedSubview(makeLabel(with: model.ownerName, font: .systemFont(ofSize: 16)))
-
-                    let firstRowTuples = [
-                        ("bell", model.subscribersCount),
-                        ("smallcircle.filled.circle", model.openIssuesCount)
-                    ]
-
-                    let firstTupleViewsBatch = firstRowTuples.map {
-                        makeTupleView(imageName: $0.0, text: $0.1)
-                    }
-
-                    stackView.addArrangedSubview(makeSubStackView(with: firstTupleViewsBatch))
-
-                    let secondRowTuples = [
-                        ("arrow.triangle.branch", model.forksCount),
-                        ("star", model.stargazersCount),
-                        ("eye", model.watchersCount)
-                    ]
-
-                    let secondTupleViewsBatch = secondRowTuples.map {
-                        makeTupleView(imageName: $0.0, text: $0.1)
-                    }
-
-                    stackView.addArrangedSubview(makeSubStackView(with: secondTupleViewsBatch))
-
-                    if let description = model.description {
-                        stackView.addArrangedSubview(makeLabel(with: description, font: .systemFont(ofSize: 14)))
-                    }
-
-                    let createdAtTitleLabel = makeLabel(with: viewModel.createdAtTitle, font: .systemFont(ofSize: 14, weight: .medium))
-                    let createAtLabel = makeLabel(with: model.createdAt, font: .systemFont(ofSize: 14))
-                    stackView.addArrangedSubview(makeSubStackView(with: [createdAtTitleLabel, createAtLabel]))
-
-
-                    let updatedAtTitleLabel = makeLabel(with: viewModel.updatedAtTitle, font: .systemFont(ofSize: 14, weight: .medium))
-                    let updatedAtLabel = makeLabel(with: model.updatedAt, font: .systemFont(ofSize: 14))
-                    stackView.addArrangedSubview(makeSubStackView(with: [updatedAtTitleLabel, updatedAtLabel]))
-
+                    makeLoadedStateLayout(with: model)
 
                 case .failed(let message):
                     activityIndicatorView.stopAnimating()
@@ -167,6 +122,55 @@ extension RepositoryDetailsViewController: ViewConstructing {
         activityIndicatorView.style = .large
         activityIndicatorView.hidesWhenStopped = true
 
+    }
+
+    private func makeLoadedStateLayout(with model: RepositoryDetailsModel) {
+
+        avatarImageView.configure(with: model.ownerImageViewModel, disposeBag: disposeBag)
+
+        let imageConfiguration = UIImage.SymbolConfiguration(pointSize: Dimension.likeButtonPointSize)
+        likeButton.setImage(UIImage(systemName: "heart", withConfiguration: imageConfiguration), for: .normal)
+        let titleLabel = makeLabel(with: model.name, font: .systemFont(ofSize: 20, weight: .medium))
+        let titleWithLikeButtonView = makeSubStackView(with: [titleLabel, likeButton])
+        stackView.addArrangedSubview(titleWithLikeButtonView)
+
+        stackView.addArrangedSubview(makeLabel(with: model.ownerName, font: .systemFont(ofSize: 16)))
+
+        let firstRowTuples = [
+            ("bell", model.subscribersCount),
+            ("smallcircle.filled.circle", model.openIssuesCount)
+        ]
+
+        let firstTupleViewsBatch = firstRowTuples.map {
+            makeTupleView(imageName: $0.0, text: $0.1)
+        }
+
+        stackView.addArrangedSubview(makeSubStackView(with: firstTupleViewsBatch))
+
+        let secondRowTuples = [
+            ("arrow.triangle.branch", model.forksCount),
+            ("star", model.stargazersCount),
+            ("eye", model.watchersCount)
+        ]
+
+        let secondTupleViewsBatch = secondRowTuples.map {
+            makeTupleView(imageName: $0.0, text: $0.1)
+        }
+
+        stackView.addArrangedSubview(makeSubStackView(with: secondTupleViewsBatch))
+
+        if let description = model.description {
+            stackView.addArrangedSubview(makeLabel(with: description, font: .systemFont(ofSize: 14)))
+        }
+
+        let createdAtTitleLabel = makeLabel(with: viewModel.createdAtTitle, font: .systemFont(ofSize: 14, weight: .medium))
+        let createAtLabel = makeLabel(with: model.createdAt, font: .systemFont(ofSize: 14))
+        stackView.addArrangedSubview(makeSubStackView(with: [createdAtTitleLabel, createAtLabel]))
+
+
+        let updatedAtTitleLabel = makeLabel(with: viewModel.updatedAtTitle, font: .systemFont(ofSize: 14, weight: .medium))
+        let updatedAtLabel = makeLabel(with: model.updatedAt, font: .systemFont(ofSize: 14))
+        stackView.addArrangedSubview(makeSubStackView(with: [updatedAtTitleLabel, updatedAtLabel]))
     }
 
     private func makeTupleView(imageName: String, text: String) -> UIView {

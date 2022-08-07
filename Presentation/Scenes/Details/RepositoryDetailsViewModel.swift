@@ -11,7 +11,6 @@ import RxCocoa
 import Domain
 
 public final class RepositoryDetailsViewModel {
-
     struct Input {
         let trigger: Signal<Void>
     }
