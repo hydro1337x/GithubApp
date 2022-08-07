@@ -50,12 +50,12 @@ struct FavoriteRepositoriesSceneFactory {
         refreshRelay: PublishRelay<Void>
     ) -> UIViewController {
         let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated)
-        let viewModel = FavoritesViewModel(
+        let viewModel = FavoriteRepositoriesViewModel(
             fetchFavoriteRepositoriesUseCase: dependencies.fetchFavoriteRepositoriesUseCase,
             repositoriesToRepositoryViewModelsMapper: dependencies.repositoriesToRepositoryViewModelsMapper,
             scheduler: scheduler
         )
-        let viewController = FavoritesViewController(
+        let viewController = FavoriteRepositoriesViewController(
             viewModel: viewModel,
             selectionRelay: selectionRelay,
             refreshRelay: refreshRelay

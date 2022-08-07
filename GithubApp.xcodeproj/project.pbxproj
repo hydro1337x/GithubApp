@@ -125,8 +125,8 @@
 		60C8D95B289E8F6F00798A14 /* URLSessionRemoteClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D95A289E8F6F00798A14 /* URLSessionRemoteClient.swift */; };
 		60C8D95D289E921700798A14 /* RemoteCompletableFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D95C289E921700798A14 /* RemoteCompletableFetching.swift */; };
 		60C8D961289EEE8300798A14 /* SubsequentTriggerInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D960289EEE8300798A14 /* SubsequentTriggerInput.swift */; };
-		60C8D964289EF4C000798A14 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D963289EF4C000798A14 /* FavoritesViewController.swift */; };
-		60C8D966289EF4E400798A14 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D965289EF4E400798A14 /* FavoritesViewModel.swift */; };
+		60C8D964289EF4C000798A14 /* FavoriteRepositoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D963289EF4C000798A14 /* FavoriteRepositoriesViewController.swift */; };
+		60C8D966289EF4E400798A14 /* FavoriteRepositoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D965289EF4E400798A14 /* FavoriteRepositoriesViewModel.swift */; };
 		60C8D968289EFD4500798A14 /* FetchFavoriteRepositoriesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D967289EFD4500798A14 /* FetchFavoriteRepositoriesUseCase.swift */; };
 		60C8D96A289EFD7700798A14 /* ConcreteFetchFavoriteRepositoriesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D969289EFD7700798A14 /* ConcreteFetchFavoriteRepositoriesUseCase.swift */; };
 		60C8D96C289EFF3400798A14 /* FetchFavoriteRepositoriesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D96B289EFF3400798A14 /* FetchFavoriteRepositoriesRepository.swift */; };
@@ -365,8 +365,8 @@
 		60C8D95A289E8F6F00798A14 /* URLSessionRemoteClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionRemoteClient.swift; sourceTree = "<group>"; };
 		60C8D95C289E921700798A14 /* RemoteCompletableFetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCompletableFetching.swift; sourceTree = "<group>"; };
 		60C8D960289EEE8300798A14 /* SubsequentTriggerInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubsequentTriggerInput.swift; sourceTree = "<group>"; };
-		60C8D963289EF4C000798A14 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
-		60C8D965289EF4E400798A14 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
+		60C8D963289EF4C000798A14 /* FavoriteRepositoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRepositoriesViewController.swift; sourceTree = "<group>"; };
+		60C8D965289EF4E400798A14 /* FavoriteRepositoriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRepositoriesViewModel.swift; sourceTree = "<group>"; };
 		60C8D967289EFD4500798A14 /* FetchFavoriteRepositoriesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchFavoriteRepositoriesUseCase.swift; sourceTree = "<group>"; };
 		60C8D969289EFD7700798A14 /* ConcreteFetchFavoriteRepositoriesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteFetchFavoriteRepositoriesUseCase.swift; sourceTree = "<group>"; };
 		60C8D96B289EFF3400798A14 /* FetchFavoriteRepositoriesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchFavoriteRepositoriesRepository.swift; sourceTree = "<group>"; };
@@ -908,8 +908,8 @@
 		60C8D962289EF48400798A14 /* Favorites */ = {
 			isa = PBXGroup;
 			children = (
-				60C8D963289EF4C000798A14 /* FavoritesViewController.swift */,
-				60C8D965289EF4E400798A14 /* FavoritesViewModel.swift */,
+				60C8D963289EF4C000798A14 /* FavoriteRepositoriesViewController.swift */,
+				60C8D965289EF4E400798A14 /* FavoriteRepositoriesViewModel.swift */,
 			);
 			path = Favorites;
 			sourceTree = "<group>";
@@ -1530,7 +1530,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60C8D966289EF4E400798A14 /* FavoritesViewModel.swift in Sources */,
+				60C8D966289EF4E400798A14 /* FavoriteRepositoriesViewModel.swift in Sources */,
 				603D8C2B289DCB9600A5CBE3 /* RepositoryDetailsModel.swift in Sources */,
 				6047570228954E1700DE40DE /* RepositoryViewModel.swift in Sources */,
 				606546FD289B1B8500B01432 /* ActivityIndicatorTableViewCell.swift in Sources */,
@@ -1555,7 +1555,7 @@
 				6066F6D2289C6A1C00A8631C /* LoginViewController.swift in Sources */,
 				607DD9CC2895AD6000957EEA /* FailureTracker.swift in Sources */,
 				607DD9D72895E42300957EEA /* AsyncImageState.swift in Sources */,
-				60C8D964289EF4C000798A14 /* FavoritesViewController.swift in Sources */,
+				60C8D964289EF4C000798A14 /* FavoriteRepositoriesViewController.swift in Sources */,
 				603D8BF8289D101D00A5CBE3 /* ValidationState.swift in Sources */,
 				607DD9CA2895AD5700957EEA /* ActivityTracker.swift in Sources */,
 				603D8BFA289D298800A5CBE3 /* DiscardableDataState.swift in Sources */,

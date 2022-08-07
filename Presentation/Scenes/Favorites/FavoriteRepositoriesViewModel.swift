@@ -1,5 +1,5 @@
 //
-//  FavoritesViewModel.swift
+//  FavoriteRepositoriesViewModel.swift
 //  Presentation
 //
 //  Created by Benjamin Mecanović on 06.08.2022..
@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import Domain
 
-public final class FavoritesViewModel {
+public final class FavoriteRepositoriesViewModel {
     struct Input {
         let trigger: Driver<Void>
     }

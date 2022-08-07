@@ -1,5 +1,5 @@
 //
-//  FavoritesViewController.swift
+//  FavoriteRepositoriesViewController.swift
 //  Presentation
 //
 //  Created by Benjamin Mecanović on 06.08.2022..
@@ -9,7 +9,7 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-public final class FavoritesViewController: UIViewController {
+public final class FavoriteRepositoriesViewController: UIViewController {
     typealias DataSource = UITableViewDiffableDataSource<String, RepositoryViewModel>
     typealias Snapshot = NSDiffableDataSourceSnapshot<String, RepositoryViewModel>
 
@@ -20,12 +20,12 @@ public final class FavoritesViewController: UIViewController {
     private lazy var dataSource = makeDataSource()
     private let disposeBag = DisposeBag()
     private let sectionIdentifier = "section"
-    private let viewModel: FavoritesViewModel
+    private let viewModel: FavoriteRepositoriesViewModel
     private let selectionRelay: PublishRelay<RepositoryViewModel>
     private let refreshRelay: PublishRelay<Void>
 
     public init(
-        viewModel: FavoritesViewModel,
+        viewModel: FavoriteRepositoriesViewModel,
         selectionRelay: PublishRelay<RepositoryViewModel>,
         refreshRelay: PublishRelay<Void>
     ) {
@@ -55,7 +55,7 @@ public final class FavoritesViewController: UIViewController {
         let trigger = refreshRelay
             .startWith(())
 
-        let input = FavoritesViewModel.Input(trigger: trigger.asDriver(onErrorDriveWith: .empty()))
+        let input = FavoriteRepositoriesViewModel.Input(trigger: trigger.asDriver(onErrorDriveWith: .empty()))
 
         let output = viewModel.transform(input: input)
 
@@ -92,7 +92,7 @@ public final class FavoritesViewController: UIViewController {
     }
 }
 
-extension FavoritesViewController {
+extension FavoriteRepositoriesViewController {
 
     private func registerCells() {
         tableView.register(RepositoryTableViewCell.self,
@@ -121,7 +121,7 @@ extension FavoritesViewController {
     }
 }
 
-extension FavoritesViewController: ViewConstructing {
+extension FavoriteRepositoriesViewController: ViewConstructing {
     func setupLayout() {
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
