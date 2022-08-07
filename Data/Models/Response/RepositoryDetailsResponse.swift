@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct RepositoryDetailsResponse: Decodable {
+public struct RepositoryDetailsResponse: Codable {
     let id: Int
     let name: String
     let description: String?
@@ -17,7 +17,6 @@ public struct RepositoryDetailsResponse: Decodable {
     let forks_count: Int
     let open_issues_count: Int
     let subscribers_count: Int
-    let url: String
     let created_at: String
     let updated_at: String
 }

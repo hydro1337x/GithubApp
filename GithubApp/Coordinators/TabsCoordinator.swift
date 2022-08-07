@@ -39,12 +39,13 @@ final class TabsCoordinator: Coordinator {
         showTabsScene()
     }
 
-    private func setupSubscriptions() {
-
-    }
+    private func setupSubscriptions() {}
 
     private func showTabsScene() {
-        let searchRepositoriesCoordinator = factory.makeSearchRepositoriesCoordinator(logoutRelay: logoutRelay)
+        let searchRepositoriesCoordinator = factory.makeSearchRepositoriesCoordinator(
+            logoutRelay: logoutRelay,
+            refreshRelay: refreshRelay
+        )
 
         searchRepositoriesCoordinator.navigationController.tabBarItem = UITabBarItem(
             title: "Search",
@@ -54,7 +55,10 @@ final class TabsCoordinator: Coordinator {
         children.append(searchRepositoriesCoordinator)
         searchRepositoriesCoordinator.start()
 
-        let favoriteRepositoriesCoordinator = factory.makeFavoriteRepositoriesCoordinator(logoutRelay: logoutRelay, refreshRelay: refreshRelay)
+        let favoriteRepositoriesCoordinator = factory.makeFavoriteRepositoriesCoordinator(
+            logoutRelay: logoutRelay,
+            refreshRelay: refreshRelay
+        )
 
         favoriteRepositoriesCoordinator.navigationController.tabBarItem = UITabBarItem(
             title: "Favorites",

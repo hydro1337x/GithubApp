@@ -20,13 +20,16 @@ final class SearchRepositoriesCoordinator: Coordinator {
     private let disposeBag = DisposeBag()
     private let factory: SearchRepositoriesSceneFactory
     private let logoutRelay: PublishRelay<Void>
+    private let refreshRelay: PublishRelay<Void>
 
     init(
         factory: SearchRepositoriesSceneFactory,
-        logoutRelay: PublishRelay<Void>
+        logoutRelay: PublishRelay<Void>,
+        refreshRelay: PublishRelay<Void>
     ) {
         self.factory = factory
         self.logoutRelay = logoutRelay
+        self.refreshRelay = refreshRelay
     }
 
     deinit {
@@ -65,7 +68,7 @@ final class SearchRepositoriesCoordinator: Coordinator {
     }
 
     private func showRepositoryDetailsScene(with input: FetchRepositoryDetailsInput) {
-        let viewController = factory.makeRepositoryDetailsViewController(with: input)
+        let viewController = factory.makeRepositoryDetailsViewController(with: input, refreshRelay: refreshRelay)
         viewController.title = "Repository Details"
         viewController.navigationItem.rightBarButtonItem = logoutButton
         viewController.hidesBottomBarWhenPushed = true

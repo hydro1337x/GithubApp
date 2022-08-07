@@ -17,17 +17,29 @@ struct FavoriteRepositoriesSceneFactory {
     FetchFavoriteRepositoryListRepositoryInjectable &
     RepositoryListMapperInjectable &
     FetchRepositoryDetailsRepositoryInjectable &
-    RepositoryDetailsMapperInjectable
+    RepositoryDetailsToRepositoryDetailsModelMapperInjectable &
+    RepositoryDetailsModelToRepositoryDetailsMapperInjectable &
+    StoreFavoriteRepositoryRepositoryInjectable
 
     let dependencies: Dependencies
 
-    func makeRepositoryDetailsViewController(with input: FetchRepositoryDetailsInput) -> UIViewController {
-        let useCase = ConcreteFetchRepositoryDetailsUseCase(repository: dependencies.fetchRepositoryDetailsRepository)
+    func makeRepositoryDetailsViewController(input: FetchRepositoryDetailsInput, refreshRelay: PublishRelay<Void>) -> UIViewController {
+        let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated)
+        let fetchRepositoryDetailsUseCase = ConcreteFetchRepositoryDetailsUseCase(
+            repository: dependencies.fetchRepositoryDetailsRepository
+        )
+        let addFavoriteRepositoryUseCase = ConcreteAddFavoriteRepositoryUseCase(
+            repository: dependencies.storeFavoriteRepositoryRepository
+        )
+        let addFavoriteRepositoryUseCaseDecorator = AddFavoriteRepositoryUseCaseDecorator(addFavoriteRepositoryUseCase, completionRelay: refreshRelay)
         let viewModel = RepositoryDetailsViewModel(
             name: input.name,
             owner: input.owner,
-            fetchRepositoryDetailsUseCase: useCase,
-            repositoryDetailsMapper: dependencies.repositoryDetailsMapper
+            fetchRepositoryDetailsUseCase: fetchRepositoryDetailsUseCase,
+            addFavoriteRepositoryUseCase: addFavoriteRepositoryUseCaseDecorator,
+            repositoryDetailsToRepositoryDetailsModelMapper: dependencies.repositoryDetailsToRepositoryDetailsModelMapper,
+            repositoryDetailsModelToRepositoryDetailsMapper: dependencies.repositoryDetailsModelToRepositoryDetailsMapper,
+            scheduler: scheduler
         )
         let viewController = RepositoryDetailsViewController(viewModel: viewModel)
 

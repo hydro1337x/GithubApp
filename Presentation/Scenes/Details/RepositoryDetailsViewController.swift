@@ -15,14 +15,14 @@ public final class RepositoryDetailsViewController: UIViewController {
         static let imageSpan: CGFloat = 150
         static let spacing: CGFloat = 8
         static let tupleViewSpacing: CGFloat = 2
-        static let likeButtonPointSize: CGFloat = 24
+        static let favoriteButtonPointSize: CGFloat = 24
     }
 
     let scrollView = UIScrollView()
     let stackView = UIStackView()
     let avatarImageView = AsyncImageView()
     let activityIndicatorView = UIActivityIndicatorView()
-    let likeButton = UIButton(type: .system)
+    let favoriteButton = UIButton(type: .system)
 
     private let disposeBag = DisposeBag()
     private let viewModel: RepositoryDetailsViewModel
@@ -50,11 +50,15 @@ public final class RepositoryDetailsViewController: UIViewController {
     private func setupSubscriptions() {
         let trigger = Signal.just(())
 
-        let input = RepositoryDetailsViewModel.Input(trigger: trigger)
+        let favoriteTrigger = favoriteButton.rx
+            .tap
+            .asSignal()
+
+        let input = RepositoryDetailsViewModel.Input(trigger: trigger, favoriteTrigger: favoriteTrigger)
 
         let output = viewModel.transform(input: input)
 
-        output.state
+        output.repositoryDetailsState
             .drive(onNext: { [unowned self] state in
                 switch state {
                 case .initial:
@@ -64,9 +68,23 @@ public final class RepositoryDetailsViewController: UIViewController {
                 case .loaded(let model):
                     activityIndicatorView.stopAnimating()
                     makeLoadedStateLayout(with: model)
-
                 case .failed(let message):
                     activityIndicatorView.stopAnimating()
+                    print("ERROR: ", message)
+                }
+            })
+            .disposed(by: disposeBag)
+
+        output.isFavoritedState
+            .drive(onNext: { [unowned self] state in
+                switch state {
+                case .initial:
+                    break
+                case .loading:
+                    break
+                case .loaded(let value):
+                    setFavoriteButtonImage(value ? "heart.fill" : "heart")
+                case .failed(let message):
                     print("ERROR: ", message)
                 }
             })
@@ -122,17 +140,17 @@ extension RepositoryDetailsViewController: ViewConstructing {
         activityIndicatorView.style = .large
         activityIndicatorView.hidesWhenStopped = true
 
+        setFavoriteButtonImage("heart")
+
     }
 
     private func makeLoadedStateLayout(with model: RepositoryDetailsModel) {
 
         avatarImageView.configure(with: model.ownerImageViewModel, disposeBag: disposeBag)
 
-        let imageConfiguration = UIImage.SymbolConfiguration(pointSize: Dimension.likeButtonPointSize)
-        likeButton.setImage(UIImage(systemName: "heart", withConfiguration: imageConfiguration), for: .normal)
         let titleLabel = makeLabel(with: model.name, font: .systemFont(ofSize: 20, weight: .medium))
-        let titleWithLikeButtonView = makeSubStackView(with: [titleLabel, likeButton])
-        stackView.addArrangedSubview(titleWithLikeButtonView)
+        let titleWithFavoriteButtonView = makeSubStackView(with: [titleLabel, favoriteButton])
+        stackView.addArrangedSubview(titleWithFavoriteButtonView)
 
         stackView.addArrangedSubview(makeLabel(with: model.ownerName, font: .systemFont(ofSize: 16)))
 
@@ -173,6 +191,11 @@ extension RepositoryDetailsViewController: ViewConstructing {
         stackView.addArrangedSubview(makeSubStackView(with: [updatedAtTitleLabel, updatedAtLabel]))
     }
 
+    private func setFavoriteButtonImage(_ imageName: String) {
+        let imageConfiguration = UIImage.SymbolConfiguration(pointSize: Dimension.favoriteButtonPointSize)
+        favoriteButton.setImage(UIImage(systemName: imageName, withConfiguration: imageConfiguration), for: .normal)
+    }
+
     private func makeTupleView(imageName: String, text: String) -> UIView {
         let stackView = UIStackView()
         stackView.backgroundColor = .secondarySystemBackground
@@ -181,12 +204,10 @@ extension RepositoryDetailsViewController: ViewConstructing {
 
         let image = UIImage(systemName: imageName)
         let imageView = UIImageView(image: image)
-
         stackView.addArrangedSubview(imageView)
 
         let label = UILabel()
         label.text = text
-
         stackView.addArrangedSubview(label)
 
         return stackView

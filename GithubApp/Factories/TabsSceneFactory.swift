@@ -14,11 +14,11 @@ struct TabsSceneFactory {
 
     let dependencies: Dependencies
 
-    func makeSearchRepositoriesCoordinator(logoutRelay: PublishRelay<Void>) -> SearchRepositoriesCoordinator {
+    func makeSearchRepositoriesCoordinator(logoutRelay: PublishRelay<Void>, refreshRelay: PublishRelay<Void>) -> SearchRepositoriesCoordinator {
         let factory = SearchRepositoriesSceneFactory(dependencies: dependencies)
         let coordinator = SearchRepositoriesCoordinator(
             factory: factory,
-            logoutRelay: logoutRelay
+            logoutRelay: logoutRelay, refreshRelay: refreshRelay
         )
 
         return coordinator

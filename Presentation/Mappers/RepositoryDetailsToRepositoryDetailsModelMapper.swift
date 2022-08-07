@@ -1,5 +1,5 @@
 //
-//  RepositoryDetailsMapper.swift
+//  RepositoryDetailsToRepositoryDetailsModelMapper.swift
 //  Presentation
 //
 //  Created by Benjamin Mecanović on 06.08.2022..
@@ -8,7 +8,7 @@
 import Foundation
 import Domain
 
-public final class RepositoryDetailsMapper: Mapper {
+public final class RepositoryDetailsToRepositoryDetailsModelMapper: Mapper {
     private let imageURLMapper: AnyMapper<String, AsyncImageViewModel>
     private let dateMapper: AnyMapper<String, String>
 
@@ -27,6 +27,7 @@ public final class RepositoryDetailsMapper: Mapper {
             description: input.description,
             ownerName: input.owner.name,
             ownerImageViewModel: imageURLMapper.map(input: input.owner.avatarURL),
+            ownerImageURL: input.owner.avatarURL,
             stargazersCount: input.stargazersCount.description,
             watchersCount: input.watchersCount.description,
             forksCount: input.forksCount.description,

@@ -71,7 +71,7 @@ final class FavoriteRepositoriesCoordinator: Coordinator {
     }
 
     private func showRepositoryDetailsScene(with input: FetchRepositoryDetailsInput) {
-        let viewController = factory.makeRepositoryDetailsViewController(with: input)
+        let viewController = factory.makeRepositoryDetailsViewController(input: input, refreshRelay: refreshRelay)
         viewController.title = "Repository Details"
         viewController.navigationItem.rightBarButtonItem = logoutButton
         navigationController.pushViewController(viewController, animated: true)

@@ -24,7 +24,6 @@ public final class LocalFetchFavoriteRepositoryListRepository: FetchFavoriteRepo
     public func fetch() -> Single<[Repository]> {
         localClient.retrieveInstance(ofType: [RepositoryDetailsResponse].self, for: LocalStorageKey.favoriteRepositoryList)
             .map(responseMapper.map(input:))
+            .map { $0.uniqued() }
     }
-
-
 }

@@ -13,6 +13,7 @@ public struct RepositoryDetailsModel {
     let description: String?
     let ownerName: String
     let ownerImageViewModel: AsyncImageViewModel
+    let ownerImageURL: String
     let stargazersCount: String
     let watchersCount: String
     let forksCount: String

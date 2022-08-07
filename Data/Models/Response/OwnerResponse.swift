@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct OwnerResponse: Decodable {
+public struct OwnerResponse: Codable {
     let login: String
     let avatar_url: String
 }

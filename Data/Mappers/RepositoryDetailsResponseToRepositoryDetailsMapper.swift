@@ -8,7 +8,7 @@
 import Foundation
 import Domain
 
-public final class RepositoryDetailsResponseMapper: Mapper {
+public final class RepositoryDetailsResponseToRepositoryDetailsMapper: Mapper {
     private let ownerResponseMapper: AnyMapper<OwnerResponse, Owner>
 
     public init(ownerResponseMapper: AnyMapper<OwnerResponse, Owner>) {
@@ -26,7 +26,6 @@ public final class RepositoryDetailsResponseMapper: Mapper {
             forksCount: input.forks_count,
             openIssuesCount: input.open_issues_count,
             subscribersCount: input.subscribers_count,
-            url: input.url,
             createdAt: input.created_at,
             updatedAt: input.updated_at
         )

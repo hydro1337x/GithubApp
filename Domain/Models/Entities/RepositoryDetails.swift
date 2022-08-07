@@ -17,7 +17,6 @@ public struct RepositoryDetails {
     public let forksCount: Int
     public let openIssuesCount: Int
     public let subscribersCount: Int
-    public let url: String
     public let createdAt: String
     public let updatedAt: String
 
@@ -31,7 +30,6 @@ public struct RepositoryDetails {
         forksCount: Int,
         openIssuesCount: Int,
         subscribersCount: Int,
-        url: String,
         createdAt: String,
         updatedAt: String
     ) {
@@ -44,7 +42,6 @@ public struct RepositoryDetails {
         self.forksCount = forksCount
         self.openIssuesCount = openIssuesCount
         self.subscribersCount = subscribersCount
-        self.url = url
         self.createdAt = createdAt
         self.updatedAt = updatedAt
     }
