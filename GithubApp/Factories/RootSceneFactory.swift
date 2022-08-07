@@ -13,16 +13,15 @@ import Data
 import Presentation
 
 struct RootSceneFactory {
-    typealias Dependencies = LoginUserRepositoryInjectable & TabsSceneFactory.Dependencies
+    typealias Dependencies = LoginUserUseCaseInjectable & TabsSceneFactory.Dependencies
 
     let dependencies: Dependencies
 
     func makeLoginUserViewController(with loginRelay: PublishRelay<Void>) -> UIViewController {
         let emailValidator = BasicEmailValidator().eraseToAnyValidator
         let passwordValidator = BasicPasswordValidator().eraseToAnyValidator
-        let loginUserUseCase = ConcreteLoginUserUseCase(repository: dependencies.loginUserRepository)
         let loginUserUseCaseDecorator = LoginUserUseCaseDecorator(
-            loginUserUseCase,
+            dependencies.loginUserUseCase,
             completionRelay: loginRelay
         )
         let viewModel = LoginViewModel(

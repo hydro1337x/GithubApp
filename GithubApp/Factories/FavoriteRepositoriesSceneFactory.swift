@@ -14,28 +14,25 @@ import RxRelay
 
 struct FavoriteRepositoriesSceneFactory {
     typealias Dependencies =
-    FetchFavoriteRepositoriesRepositoryInjectable &
     RepositoryListMapperInjectable &
-    FetchRepositoryDetailsRepositoryInjectable &
     RepositoryDetailsToRepositoryDetailsModelMapperInjectable &
     RepositoryDetailsModelToRepositoryDetailsMapperInjectable &
-    StoreFavoriteRepositoryRepositoryInjectable
+    AddFavoriteRepositoryUseCaseInjectable &
+    FetchRepositoryDetailsUseCaseInjectable &
+    FetchFavoriteRepositoriesUseCaseInjectable
 
     let dependencies: Dependencies
 
     func makeRepositoryDetailsViewController(input: FetchRepositoryDetailsInput, refreshRelay: PublishRelay<Void>) -> UIViewController {
         let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated)
-        let fetchRepositoryDetailsUseCase = ConcreteFetchRepositoryDetailsUseCase(
-            repository: dependencies.fetchRepositoryDetailsRepository
+        let addFavoriteRepositoryUseCaseDecorator = AddFavoriteRepositoryUseCaseDecorator(
+            dependencies.addFavoriteRepositoryUseCase,
+            completionRelay: refreshRelay
         )
-        let addFavoriteRepositoryUseCase = ConcreteAddFavoriteRepositoryUseCase(
-            repository: dependencies.storeFavoriteRepositoryRepository
-        )
-        let addFavoriteRepositoryUseCaseDecorator = AddFavoriteRepositoryUseCaseDecorator(addFavoriteRepositoryUseCase, completionRelay: refreshRelay)
         let viewModel = RepositoryDetailsViewModel(
             name: input.name,
             owner: input.owner,
-            fetchRepositoryDetailsUseCase: fetchRepositoryDetailsUseCase,
+            fetchRepositoryDetailsUseCase: dependencies.fetchRepositoryDetailsUseCase,
             addFavoriteRepositoryUseCase: addFavoriteRepositoryUseCaseDecorator,
             repositoryDetailsToRepositoryDetailsModelMapper: dependencies.repositoryDetailsToRepositoryDetailsModelMapper,
             repositoryDetailsModelToRepositoryDetailsMapper: dependencies.repositoryDetailsModelToRepositoryDetailsMapper,
@@ -51,10 +48,8 @@ struct FavoriteRepositoriesSceneFactory {
         refreshRelay: PublishRelay<Void>
     ) -> UIViewController {
         let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated)
-        let fetchFavoriteRepositoriesUseCase = ConcreteFetchFavoriteRepositoriesUseCase(
-            repository: dependencies.fetchFavoriteRepositoriesRepository)
         let viewModel = FavoritesViewModel(
-            fetchFavoriteRepositoriesUseCase: fetchFavoriteRepositoriesUseCase,
+            fetchFavoriteRepositoriesUseCase: dependencies.fetchFavoriteRepositoriesUseCase,
             repositoryListMapper: dependencies.repositoryListMapper,
             scheduler: scheduler
         )

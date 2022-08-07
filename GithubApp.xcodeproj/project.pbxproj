@@ -71,6 +71,7 @@
 		604898882896CA9200EA6E21 /* FetchRepositoryDetailsInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604898872896CA9200EA6E21 /* FetchRepositoryDetailsInput.swift */; };
 		6048988A2896CB1E00EA6E21 /* FetchRepositoryDetailsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604898892896CB1E00EA6E21 /* FetchRepositoryDetailsRepository.swift */; };
 		6048988C2896CBC600EA6E21 /* ConcreteFetchRepositoryDetailsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6048988B2896CBC600EA6E21 /* ConcreteFetchRepositoryDetailsUseCase.swift */; };
+		604DE7B3289FFFCF00A113C6 /* Interactors+Injectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604DE7B2289FFFCF00A113C6 /* Interactors+Injectable.swift */; };
 		606546FB289AC7B200B01432 /* SearchRepositoriesItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606546FA289AC7B200B01432 /* SearchRepositoriesItem.swift */; };
 		606546FD289B1B8500B01432 /* ActivityIndicatorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606546FC289B1B8500B01432 /* ActivityIndicatorTableViewCell.swift */; };
 		6066F69E289C187000A8631C /* RepositoryDetailsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6066F69D289C187000A8631C /* RepositoryDetailsResponse.swift */; };
@@ -126,7 +127,6 @@
 		60C8D96E289EFFD200798A14 /* LocalFetchFavoriteRepositoriesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D96D289EFFD200798A14 /* LocalFetchFavoriteRepositoriesRepository.swift */; };
 		60C8D970289F089600798A14 /* RepositoryDetailsResponseListMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D96F289F089600798A14 /* RepositoryDetailsResponseListMapper.swift */; };
 		60C8D973289F0F7600798A14 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D972289F0F7600798A14 /* DependencyContainer.swift */; };
-		60C8D975289F100300798A14 /* Repositories+Injectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D974289F100300798A14 /* Repositories+Injectable.swift */; };
 		60C8D977289F10BF00798A14 /* Mappers+Injectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D976289F10BF00798A14 /* Mappers+Injectable.swift */; };
 		60C8D979289F198A00798A14 /* TabsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D978289F198A00798A14 /* TabsCoordinator.swift */; };
 		60C8D97B289F19A900798A14 /* TabsSceneFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D97A289F19A900798A14 /* TabsSceneFactory.swift */; };
@@ -305,6 +305,7 @@
 		604898872896CA9200EA6E21 /* FetchRepositoryDetailsInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRepositoryDetailsInput.swift; sourceTree = "<group>"; };
 		604898892896CB1E00EA6E21 /* FetchRepositoryDetailsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRepositoryDetailsRepository.swift; sourceTree = "<group>"; };
 		6048988B2896CBC600EA6E21 /* ConcreteFetchRepositoryDetailsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteFetchRepositoryDetailsUseCase.swift; sourceTree = "<group>"; };
+		604DE7B2289FFFCF00A113C6 /* Interactors+Injectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Interactors+Injectable.swift"; sourceTree = "<group>"; };
 		606546FA289AC7B200B01432 /* SearchRepositoriesItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepositoriesItem.swift; sourceTree = "<group>"; };
 		606546FC289B1B8500B01432 /* ActivityIndicatorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorTableViewCell.swift; sourceTree = "<group>"; };
 		6066F69D289C187000A8631C /* RepositoryDetailsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailsResponse.swift; sourceTree = "<group>"; };
@@ -360,7 +361,6 @@
 		60C8D96D289EFFD200798A14 /* LocalFetchFavoriteRepositoriesRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFetchFavoriteRepositoriesRepository.swift; sourceTree = "<group>"; };
 		60C8D96F289F089600798A14 /* RepositoryDetailsResponseListMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailsResponseListMapper.swift; sourceTree = "<group>"; };
 		60C8D972289F0F7600798A14 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
-		60C8D974289F100300798A14 /* Repositories+Injectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Repositories+Injectable.swift"; sourceTree = "<group>"; };
 		60C8D976289F10BF00798A14 /* Mappers+Injectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Mappers+Injectable.swift"; sourceTree = "<group>"; };
 		60C8D978289F198A00798A14 /* TabsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsCoordinator.swift; sourceTree = "<group>"; };
 		60C8D97A289F19A900798A14 /* TabsSceneFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsSceneFactory.swift; sourceTree = "<group>"; };
@@ -900,7 +900,7 @@
 			isa = PBXGroup;
 			children = (
 				60C8D972289F0F7600798A14 /* DependencyContainer.swift */,
-				60C8D974289F100300798A14 /* Repositories+Injectable.swift */,
+				604DE7B2289FFFCF00A113C6 /* Interactors+Injectable.swift */,
 				60C8D976289F10BF00798A14 /* Mappers+Injectable.swift */,
 			);
 			path = Dependencies;
@@ -1365,13 +1365,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60C8D975289F100300798A14 /* Repositories+Injectable.swift in Sources */,
 				603D8C29289DAF2B00A5CBE3 /* EvaluateUserAuthenticityUseCaseDecorator.swift in Sources */,
 				603D8C13289D5D1900A5CBE3 /* SearchRepositoriesCoordinator.swift in Sources */,
 				6048987D2896A1E100EA6E21 /* RootSceneFactory.swift in Sources */,
 				60C8D97B289F19A900798A14 /* TabsSceneFactory.swift in Sources */,
 				60C8D977289F10BF00798A14 /* Mappers+Injectable.swift in Sources */,
 				603D8C27289DA7A500A5CBE3 /* BiometricsAuthenticator.swift in Sources */,
+				604DE7B3289FFFCF00A113C6 /* Interactors+Injectable.swift in Sources */,
 				60C8D97F289F1F5C00798A14 /* FavoriteRepositoriesCoordinator.swift in Sources */,
 				603D8C11289D5C5500A5CBE3 /* SearchRepositoriesSceneFactory.swift in Sources */,
 				60C8D973289F0F7600798A14 /* DependencyContainer.swift in Sources */,
