@@ -23,6 +23,7 @@ public final class RepositoryDetailsViewController: UIViewController {
     let avatarImageView = AsyncImageView()
     let activityIndicatorView = UIActivityIndicatorView()
     let favoriteButton = UIButton(type: .system)
+    let generator = UINotificationFeedbackGenerator()
 
     private let disposeBag = DisposeBag()
     private let viewModel: RepositoryDetailsViewModel
@@ -82,7 +83,9 @@ public final class RepositoryDetailsViewController: UIViewController {
                     break
                 case .loaded(let value):
                     setFavoriteButtonImage(value ? "heart.fill" : "heart")
+                    generator.notificationOccurred(.success)
                 case .failed(let message):
+                    generator.notificationOccurred(.error)
                     print("ERROR: ", message)
                 }
             })
