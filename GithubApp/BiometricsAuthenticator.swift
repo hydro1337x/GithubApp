@@ -18,7 +18,7 @@ final class BiometricsAuthenticator: Authenticator {
     private var context = LAContext()
 
     init() {
-        context.canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
+        context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
     }
 
     func evaluate() -> Completable {

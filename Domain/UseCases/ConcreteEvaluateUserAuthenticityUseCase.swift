@@ -21,7 +21,7 @@ public final class ConcreteEvaluateUserAuthenticityUseCase: EvaluateUserAuthenti
     }
 
     // More complex logic could be applied here, this is a simple check
-    // since I am faking the whole authentication process
+    // since I am mocking the whole authentication process
     public func execute() -> Completable {
         repository.retrieve()
             .flatMapCompletable { [weak self] token in
