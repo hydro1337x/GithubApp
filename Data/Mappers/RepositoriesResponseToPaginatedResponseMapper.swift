@@ -1,5 +1,5 @@
 //
-//  RepositoriesResponseMapper.swift
+//  RepositoriesResponseToPaginatedResponseMapper.swift
 //  Data
 //
 //  Created by Benjamin Mecanović on 30.07.2022..
@@ -8,11 +8,11 @@
 import Foundation
 import Domain
 
-public final class RepositoriesResponseMapper: Mapper {
-    private let ownerResponseMapper: AnyMapper<OwnerResponse, Owner>
+public final class RepositoriesResponseToPaginatedResponseMapper: Mapper {
+    private let ownerResponseToOwnerMapper: AnyMapper<OwnerResponse, Owner>
 
-    public init(ownerResponseMapper: AnyMapper<OwnerResponse, Owner>) {
-        self.ownerResponseMapper = ownerResponseMapper
+    public init(ownerResponseToOwnerMapper: AnyMapper<OwnerResponse, Owner>) {
+        self.ownerResponseToOwnerMapper = ownerResponseToOwnerMapper
     }
 
     public func map(input: RepositoriesResponse) -> PaginatedResponse<Repository> {
@@ -23,7 +23,7 @@ public final class RepositoriesResponseMapper: Mapper {
                 Repository(
                     id: $0.id.description,
                     name: $0.name,
-                    owner: ownerResponseMapper.map(input: $0.owner),
+                    owner: ownerResponseToOwnerMapper.map(input: $0.owner),
                     stargazersCount: $0.stargazers_count,
                     watchersCount: $0.watchers_count,
                     forksCount: $0.forks_count,

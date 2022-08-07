@@ -9,10 +9,10 @@ import Foundation
 import Domain
 
 public final class RepositoryDetailsResponseToRepositoryDetailsMapper: Mapper {
-    private let ownerResponseMapper: AnyMapper<OwnerResponse, Owner>
+    private let ownerResponseToOwnerMapper: AnyMapper<OwnerResponse, Owner>
 
-    public init(ownerResponseMapper: AnyMapper<OwnerResponse, Owner>) {
-        self.ownerResponseMapper = ownerResponseMapper
+    public init(ownerResponseToOwnerMapper: AnyMapper<OwnerResponse, Owner>) {
+        self.ownerResponseToOwnerMapper = ownerResponseToOwnerMapper
     }
 
     public func map(input: RepositoryDetailsResponse) -> RepositoryDetails {
@@ -20,7 +20,7 @@ public final class RepositoryDetailsResponseToRepositoryDetailsMapper: Mapper {
             id: input.id,
             name: input.name,
             description: input.description,
-            owner: ownerResponseMapper.map(input: input.owner),
+            owner: ownerResponseToOwnerMapper.map(input: input.owner),
             stargazersCount: input.stargazers_count,
             watchersCount: input.watchers_count,
             forksCount: input.forks_count,

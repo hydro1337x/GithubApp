@@ -1,5 +1,5 @@
 //
-//  ImageURLMapper.swift
+//  URLToAsyncImageViewModelMapper.swift
 //  Presentation
 //
 //  Created by Benjamin Mecanović on 06.08.2022..
@@ -8,7 +8,7 @@
 import Foundation
 import Domain
 
-public final class ImageURLMapper: Mapper {
+public final class URLToAsyncImageViewModelMapper: Mapper {
     private let fetchImageUseCase: FetchImageUseCase
 
     public init(fetchImageUseCase: FetchImageUseCase) {

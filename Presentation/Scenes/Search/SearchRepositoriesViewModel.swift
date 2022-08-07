@@ -25,16 +25,16 @@ public final class SearchRepositoriesViewModel {
     }
 
     private let fetchSearchedRepositoriesUseCase: FetchSearchedRepositoriesUseCase
-    private let repositoryListMapper: AnyMapper<[Repository], [RepositoryViewModel]>
+    private let repositoriesToRepositoryViewModelsMapper: AnyMapper<[Repository], [RepositoryViewModel]>
     private let scheduler: SchedulerType
 
     public init(
         fetchSearchedRepositoriesUseCase: FetchSearchedRepositoriesUseCase,
-        repositoryListMapper: AnyMapper<[Repository], [RepositoryViewModel]>,
+        repositoriesToRepositoryViewModelsMapper: AnyMapper<[Repository], [RepositoryViewModel]>,
         scheduler: SchedulerType
     ) {
         self.fetchSearchedRepositoriesUseCase = fetchSearchedRepositoriesUseCase
-        self.repositoryListMapper = repositoryListMapper
+        self.repositoriesToRepositoryViewModelsMapper = repositoriesToRepositoryViewModelsMapper
         self.scheduler = scheduler
     }
 
@@ -83,7 +83,7 @@ public final class SearchRepositoriesViewModel {
 
         let repositories = Observable.merge(refreshedRepositories, searchedRepositories, subsequentRepositories)
             .map { [unowned self] repositories in
-                repositoryListMapper.map(input: repositories)
+                repositoriesToRepositoryViewModelsMapper.map(input: repositories)
             }
 
         let items = Observable.combineLatest(repositories, subsequentActivityTracker.asObservable())

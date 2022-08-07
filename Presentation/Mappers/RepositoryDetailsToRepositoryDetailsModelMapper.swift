@@ -9,14 +9,14 @@ import Foundation
 import Domain
 
 public final class RepositoryDetailsToRepositoryDetailsModelMapper: Mapper {
-    private let imageURLMapper: AnyMapper<String, AsyncImageViewModel>
+    private let urlToAsyncImageViewModelMapper: AnyMapper<String, AsyncImageViewModel>
     private let dateMapper: AnyMapper<String, String>
 
     public init(
-        imageURLMapper: AnyMapper<String, AsyncImageViewModel>,
+        urlToAsyncImageViewModelMapper: AnyMapper<String, AsyncImageViewModel>,
         dateMapper: AnyMapper<String, String>
     ) {
-        self.imageURLMapper = imageURLMapper
+        self.urlToAsyncImageViewModelMapper = urlToAsyncImageViewModelMapper
         self.dateMapper = dateMapper
     }
 
@@ -26,7 +26,7 @@ public final class RepositoryDetailsToRepositoryDetailsModelMapper: Mapper {
             name: input.name,
             description: input.description,
             ownerName: input.owner.name,
-            ownerImageViewModel: imageURLMapper.map(input: input.owner.avatarURL),
+            ownerImageViewModel: urlToAsyncImageViewModelMapper.map(input: input.owner.avatarURL),
             ownerImageURL: input.owner.avatarURL,
             stargazersCount: input.stargazersCount.description,
             watchersCount: input.watchersCount.description,

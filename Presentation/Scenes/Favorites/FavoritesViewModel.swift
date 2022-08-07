@@ -20,16 +20,16 @@ public final class FavoritesViewModel {
     }
 
     private let fetchFavoriteRepositoriesUseCase: FetchFavoriteRepositoriesUseCase
-    private let repositoryListMapper: AnyMapper<[Repository], [RepositoryViewModel]>
+    private let repositoriesToRepositoryViewModelsMapper: AnyMapper<[Repository], [RepositoryViewModel]>
     private let scheduler: SchedulerType
 
     public init(
         fetchFavoriteRepositoriesUseCase: FetchFavoriteRepositoriesUseCase,
-        repositoryListMapper: AnyMapper<[Repository], [RepositoryViewModel]>,
+        repositoriesToRepositoryViewModelsMapper: AnyMapper<[Repository], [RepositoryViewModel]>,
         scheduler: SchedulerType
     ) {
         self.fetchFavoriteRepositoriesUseCase = fetchFavoriteRepositoriesUseCase
-        self.repositoryListMapper = repositoryListMapper
+        self.repositoriesToRepositoryViewModelsMapper = repositoriesToRepositoryViewModelsMapper
         self.scheduler = scheduler
     }
 
@@ -40,7 +40,7 @@ public final class FavoritesViewModel {
             .observe(on: scheduler)
             .flatMap { [unowned self] in
                 fetchFavoriteRepositoriesUseCase.execute()
-                    .map(repositoryListMapper.map(input:))
+                    .map(repositoriesToRepositoryViewModelsMapper.map(input:))
                     .asObservable()
                     .materialize()
             }

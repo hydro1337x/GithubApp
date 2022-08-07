@@ -14,7 +14,7 @@ import RxRelay
 
 struct FavoriteRepositoriesSceneFactory {
     typealias Dependencies =
-    RepositoryListMapperInjectable &
+    RepositoriesToRepositoryViewModelsMapperInjectable &
     RepositoryDetailsToRepositoryDetailsModelMapperInjectable &
     RepositoryDetailsModelToRepositoryDetailsMapperInjectable &
     AddFavoriteRepositoryUseCaseInjectable &
@@ -50,7 +50,7 @@ struct FavoriteRepositoriesSceneFactory {
         let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated)
         let viewModel = FavoritesViewModel(
             fetchFavoriteRepositoriesUseCase: dependencies.fetchFavoriteRepositoriesUseCase,
-            repositoryListMapper: dependencies.repositoryListMapper,
+            repositoriesToRepositoryViewModelsMapper: dependencies.repositoriesToRepositoryViewModelsMapper,
             scheduler: scheduler
         )
         let viewController = FavoritesViewController(

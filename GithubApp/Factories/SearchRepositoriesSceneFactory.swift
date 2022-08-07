@@ -14,7 +14,7 @@ import RxRelay
 
 struct SearchRepositoriesSceneFactory {
     typealias Dependencies =
-    RepositoryListMapperInjectable &
+    RepositoriesToRepositoryViewModelsMapperInjectable &
     RepositoryDetailsToRepositoryDetailsModelMapperInjectable &
     RepositoryDetailsModelToRepositoryDetailsMapperInjectable &
     AddFavoriteRepositoryUseCaseInjectable &
@@ -49,7 +49,7 @@ struct SearchRepositoriesSceneFactory {
         let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated)
         let viewModel = SearchRepositoriesViewModel(
             fetchSearchedRepositoriesUseCase: dependencies.fetchSearchedRepositoriesUseCase,
-            repositoryListMapper: dependencies.repositoryListMapper,
+            repositoriesToRepositoryViewModelsMapper: dependencies.repositoriesToRepositoryViewModelsMapper,
             scheduler: scheduler
         )
         let viewController = SearchRepositoriesViewController(
