@@ -52,12 +52,7 @@ public final class FavoriteRepositoriesViewController: UIViewController {
     }
 
     private func setupSubscriptions() {
-        let trigger = refreshRelay
-            .startWith(())
-
-        let input = FavoriteRepositoriesViewModel.Input(trigger: trigger.asDriver(onErrorDriveWith: .empty()))
-
-        let output = viewModel.transform(input: input)
+        let output = viewModel.transform()
 
         output.state
             .drive(onNext: { [unowned self] state in
