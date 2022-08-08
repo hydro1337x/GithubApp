@@ -50,6 +50,11 @@ public final class SearchRepositoriesViewController: UIViewController {
         setupSubscriptions()
     }
 
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        showKeyboard()
+    }
+
     private func setupSubscriptions() {
         let refreshTrigger = refreshControl.rx
             .controlEvent(.valueChanged)
@@ -143,6 +148,12 @@ public final class SearchRepositoriesViewController: UIViewController {
                 dismissKeyboard()
             })
             .disposed(by: disposeBag)
+    }
+
+    private func showKeyboard() {
+        if !searchBar.isFirstResponder {
+            _ = searchBar.becomeFirstResponder()
+        }
     }
 
     private func dismissKeyboard() {
