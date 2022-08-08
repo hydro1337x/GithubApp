@@ -43,7 +43,6 @@ public final class LoginViewController: UIViewController {
     }
 
     private func setupSubscriptions() {
-
         let email = emailTextField.rx
             .text
             .orEmpty
@@ -65,7 +64,7 @@ public final class LoginViewController: UIViewController {
         let input = LoginViewModel.Input(
             email: email,
             password: password,
-            loginTap: loginTap
+            loginTrigger: loginTap
         )
 
         let output = viewModel.transform(input: input)

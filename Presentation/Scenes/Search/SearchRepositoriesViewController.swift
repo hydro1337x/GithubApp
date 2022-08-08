@@ -51,7 +51,6 @@ public final class SearchRepositoriesViewController: UIViewController {
     }
 
     private func setupSubscriptions() {
-
         let refreshTrigger = refreshControl.rx
             .controlEvent(.valueChanged)
             .map { [unowned self] _ in searchBar.text ?? "" }

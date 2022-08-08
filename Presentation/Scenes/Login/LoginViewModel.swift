@@ -15,7 +15,7 @@ public final class LoginViewModel {
     struct Input {
         let email: Driver<String>
         let password: Driver<String>
-        let loginTap: Signal<Void>
+        let loginTrigger: Signal<Void>
     }
 
     struct Output {
@@ -40,7 +40,6 @@ public final class LoginViewModel {
     }
 
     func transform(input: Input) -> Output {
-
         let emailValidation = input.email
             .asObservable()
             .flatMapLatest { [unowned self] input in
@@ -87,8 +86,10 @@ public final class LoginViewModel {
             )
             .map { $0.0 && $0.1 }
 
-        let login = input.loginTap
+        let loginTrigger = input.loginTrigger
             .asObservable()
+
+        let partialLoginState = loginTrigger
             .withLatestFrom(
                 Observable.combineLatest(input.email.asObservable(), input.password.asObservable())
             )
@@ -110,10 +111,10 @@ public final class LoginViewModel {
             }
             .share()
 
-        let state = Observable
+        let loginState = Observable
             .merge(
-                input.loginTap.asObservable().map { DiscardableDataState.loading },
-                login
+                loginTrigger.map { DiscardableDataState.loading },
+                partialLoginState
             )
             .startWith(.initial)
 
@@ -121,7 +122,7 @@ public final class LoginViewModel {
             emailValidation: emailValidation.asDriver(onErrorDriveWith: .empty()),
             passwordValidation: passwordValidation.asDriver(onErrorDriveWith: .empty()),
             areInputsValid: areInputsValid.asDriver(onErrorDriveWith: .empty()),
-            loginState: state.asDriver(onErrorDriveWith: .empty())
+            loginState: loginState.asDriver(onErrorDriveWith: .empty())
         )
     }
 }

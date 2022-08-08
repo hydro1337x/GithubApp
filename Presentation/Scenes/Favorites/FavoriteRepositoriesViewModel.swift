@@ -34,7 +34,6 @@ public final class FavoriteRepositoriesViewModel {
     }
 
     func transform(input: Input) -> Output {
-
         let trigger = input.trigger
             .asObservable()
             .observe(on: scheduler)
