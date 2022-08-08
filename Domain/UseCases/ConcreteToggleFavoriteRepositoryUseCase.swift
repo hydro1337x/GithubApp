@@ -12,20 +12,34 @@ public final class ConcreteToggleFavoriteRepositoryUseCase: ToggleFavoriteReposi
 
     private let storeFavoriteRepositoryRepository: StoreFavoriteRepositoryRepository
     private let removeFavoriteRepositoryRepository: RemoveFavoriteRepositoryRepository
+    private let fetchUserAccessTokenRepository: FetchUserAccessTokenRepository
 
     public init(
         storeFavoriteRepositoryRepository: StoreFavoriteRepositoryRepository,
-        removeFavoriteRepositoryRepository: RemoveFavoriteRepositoryRepository
+        removeFavoriteRepositoryRepository: RemoveFavoriteRepositoryRepository,
+        fetchUserAccessTokenRepository: FetchUserAccessTokenRepository
     ) {
         self.storeFavoriteRepositoryRepository = storeFavoriteRepositoryRepository
         self.removeFavoriteRepositoryRepository = removeFavoriteRepositoryRepository
+        self.fetchUserAccessTokenRepository = fetchUserAccessTokenRepository
     }
 
     public func execute(input: ToggleFavoriteRepositoryInput) -> Completable {
-        if input.toggle {
-            return removeFavoriteRepositoryRepository.remove(input: input.repositoryDetails)
-        } else {
-            return storeFavoriteRepositoryRepository.store(input: input.repositoryDetails)
-        }
+        fetchUserAccessTokenRepository
+            .fetch()
+            .flatMapCompletable { [weak self] token in
+                guard let self = self else { return .empty() }
+
+                let repositoryInput = UpdateFavoriteRepositoryInput(
+                    tokenValue: token.value,
+                    repositoryDetails: input.repositoryDetails
+                )
+
+                if input.toggle {
+                    return self.removeFavoriteRepositoryRepository.remove(input: repositoryInput)
+                } else {
+                    return self.storeFavoriteRepositoryRepository.store(input: repositoryInput)
+                }
+            }
     }
 }

@@ -9,5 +9,5 @@ import Foundation
 import RxSwift
 
 public protocol FetchFavoriteRepositoriesRepository {
-    func fetch() -> Single<[Repository]>
+    func fetch(input: AccessToken) -> Single<[Repository]>
 }

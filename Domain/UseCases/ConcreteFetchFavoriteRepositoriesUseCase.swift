@@ -10,13 +10,24 @@ import RxSwift
 
 public final class ConcreteFetchFavoriteRepositoriesUseCase: FetchFavoriteRepositoriesUseCase {
 
-    private let repository: FetchFavoriteRepositoriesRepository
+    private let fetchFavoriteRepositoriesRepository: FetchFavoriteRepositoriesRepository
+    private let fetchUserAccessTokenRepository: FetchUserAccessTokenRepository
 
-    public init(repository: FetchFavoriteRepositoriesRepository) {
-        self.repository = repository
+    public init(
+        fetchFavoriteRepositoriesRepository: FetchFavoriteRepositoriesRepository,
+        fetchUserAccessTokenRepository: FetchUserAccessTokenRepository
+    ) {
+        self.fetchFavoriteRepositoriesRepository = fetchFavoriteRepositoriesRepository
+        self.fetchUserAccessTokenRepository = fetchUserAccessTokenRepository
     }
 
     public func execute() -> Single<[Repository]> {
-        repository.fetch()
+        fetchUserAccessTokenRepository
+            .fetch()
+            .flatMap { [weak self] token in
+                guard let self = self else { return Observable.empty().asSingle() }
+
+                return self.fetchFavoriteRepositoriesRepository.fetch(input: token)
+            }
     }
 }

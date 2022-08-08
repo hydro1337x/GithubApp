@@ -21,10 +21,11 @@ public final class LocalStoreFavoriteRepositoryRepository: StoreFavoriteReposito
         self.requestMapper = requestMapper
     }
 
-    public func store(input: RepositoryDetails) -> Completable {
-        let newRepository = requestMapper.map(input: input)
+    public func store(input: UpdateFavoriteRepositoryInput) -> Completable {
+        let newRepository = requestMapper.map(input: input.repositoryDetails)
+        let key = LocalStorageKey.favoriteRepositories + input.tokenValue
 
-        return localClient.fetchInstance(ofType: [RepositoryDetailsResponse].self, for: LocalStorageKey.favoriteRepositories)
+        return localClient.fetchInstance(ofType: [RepositoryDetailsResponse].self, for: key)
             .catch { error in
                 if error is NotFoundError {
                     return .just([])
@@ -32,14 +33,18 @@ public final class LocalStoreFavoriteRepositoryRepository: StoreFavoriteReposito
                     return .error(error)
                 }
             }
+            .filter { repositories in repositories.first(where: { $0.id == newRepository.id }) == nil }
+            .asObservable()
             .map { repositories -> [RepositoryDetailsResponse] in
                 var newRepositories = repositories
                 newRepositories.append(newRepository)
                 return newRepositories
             }
-            .flatMapCompletable { [weak self] repositories in
+            .asSingle()
+            .flatMapCompletable { [weak self] repositories -> Completable in
                 guard let self = self else { return .empty() }
-                return self.localClient.store(repositories, for: LocalStorageKey.favoriteRepositories)
+                
+                return self.localClient.store(repositories, for: key)
             }
     }
 }

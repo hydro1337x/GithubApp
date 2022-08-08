@@ -9,5 +9,5 @@ import Foundation
 
 enum LocalStorageKey {
     static let accessToken = "access-token"
-    static let favoriteRepositories = "favorite-repositories"
+    static let favoriteRepositories = "favorite-repositories-"
 }

@@ -9,20 +9,32 @@ import Foundation
 import RxSwift
 
 public final class ConcreteCheckIfRepositoryIsFavoriteUseCase: CheckIfRepositoryIsFavoriteUseCase {
-    private let repository: FetchFavoriteRepositoriesRepository
+    private let fetchFavoriteRepositoriesRepository: FetchFavoriteRepositoriesRepository
+    private let fetchUserAccessTokenRepository: FetchUserAccessTokenRepository
 
-    public init(repository: FetchFavoriteRepositoriesRepository) {
-        self.repository = repository
+    public init(
+        fetchFavoriteRepositoriesRepository: FetchFavoriteRepositoriesRepository,
+        fetchUserAccessTokenRepository: FetchUserAccessTokenRepository
+    ) {
+        self.fetchFavoriteRepositoriesRepository = fetchFavoriteRepositoriesRepository
+        self.fetchUserAccessTokenRepository = fetchUserAccessTokenRepository
     }
 
     public func execute(input: FindRepositoryInput) -> Single<Bool> {
-        repository.fetch()
-            .map { repositories in
-                let result = repositories.first(where: {
-                    $0.name == input.name && $0.owner.name == input.owner
-                })
+        fetchUserAccessTokenRepository
+            .fetch()
+            .flatMap { [weak self] token in
+                guard let self = self else { return Observable.empty().asSingle() }
 
-                return result != nil
+                return self.fetchFavoriteRepositoriesRepository.fetch(input: token)
+                    .map { repositories in
+                        let result = repositories.first(where: {
+                            $0.name == input.name && $0.owner.name == input.owner
+                        })
+
+                        return result != nil
+                    }
             }
+
     }
 }

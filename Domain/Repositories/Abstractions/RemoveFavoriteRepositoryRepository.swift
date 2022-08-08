@@ -9,5 +9,5 @@ import Foundation
 import RxSwift
 
 public protocol RemoveFavoriteRepositoryRepository {
-    func remove(input: RepositoryDetails) -> Completable
+    func remove(input: UpdateFavoriteRepositoryInput) -> Completable
 }

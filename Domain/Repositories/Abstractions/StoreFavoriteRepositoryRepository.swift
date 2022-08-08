@@ -9,5 +9,5 @@ import Foundation
 import RxSwift
 
 public protocol StoreFavoriteRepositoryRepository {
-    func store(input: RepositoryDetails) -> Completable
+    func store(input: UpdateFavoriteRepositoryInput) -> Completable
 }

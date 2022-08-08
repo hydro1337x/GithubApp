@@ -9,11 +9,11 @@ import Foundation
 import RxSwift
 
 public final class ConcreteEvaluateUserAuthenticityUseCase: EvaluateUserAuthenticityUseCase {
-    private let repository: RetrieveUserAccessTokenRepository
+    private let repository: FetchUserAccessTokenRepository
     private let emailValidator: AnyValidator<String>
 
     public init(
-        repository: RetrieveUserAccessTokenRepository,
+        repository: FetchUserAccessTokenRepository,
         emailValidator: AnyValidator<String>
     ) {
         self.repository = repository
@@ -23,7 +23,7 @@ public final class ConcreteEvaluateUserAuthenticityUseCase: EvaluateUserAuthenti
     // More complex logic could be applied here, this is a simple check
     // since I am mocking the whole authentication process
     public func execute() -> Completable {
-        repository.retrieve()
+        repository.fetch()
             .flatMapCompletable { [weak self] token in
                 guard let self = self else { return .empty() }
 
