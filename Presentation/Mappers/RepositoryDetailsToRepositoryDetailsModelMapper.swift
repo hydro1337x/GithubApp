@@ -27,7 +27,6 @@ public final class RepositoryDetailsToRepositoryDetailsModelMapper: Mapper {
             description: input.description,
             ownerName: input.owner.name,
             ownerImageViewModel: urlToAsyncImageViewModelMapper.map(input: input.owner.avatarURL),
-            ownerImageURL: input.owner.avatarURL,
             stargazersCount: input.stargazersCount.description,
             watchersCount: input.watchersCount.description,
             forksCount: input.forksCount.description,

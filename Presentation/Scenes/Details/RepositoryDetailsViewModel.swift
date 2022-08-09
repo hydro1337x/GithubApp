@@ -29,7 +29,6 @@ public final class RepositoryDetailsViewModel {
     private let toggleFavoriteRepositoryUseCase: ToggleFavoriteRepositoryUseCase
     private let checkIfRepositoryIsFavoriteUseCase: CheckIfRepositoryIsFavoriteUseCase
     private let repositoryDetailsToRepositoryDetailsModelMapper: AnyMapper<RepositoryDetails, RepositoryDetailsModel>
-    private let repositoryDetailsModelToRepositoryDetailsMapper: AnyMapper<RepositoryDetailsModel, RepositoryDetails>
     private let scheduler: SchedulerType
 
     public init(
@@ -39,7 +38,6 @@ public final class RepositoryDetailsViewModel {
         toggleFavoriteRepositoryUseCase: ToggleFavoriteRepositoryUseCase,
         checkIfRepositoryIsFavoriteUseCase: CheckIfRepositoryIsFavoriteUseCase,
         repositoryDetailsToRepositoryDetailsModelMapper: AnyMapper<RepositoryDetails, RepositoryDetailsModel>,
-        repositoryDetailsModelToRepositoryDetailsMapper: AnyMapper<RepositoryDetailsModel, RepositoryDetails>,
         scheduler: SchedulerType
     ) {
         self.name = name
@@ -48,12 +46,10 @@ public final class RepositoryDetailsViewModel {
         self.toggleFavoriteRepositoryUseCase = toggleFavoriteRepositoryUseCase
         self.checkIfRepositoryIsFavoriteUseCase = checkIfRepositoryIsFavoriteUseCase
         self.repositoryDetailsToRepositoryDetailsModelMapper = repositoryDetailsToRepositoryDetailsModelMapper
-        self.repositoryDetailsModelToRepositoryDetailsMapper = repositoryDetailsModelToRepositoryDetailsMapper
         self.scheduler = scheduler
     }
 
     func transform(input: Input) -> Output {
-        var repositoryDetailsModel: RepositoryDetailsModel?
         var toggle = false
 
         let fetchRepositoryDetailsInput = FetchRepositoryDetailsInput(name: name, owner: owner)
@@ -66,7 +62,6 @@ public final class RepositoryDetailsViewModel {
                 case .error(let error):
                     return .failed(error.localizedDescription)
                 case .next(let value):
-                    repositoryDetailsModel = value
                     return .loaded(value)
                 case .completed:
                     return nil
@@ -87,14 +82,12 @@ public final class RepositoryDetailsViewModel {
             .observe(on: scheduler)
 
         let isFavoriteTogglePartialState = debouncedFavoriteTrigger
-            .compactMap { [unowned self] in
-                guard let repositoryDetailsModel = repositoryDetailsModel else {
-                    return nil
-                }
-
-                let repositoryDetails = repositoryDetailsModelToRepositoryDetailsMapper.map(input: repositoryDetailsModel)
-                
-                return ToggleFavoriteRepositoryInput(toggle: toggle, repositoryDetails: repositoryDetails)
+            .map { [unowned self] in
+                let fetchRepositoryDetailsInput = FetchRepositoryDetailsInput(name: name, owner: owner)
+                return ToggleFavoriteRepositoryInput(
+                    toggle: toggle,
+                    fetchRepositoryDetailsInput: fetchRepositoryDetailsInput
+                )
             }
             .flatMap { [unowned self] input in
                 toggleFavoriteRepositoryUseCase.execute(input: input)

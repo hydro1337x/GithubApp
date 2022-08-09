@@ -16,12 +16,15 @@ public final class LocalRemoveFavoriteRepositoryRepository: RemoveFavoriteReposi
         self.localClient = localClient
     }
 
-    public func remove(input: UpdateFavoriteRepositoryInput) -> Completable {
+    public func remove(input: RemoveFavoriteRepositoryInput) -> Completable {
         let key = LocalStorageKey.favoriteRepositories + input.tokenValue
         
         return localClient.fetchInstance(ofType: [RepositoryDetailsResponse].self, for: key)
             .map { repositories -> [RepositoryDetailsResponse] in
-                guard let index = repositories.firstIndex(where: { $0.id == input.repositoryDetails.id }) else {
+                guard let index = repositories.firstIndex(where: {
+                    $0.owner.login == input.fetchRepositoryDetailsInput.owner &&
+                    $0.name == input.fetchRepositoryDetailsInput.name
+                }) else {
                     return repositories
                 }
 

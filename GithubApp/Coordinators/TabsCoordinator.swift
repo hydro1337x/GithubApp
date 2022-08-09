@@ -33,7 +33,7 @@ final class TabsCoordinator: Coordinator {
     }
 
     func start() {
-        tabBarController.tabBar.backgroundColor = .systemBackground
+        tabBarController.tabBar.backgroundColor = .secondarySystemBackground
         setupSubscriptions()
         showTabsScene()
     }

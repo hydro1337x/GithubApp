@@ -11,6 +11,10 @@ import RxCocoa
 import Domain
 
 public final class FavoriteRepositoriesViewModel {
+    struct Input {
+        let trigger: Driver<Void>
+    }
+
     struct Output {
         let state: Driver<DataState<[RepositoryViewModel]>>
     }
@@ -29,8 +33,9 @@ public final class FavoriteRepositoriesViewModel {
         self.scheduler = scheduler
     }
 
-    func transform() -> Output {
-        let trigger = BehaviorRelay<Void>(value: ())
+    func transform(input: Input) -> Output {
+        let trigger = input.trigger
+            .asObservable()
             .observe(on: scheduler)
 
         let partialState = trigger

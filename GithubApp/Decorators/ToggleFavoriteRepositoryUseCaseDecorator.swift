@@ -21,7 +21,7 @@ final class ToggleFavoriteRepositoryUseCaseDecorator: ToggleFavoriteRepositoryUs
 
     func execute(input: ToggleFavoriteRepositoryInput) -> Completable {
         decoratee.execute(input: input)
-            .do(afterCompleted: { [weak self] in
+            .do(onCompleted: { [weak self] in
                 guard let self = self else { return }
                 self.completionRelay.accept(())
             })

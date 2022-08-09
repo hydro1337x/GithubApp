@@ -16,7 +16,6 @@ struct SearchRepositoriesSceneFactory {
     typealias Dependencies =
     RepositoriesToRepositoryViewModelsMapperInjectable &
     RepositoryDetailsToRepositoryDetailsModelMapperInjectable &
-    RepositoryDetailsModelToRepositoryDetailsMapperInjectable &
     ToggleFavoriteRepositoryUseCaseInjectable &
     FetchRepositoryDetailsUseCaseInjectable &
     FetchSearchedRepositoriesUseCaseInjectable &
@@ -37,7 +36,6 @@ struct SearchRepositoriesSceneFactory {
             toggleFavoriteRepositoryUseCase: toggleFavoriteRepositoryUseCaseDecorator,
             checkIfRepositoryIsFavoriteUseCase: dependencies.checkIfRepositoryIsFavoriteUseCase,
             repositoryDetailsToRepositoryDetailsModelMapper: dependencies.repositoryDetailsToRepositoryDetailsModelMapper,
-            repositoryDetailsModelToRepositoryDetailsMapper: dependencies.repositoryDetailsModelToRepositoryDetailsMapper,
             scheduler: scheduler
         )
         let viewController = RepositoryDetailsViewController(viewModel: viewModel)

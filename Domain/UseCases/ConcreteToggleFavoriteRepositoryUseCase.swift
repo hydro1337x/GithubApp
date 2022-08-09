@@ -13,15 +13,18 @@ public final class ConcreteToggleFavoriteRepositoryUseCase: ToggleFavoriteReposi
     private let storeFavoriteRepositoryRepository: StoreFavoriteRepositoryRepository
     private let removeFavoriteRepositoryRepository: RemoveFavoriteRepositoryRepository
     private let fetchUserAccessTokenRepository: FetchUserAccessTokenRepository
+    private let fetchRepositoryDetailsRepository: FetchRepositoryDetailsRepository
 
     public init(
         storeFavoriteRepositoryRepository: StoreFavoriteRepositoryRepository,
         removeFavoriteRepositoryRepository: RemoveFavoriteRepositoryRepository,
-        fetchUserAccessTokenRepository: FetchUserAccessTokenRepository
+        fetchUserAccessTokenRepository: FetchUserAccessTokenRepository,
+        fetchRepositoryDetailsRepository: FetchRepositoryDetailsRepository
     ) {
         self.storeFavoriteRepositoryRepository = storeFavoriteRepositoryRepository
         self.removeFavoriteRepositoryRepository = removeFavoriteRepositoryRepository
         self.fetchUserAccessTokenRepository = fetchUserAccessTokenRepository
+        self.fetchRepositoryDetailsRepository = fetchRepositoryDetailsRepository
     }
 
     public func execute(input: ToggleFavoriteRepositoryInput) -> Completable {
@@ -30,15 +33,22 @@ public final class ConcreteToggleFavoriteRepositoryUseCase: ToggleFavoriteReposi
             .flatMapCompletable { [weak self] token in
                 guard let self = self else { return .empty() }
 
-                let repositoryInput = UpdateFavoriteRepositoryInput(
-                    tokenValue: token.value,
-                    repositoryDetails: input.repositoryDetails
-                )
-
                 if input.toggle {
-                    return self.removeFavoriteRepositoryRepository.remove(input: repositoryInput)
+                    let removeInput = RemoveFavoriteRepositoryInput(
+                        tokenValue: token.value,
+                        fetchRepositoryDetailsInput: input.fetchRepositoryDetailsInput
+                    )
+
+                    return self.removeFavoriteRepositoryRepository.remove(input: removeInput)
                 } else {
-                    return self.storeFavoriteRepositoryRepository.store(input: repositoryInput)
+                    return self.fetchRepositoryDetailsRepository.fetch(with: input.fetchRepositoryDetailsInput)
+                        .flatMapCompletable { repositoryDetails in
+                            let storeInput = StoreFavoriteRepositoryInput(
+                                tokenValue: token.value,
+                                repositoryDetails: repositoryDetails
+                            )
+                            return self.storeFavoriteRepositoryRepository.store(input: storeInput)
+                        }
                 }
             }
     }

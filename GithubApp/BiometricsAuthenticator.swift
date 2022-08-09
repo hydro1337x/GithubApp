@@ -31,7 +31,7 @@ final class BiometricsAuthenticator: Authenticator {
 
             var error: NSError?
 
-            guard self.context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) else {
+            guard self.context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) else {
                 observer(.error(error ?? AuthenticationFailedError()))
                 
                 return Disposables.create()

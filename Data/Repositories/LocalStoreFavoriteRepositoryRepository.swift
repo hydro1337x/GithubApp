@@ -21,7 +21,7 @@ public final class LocalStoreFavoriteRepositoryRepository: StoreFavoriteReposito
         self.requestMapper = requestMapper
     }
 
-    public func store(input: UpdateFavoriteRepositoryInput) -> Completable {
+    public func store(input: StoreFavoriteRepositoryInput) -> Completable {
         let newRepository = requestMapper.map(input: input.repositoryDetails)
         let key = LocalStorageKey.favoriteRepositories + input.tokenValue
 

@@ -9,10 +9,10 @@ import Foundation
 
 public struct ToggleFavoriteRepositoryInput {
     let toggle: Bool
-    let repositoryDetails: RepositoryDetails
+    let fetchRepositoryDetailsInput: FetchRepositoryDetailsInput
 
-    public init(toggle: Bool, repositoryDetails: RepositoryDetails) {
+    public init(toggle: Bool, fetchRepositoryDetailsInput: FetchRepositoryDetailsInput) {
         self.toggle = toggle
-        self.repositoryDetails = repositoryDetails
+        self.fetchRepositoryDetailsInput = fetchRepositoryDetailsInput
     }
 }

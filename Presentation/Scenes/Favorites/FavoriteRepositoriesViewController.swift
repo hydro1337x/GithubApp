@@ -52,7 +52,13 @@ public final class FavoriteRepositoriesViewController: UIViewController {
     }
 
     private func setupSubscriptions() {
-        let output = viewModel.transform()
+        let initialTrigger = BehaviorRelay<Void>(value: ())
+
+        let trigger = Observable.merge(initialTrigger.asObservable(), refreshRelay.asObservable())
+
+        let input = FavoriteRepositoriesViewModel.Input(trigger: trigger.asDriver(onErrorDriveWith: .empty()))
+
+        let output = viewModel.transform(input: input)
 
         output.state
             .drive(onNext: { [unowned self] state in
