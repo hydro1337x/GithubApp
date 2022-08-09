@@ -69,7 +69,7 @@ public final class RepositoryDetailsViewController: UIViewController {
                     makeLoadedStateLayout(with: model)
                 case .failed(let message):
                     activityIndicatorView.stopAnimating()
-                    print("ERROR: ", message)
+                    showToast(with: message)
                 }
             })
             .disposed(by: disposeBag)
@@ -84,9 +84,8 @@ public final class RepositoryDetailsViewController: UIViewController {
                 case .loaded(let value):
                     setFavoriteButtonImage(value ? "heart.fill" : "heart")
                     generator.notificationOccurred(.success)
-                case .failed(let message):
+                case .failed:
                     generator.notificationOccurred(.error)
-                    print("ERROR: ", message)
                 }
             })
             .disposed(by: disposeBag)

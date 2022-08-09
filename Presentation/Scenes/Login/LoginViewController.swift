@@ -152,7 +152,7 @@ public final class LoginViewController: UIViewController {
             [emailTextField, passwordTextField].forEach {
                 $0.isEnabled = true
             }
-            print("ERROR: ", message)
+            showToast(with: message)
         }
     }
 }
@@ -160,7 +160,7 @@ public final class LoginViewController: UIViewController {
 extension LoginViewController: ViewConstructing {
 
     func setupLayout() {
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -193,7 +193,7 @@ extension LoginViewController: ViewConstructing {
         loginButton.heightAnchor.constraint(equalToConstant: Dimension.buttonHeight).isActive = true
         stackView.addArrangedSubview(loginButton)
 
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(activityIndicatorView)
         NSLayoutConstraint.activate([
             activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),

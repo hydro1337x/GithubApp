@@ -112,8 +112,8 @@ public final class SearchRepositoriesViewController: UIViewController {
             .disposed(by: disposeBag)
 
         output.failureMessage
-            .emit(onNext: {
-                print($0)
+            .emit(onNext: { [unowned self] message in
+                showToast(with: message)
             })
             .disposed(by: disposeBag)
 

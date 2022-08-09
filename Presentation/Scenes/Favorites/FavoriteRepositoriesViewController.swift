@@ -68,8 +68,8 @@ public final class FavoriteRepositoriesViewController: UIViewController {
                 case .loading:
                     activityIndicatorView.startAnimating()
                 case .failed(let message):
-                    print("ERROR: ", message)
                     activityIndicatorView.stopAnimating()
+                    showToast(with: message)
                 case .loaded(let viewModels):
                     activityIndicatorView.stopAnimating()
                     emptyStateButton.isHidden = !viewModels.isEmpty
