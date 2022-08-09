@@ -50,6 +50,9 @@ public final class FavoriteRepositoriesViewModel {
                 case .next(let data):
                     return .loaded(data)
                 case .error(let error):
+                    if type(of: error) == NotFoundError.self {
+                        return .failed("No favorites yet")
+                    }
                     return .failed(error.localizedDescription)
                 case .completed:
                     return nil
