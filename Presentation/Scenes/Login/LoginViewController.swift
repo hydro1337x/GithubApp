@@ -160,8 +160,8 @@ public final class LoginViewController: UIViewController {
 extension LoginViewController: ViewConstructing {
 
     func setupLayout() {
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -169,8 +169,8 @@ extension LoginViewController: ViewConstructing {
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
 
-        scrollView.addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(stackView)
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(lessThanOrEqualTo: scrollView.topAnchor, constant: Dimension.stackViewOffset),
             stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: Dimension.padding),
@@ -193,8 +193,8 @@ extension LoginViewController: ViewConstructing {
         loginButton.heightAnchor.constraint(equalToConstant: Dimension.buttonHeight).isActive = true
         stackView.addArrangedSubview(loginButton)
 
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(activityIndicatorView)
-        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             activityIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor)

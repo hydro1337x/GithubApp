@@ -36,6 +36,7 @@ final class ActivityIndicatorTableViewCell: UITableViewCell {
 
 extension ActivityIndicatorTableViewCell: ViewConstructing {
     func setupLayout() {
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(activityIndicatorView)
         NSLayoutConstraint.activate([
             activityIndicatorView.topAnchor.constraint(equalTo: topAnchor, constant: Dimension.padding),
@@ -43,7 +44,6 @@ extension ActivityIndicatorTableViewCell: ViewConstructing {
             activityIndicatorView.trailingAnchor.constraint(equalTo: trailingAnchor),
             activityIndicatorView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Dimension.padding)
         ])
-        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
     }
 
     func setupStyle() {
