@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "rxfeedback.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/NoTests/RxFeedback.swift",
+      "state" : {
+        "revision" : "aa8384081a14af8fb389245fce2eba5776a96d0b",
+        "version" : "4.0.0"
+      }
+    },
+    {
       "identity" : "rxswift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ReactiveX/RxSwift",

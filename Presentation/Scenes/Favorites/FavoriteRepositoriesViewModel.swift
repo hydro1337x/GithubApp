@@ -9,19 +9,36 @@ import Foundation
 import RxSwift
 import RxCocoa
 import Domain
+import RxFeedback
 
 public final class FavoriteRepositoriesViewModel {
-    struct Input {
-        let trigger: Driver<Void>
-    }
-
-    struct Output {
-        let state: Driver<DataState<[RepositoryViewModel]>>
-    }
-
     private let fetchFavoriteRepositoriesUseCase: FetchFavoriteRepositoriesUseCase
     private let repositoriesToRepositoryViewModelsMapper: AnyMapper<[Repository], [RepositoryViewModel]>
     private let scheduler: SchedulerType
+
+    func state(with bindings: @escaping (Driver<State>) -> Signal<Event>) -> Driver<State> {
+        Driver.system(
+            initialState: .initial,
+            reduce: State.reduce(state:event:),
+            feedback:
+                bindings,
+                react(request: { $0.startLoading }, effects: { [unowned self] _ in
+                    fetchFavoriteRepositoriesUseCase.execute()
+                        .asObservable()
+                        .materialize()
+                        .compactMap { [self] event in
+                            switch event {
+                            case .next(let data):
+                                return .loaded(repositoriesToRepositoryViewModelsMapper.map(input: data))
+                            case .error(let error):
+                                return .failed(error.localizedDescription)
+                            case .completed:
+                                return nil
+                            }
+                        }
+                        .asSignal(onErrorSignalWith: .empty())
+            }))
+    }
 
     public init(
         fetchFavoriteRepositoriesUseCase: FetchFavoriteRepositoriesUseCase,
@@ -32,42 +49,38 @@ public final class FavoriteRepositoriesViewModel {
         self.repositoriesToRepositoryViewModelsMapper = repositoriesToRepositoryViewModelsMapper
         self.scheduler = scheduler
     }
+}
 
-    func transform(input: Input) -> Output {
-        let trigger = input.trigger
-            .asObservable()
-            .observe(on: scheduler)
+extension FavoriteRepositoriesViewModel {
+    enum State: Equatable {
+        case initial
+        case loading
+        case failed(String)
+        case loaded([RepositoryViewModel])
+    }
 
-        let partialState = trigger
-            .flatMap { [unowned self] in
-                fetchFavoriteRepositoriesUseCase.execute()
-                    .map(repositoriesToRepositoryViewModelsMapper.map(input:))
-                    .asObservable()
-                    .materialize()
-            }
-            .compactMap { event -> DataState<[RepositoryViewModel]>? in
-                switch event {
-                case .next(let data):
-                    return .loaded(data)
-                case .error(let error):
-                    if type(of: error) == NotFoundError.self {
-                        return .failed("No favorites yet")
-                    }
-                    return .failed(error.localizedDescription)
-                case .completed:
-                    return nil
-                }
-            }
+    enum Event: Equatable {
+        case load
+        case failed(String)
+        case loaded([RepositoryViewModel])
+    }
 
-        let state = Observable
-            .merge(
-                trigger.map { _ in DataState.loading },
-                partialState
-            )
-            .startWith(.initial)
+    struct Request: Equatable {}
+}
 
-        return Output(
-            state: state.asDriver(onErrorDriveWith: .empty())
-        )
+extension FavoriteRepositoriesViewModel.State {
+    static func reduce(state: Self, event: FavoriteRepositoriesViewModel.Event) -> Self {
+        switch event {
+        case .load:
+            return .loading
+        case .failed(let error):
+            return .failed(error)
+        case .loaded(let repositoryDetails):
+            return .loaded(repositoryDetails)
+        }
+    }
+
+    var startLoading: FavoriteRepositoriesViewModel.Request? {
+        return self == .loading ? FavoriteRepositoriesViewModel.Request() : nil
     }
 }

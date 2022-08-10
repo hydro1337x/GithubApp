@@ -13,6 +13,8 @@
 		601EABF528A2D23700D740FA /* UIViewController+ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601EABF428A2D23700D740FA /* UIViewController+ToastView.swift */; };
 		601EAC1828A3213400D740FA /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = 601EAC1728A3213400D740FA /* RxBlocking */; };
 		601EAC1A28A3213400D740FA /* RxTest in Frameworks */ = {isa = PBXBuildFile; productRef = 601EAC1928A3213400D740FA /* RxTest */; };
+		601EAC2028A3348400D740FA /* RxFeedback in Frameworks */ = {isa = PBXBuildFile; productRef = 601EAC1F28A3348400D740FA /* RxFeedback */; };
+		601EAC2228A334DE00D740FA /* RxFeedback in Frameworks */ = {isa = PBXBuildFile; productRef = 601EAC2128A334DE00D740FA /* RxFeedback */; };
 		603D8BF8289D101D00A5CBE3 /* ValidationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D8BF7289D101D00A5CBE3 /* ValidationState.swift */; };
 		603D8BFA289D298800A5CBE3 /* DiscardableDataState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D8BF9289D298800A5CBE3 /* DiscardableDataState.swift */; };
 		603D8BFC289D323100A5CBE3 /* AccessTokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603D8BFB289D323100A5CBE3 /* AccessTokenResponse.swift */; };
@@ -413,6 +415,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				60D771A2289469B00027CD4C /* Data.framework in Frameworks */,
+				601EAC2028A3348400D740FA /* RxFeedback in Frameworks */,
 				60D7717F2894690E0027CD4C /* Domain.framework in Frameworks */,
 				60D771C428946A070027CD4C /* Presentation.framework in Frameworks */,
 			);
@@ -465,6 +468,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				60D771FA28946E830027CD4C /* Domain.framework in Frameworks */,
+				601EAC2228A334DE00D740FA /* RxFeedback in Frameworks */,
 				60D771F528946E820027CD4C /* RxCocoa in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1114,6 +1118,7 @@
 			);
 			name = GithubApp;
 			packageProductDependencies = (
+				601EAC1F28A3348400D740FA /* RxFeedback */,
 			);
 			productName = GithubApp;
 			productReference = 60D7712F289447890027CD4C /* GithubApp.app */;
@@ -1242,6 +1247,7 @@
 			name = Presentation;
 			packageProductDependencies = (
 				60D771F428946E820027CD4C /* RxCocoa */,
+				601EAC2128A334DE00D740FA /* RxFeedback */,
 			);
 			productName = Presentation;
 			productReference = 60D771B128946A070027CD4C /* Presentation.framework */;
@@ -1320,6 +1326,7 @@
 			mainGroup = 60D77126289447890027CD4C;
 			packageReferences = (
 				60D771CE28946BE80027CD4C /* XCRemoteSwiftPackageReference "RxSwift" */,
+				601EAC1E28A3348400D740FA /* XCRemoteSwiftPackageReference "RxFeedback" */,
 			);
 			productRefGroup = 60D77130289447890027CD4C /* Products */;
 			projectDirPath = "";
@@ -2299,6 +2306,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		601EAC1E28A3348400D740FA /* XCRemoteSwiftPackageReference "RxFeedback" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/NoTests/RxFeedback.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 		60D771CE28946BE80027CD4C /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift";
@@ -2319,6 +2334,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 60D771CE28946BE80027CD4C /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxTest;
+		};
+		601EAC1F28A3348400D740FA /* RxFeedback */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 601EAC1E28A3348400D740FA /* XCRemoteSwiftPackageReference "RxFeedback" */;
+			productName = RxFeedback;
+		};
+		601EAC2128A334DE00D740FA /* RxFeedback */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 601EAC1E28A3348400D740FA /* XCRemoteSwiftPackageReference "RxFeedback" */;
+			productName = RxFeedback;
 		};
 		60D771D928946C980027CD4C /* RxRelay */ = {
 			isa = XCSwiftPackageProductDependency;

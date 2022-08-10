@@ -8,6 +8,7 @@
 import UIKit
 import RxCocoa
 import RxSwift
+import RxFeedback
 
 public final class FavoriteRepositoriesViewController: UIViewController {
     typealias DataSource = UITableViewDiffableDataSource<String, RepositoryViewModel>
@@ -56,27 +57,38 @@ public final class FavoriteRepositoriesViewController: UIViewController {
 
         let trigger = Observable.merge(initialTrigger.asObservable(), refreshRelay.asObservable())
 
-        let input = FavoriteRepositoriesViewModel.Input(trigger: trigger.asDriver(onErrorDriveWith: .empty()))
+        let uiBindings: (Driver<FavoriteRepositoriesViewModel.State>) -> Signal<FavoriteRepositoriesViewModel.Event> = bind(self) { me, state in
+            let subscriptions = [
+                state.drive(onNext: { [unowned self] state in
+                    switch state {
+                    case .initial:
+                        emptyStateButton.isHidden = false
+                    case .loading:
+                        activityIndicatorView.startAnimating()
+                    case .failed(let message):
+                        activityIndicatorView.stopAnimating()
+                        showToast(with: message)
+                    case .loaded(let viewModels):
+                        activityIndicatorView.stopAnimating()
+                        emptyStateButton.isHidden = !viewModels.isEmpty
+                        let snapshot = makeSnapshot(with: viewModels)
+                        dataSource.apply(snapshot)
+                    }
+                })
+                ]
 
-        let output = viewModel.transform(input: input)
-
-        output.state
-            .drive(onNext: { [unowned self] state in
-                switch state {
-                case .initial:
-                    emptyStateButton.isHidden = false
-                case .loading:
-                    activityIndicatorView.startAnimating()
-                case .failed(let message):
-                    activityIndicatorView.stopAnimating()
-                    showToast(with: message)
-                case .loaded(let viewModels):
-                    activityIndicatorView.stopAnimating()
-                    emptyStateButton.isHidden = !viewModels.isEmpty
-                    let snapshot = makeSnapshot(with: viewModels)
-                    dataSource.apply(snapshot)
+            let events: [Signal<FavoriteRepositoriesViewModel.Event>] = [
+                trigger.map {
+                    .load
                 }
-            })
+                .asSignal(onErrorSignalWith: .empty())
+            ]
+
+            return Bindings(subscriptions: subscriptions, events: events)
+        }
+
+        viewModel.state(with: uiBindings)
+            .drive()
             .disposed(by: disposeBag)
 
         /**
