@@ -31,16 +31,9 @@ public final class AsyncImageViewModel {
                 guard let self = self else { return .empty() }
 
                 return self.imageConvertible
-                    .materialize()
-                    .compactMap { event -> AsyncImageState? in
-                        switch event {
-                        case .next(let data):
-                            return .loaded(data)
-                        case .error:
-                            return .failed
-                        case .completed:
-                            return nil
-                        }
+                    .map { .loaded($0) }
+                    .catch { error in
+                        .just(.failed)
                     }
             }
 

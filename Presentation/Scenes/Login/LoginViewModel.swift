@@ -44,17 +44,10 @@ public final class LoginViewModel {
             .asObservable()
             .flatMapLatest { [unowned self] input in
                 emailValidator.validate(input: input)
-                    .andThen(.just(ValidationState.valid))
-                    .materialize()
-                    .map { event -> ValidationState in
-                        switch event {
-                        case .error(let error):
-                            return ValidationState.invalid(error.localizedDescription)
-                        case .next, .completed:
-                            return ValidationState.valid
-                        }
+                    .andThen(Observable<ValidationState>.just(.valid))
+                    .catch { error in
+                        .just(.invalid(error.localizedDescription))
                     }
-                    .distinctUntilChanged()
             }
             .share()
             .startWith(.empty)
@@ -63,17 +56,10 @@ public final class LoginViewModel {
             .asObservable()
             .flatMapLatest { [unowned self] input in
                 passwordValidator.validate(input: input)
-                    .andThen(.just(ValidationState.valid))
-                    .materialize()
-                    .map { event -> ValidationState in
-                        switch event {
-                        case .error(let error):
-                            return ValidationState.invalid(error.localizedDescription)
-                        case .next, .completed:
-                            return ValidationState.valid
-                        }
+                    .andThen(Observable<ValidationState>.just(.valid))
+                    .catch { error in
+                        .just(.invalid(error.localizedDescription))
                     }
-                    .distinctUntilChanged()
             }
             .share()
             .startWith(.empty)
@@ -92,21 +78,14 @@ public final class LoginViewModel {
             .withLatestFrom(
                 Observable.combineLatest(input.email.asObservable(), input.password.asObservable())
             )
-            .flatMap { [unowned self] email, password -> Observable<Event<Void>> in
+            .flatMap { [unowned self] email, password -> Observable<DiscardableDataState> in
                 let input = LoginUserInput(email: email, password: password)
                 return loginUserUseCase.execute(input: input)
                     .andThen(Observable<Void>.just(()))
-                    .materialize()
-            }
-            .compactMap { event -> DiscardableDataState? in
-                switch event {
-                case .error(let error):
-                    return .failed(error.localizedDescription)
-                case .next:
-                    return .loaded
-                case .completed:
-                    return nil
-                }
+                    .map { .loaded }
+                    .catch { error in
+                        .just(.failed(error.localizedDescription))
+                    }
             }
             .share()
 

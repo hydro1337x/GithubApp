@@ -55,23 +55,15 @@ public final class RepositoryDetailsViewModel {
         let fetchRepositoryDetailsInput = FetchRepositoryDetailsInput(name: name, owner: owner)
         let repositoryDetailsPartialState = fetchRepositoryDetailsUseCase.execute(with: fetchRepositoryDetailsInput)
             .map(repositoryDetailsToRepositoryDetailsModelMapper.map(input:))
-            .asObservable()
-            .materialize()
-            .compactMap { event -> DataState<RepositoryDetailsModel>? in
-                switch event {
-                case .error(let error):
-                    return .failed(error.localizedDescription)
-                case .next(let value):
-                    return .loaded(value)
-                case .completed:
-                    return nil
-                }
+            .map { DataState.loaded($0) }
+            .catch { error in
+                .just(.failed(error.localizedDescription))
             }
-            .share()
+            .asObservable()
 
         let repositoryDetailsState = Observable
             .merge(
-                .just(DataState.loading),
+                .just(.loading),
                 repositoryDetailsPartialState
             )
             .startWith(.initial)
@@ -89,21 +81,16 @@ public final class RepositoryDetailsViewModel {
                     fetchRepositoryDetailsInput: fetchRepositoryDetailsInput
                 )
             }
-            .flatMap { [unowned self] input in
+            .flatMap { [unowned self] input -> Observable<DataState<Bool>> in
                 toggleFavoriteRepositoryUseCase.execute(input: input)
                     .andThen(Observable<Void>.just(()))
-                    .materialize()
-            }
-            .compactMap { event -> DataState<Bool>? in
-                switch event {
-                case .next:
-                    toggle = !toggle
-                    return .loaded(toggle)
-                case .error(let error):
-                    return .failed(error.localizedDescription)
-                case .completed:
-                    return nil
-                }
+                    .do(onNext: {
+                        toggle = !toggle
+                    })
+                    .map { .loaded(toggle) }
+                    .catch { error in
+                        .just(.failed(error.localizedDescription))
+                    }
             }
             .share()
 
