@@ -25,6 +25,7 @@ public final class FavoriteRepositoriesViewModel {
                 react(request: { $0.startLoading }, effects: { [unowned self] _ in
                     fetchFavoriteRepositoriesUseCase.execute()
                         .asObservable()
+                        .observe(on: scheduler)
                         .materialize()
                         .compactMap { [self] event in
                             switch event {
