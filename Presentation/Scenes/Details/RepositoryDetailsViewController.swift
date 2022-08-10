@@ -96,7 +96,6 @@ public final class RepositoryDetailsViewController: UIViewController {
 
 extension RepositoryDetailsViewController: ViewConstructing {
     func setupLayout() {
-
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
         NSLayoutConstraint.activate([
@@ -141,6 +140,11 @@ extension RepositoryDetailsViewController: ViewConstructing {
 
         activityIndicatorView.style = .large
         activityIndicatorView.hidesWhenStopped = true
+
+        avatarImageView.contentMode = .scaleAspectFit
+        avatarImageView.layer.cornerRadius = Dimension.imageSpan / 2
+        avatarImageView.layer.borderWidth = 1
+        avatarImageView.clipsToBounds = true
     }
 
     private func makeLoadedStateLayout(with model: RepositoryDetailsModel) {
@@ -158,8 +162,11 @@ extension RepositoryDetailsViewController: ViewConstructing {
             ("smallcircle.filled.circle", model.openIssuesCount)
         ]
 
-        let firstTupleViewsBatch = firstRowTuples.map {
-            makeTupleView(imageName: $0.0, text: $0.1)
+        let firstTupleViewsBatch: [UIView] = firstRowTuples.map {
+            let tupleView = makeTupleView(imageName: $0.0, text: $0.1)
+            tupleView.layer.cornerRadius = 8
+            tupleView.clipsToBounds = true
+            return tupleView
         }
 
         stackView.addArrangedSubview(makeSubStackView(with: firstTupleViewsBatch))
@@ -170,8 +177,11 @@ extension RepositoryDetailsViewController: ViewConstructing {
             ("eye", model.watchersCount)
         ]
 
-        let secondTupleViewsBatch = secondRowTuples.map {
-            makeTupleView(imageName: $0.0, text: $0.1)
+        let secondTupleViewsBatch: [UIView] = secondRowTuples.map {
+            let tupleView = makeTupleView(imageName: $0.0, text: $0.1)
+            tupleView.layer.cornerRadius = 8
+            tupleView.clipsToBounds = true
+            return tupleView
         }
 
         stackView.addArrangedSubview(makeSubStackView(with: secondTupleViewsBatch))

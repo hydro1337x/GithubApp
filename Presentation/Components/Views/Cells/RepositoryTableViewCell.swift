@@ -53,11 +53,11 @@ final class RepositoryTableViewCell: UITableViewCell {
         ]
 
         tuples.forEach {
+            let tupleView = makeTupleView(imageName: $0.0, text: $0.1)
+            tupleView.layer.cornerRadius = 8
+            tupleView.clipsToBounds = true
             stackView.addArrangedSubview(
-                makeTupleView(
-                    imageName: $0.0,
-                    text: $0.1
-                )
+                tupleView
             )
         }
     }
