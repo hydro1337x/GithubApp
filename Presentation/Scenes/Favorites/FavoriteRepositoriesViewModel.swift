@@ -26,18 +26,11 @@ public final class FavoriteRepositoriesViewModel {
                     fetchFavoriteRepositoriesUseCase.execute()
                         .asObservable()
                         .observe(on: scheduler)
-                        .materialize()
-                        .compactMap { [self] event in
-                            switch event {
-                            case .next(let data):
-                                return .loaded(repositoriesToRepositoryViewModelsMapper.map(input: data))
-                            case .error(let error):
-                                return .failed(error.localizedDescription)
-                            case .completed:
-                                return nil
-                            }
+                        .map(repositoriesToRepositoryViewModelsMapper.map(input:))
+                        .map { repositories in .loaded(repositories) }
+                        .asSignal { error in
+                            .just(.failed(error.localizedDescription))
                         }
-                        .asSignal(onErrorSignalWith: .empty())
             }))
     }
 
