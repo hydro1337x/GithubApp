@@ -32,10 +32,6 @@ final class SearchRepositoriesCoordinator: Coordinator {
         self.refreshRelay = refreshRelay
     }
 
-    deinit {
-        print("Deinited: \(String(describing: self))")
-    }
-
     func start() {
         setupNavigationItems()
         setupSubscriptions()

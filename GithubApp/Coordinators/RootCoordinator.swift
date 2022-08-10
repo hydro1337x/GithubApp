@@ -34,10 +34,6 @@ final class RootCoordinator: Coordinator {
         self.evaluateUserAuthenticityUseCase = evaluateUserAuthenticityUseCase
     }
 
-    deinit {
-        print("Deinited: \(String(describing: self))")
-    }
-
     func start() {
         setupSubscriptions()
         window.backgroundColor = .systemBackground

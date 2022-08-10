@@ -28,10 +28,6 @@ final class TabsCoordinator: Coordinator {
         self.logoutRelay = logoutRelay
     }
 
-    deinit {
-        print("Deinited: \(String(describing: self))")
-    }
-
     func start() {
         tabBarController.tabBar.backgroundColor = .secondarySystemBackground
         setupSubscriptions()
