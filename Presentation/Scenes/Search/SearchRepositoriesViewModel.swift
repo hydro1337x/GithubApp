@@ -6,24 +6,12 @@
 //
 
 import Foundation
+import Domain
 import RxSwift
 import RxCocoa
-import Domain
+import RxFeedback
 
 public final class SearchRepositoriesViewModel {
-    struct Input {
-        let searchTrigger: Signal<String>
-        let refreshTrigger: Signal<String>
-        let subsequentTrigger: Signal<String>
-    }
-
-    struct Output {
-        let items: Driver<[SearchRepositoriesItem]>
-        let refreshActivity: Driver<Bool>
-        let searchActivity: Driver<Bool>
-        let failureMessage: Signal<String>
-    }
-
     private let fetchSearchedRepositoriesUseCase: FetchSearchedRepositoriesUseCase
     private let repositoriesToRepositoryViewModelsMapper: AnyMapper<[Repository], [RepositoryViewModel]>
     private let scheduler: SchedulerType
@@ -38,83 +26,107 @@ public final class SearchRepositoriesViewModel {
         self.scheduler = scheduler
     }
 
-    func transform(input: Input) -> Output {
-        let failureTracker = FailureTracker()
-        let refreshActivityTracker = ActivityTracker()
-        let searchActivityTracker = ActivityTracker()
-        let subsequentActivityTracker = ActivityTracker()
-        var isSubsequentFetchInProgress = false
+    func state(with bindings: @escaping (Driver<State>) -> Signal<Event>) -> Driver<State> {
+        Driver.system(
+            initialState: .empty,
+            reduce: State.reduce(state:event:),
+            feedback:
+                bindings,
+                react(request: { $0.loadIfNeeded }, effects: { [unowned self] input in
+                    fetchSearchedRepositoriesUseCase.execute(with: input)
+                        .asObservable()
+                        .observe(on: scheduler)
+                        .map(repositoriesToRepositoryViewModelsMapper.map(input:))
+                        .map { Event.loaded($0) }
+                        .asSignal { error in
+                            .just(Event.failed(error.localizedDescription))
+                        }
+            }))
+    }
+}
 
-        let refreshedRepositories = input.refreshTrigger
-            .asObservable()
-            .observe(on: scheduler)
-            .flatMap { [unowned self] input -> Observable<[Repository]> in
-                let input = FetchRepositoriesInput(searchInput: input, isInitialFetch: true)
-                return fetch(with: input, using: refreshActivityTracker, and: failureTracker)
-            }
-            .share()
+extension SearchRepositoriesViewModel {
+    struct State {
+        var search: String
+        var shouldLoad: Bool
+        var isInitialFetch: Bool
+        var items: [SearchRepositoriesItem]
+        var isLoading: Bool
+        var isRefreshing: Bool
+        var isSearching: Bool
+        var failureMessage: String?
+    }
 
-        let searchedRepositories = input.searchTrigger
-            .asObservable()
-            .debounce(.milliseconds(500), scheduler: scheduler)
-            .observe(on: scheduler)
-            .flatMap { [unowned self] input -> Observable<[Repository]> in
-                let input = FetchRepositoriesInput(searchInput: input, isInitialFetch: true)
-                return fetch(with: input, using: searchActivityTracker, and: failureTracker)
-            }
-            .share()
+    enum Event {
+        case searchChanged(String)
+        case refresh
+        case bottomReached
+        case failed(String)
+        case loaded([RepositoryViewModel])
+    }
+}
 
-        let subsequentRepositories = input.subsequentTrigger
-            .asObservable()
-            .observe(on: scheduler)
-            .filter { _ in !isSubsequentFetchInProgress }
-            .do(onNext: { _ in
-                isSubsequentFetchInProgress = true
-            })
-            .flatMap { [unowned self] input -> Observable<[Repository]> in
-                let input = FetchRepositoriesInput(searchInput: input, isInitialFetch: false)
-                return fetch(with: input, using: subsequentActivityTracker, and: failureTracker)
-            }
-            .share()
-            .do(onNext: { _ in
-                isSubsequentFetchInProgress = false
-            })
-
-
-        let repositories = Observable.merge(refreshedRepositories, searchedRepositories, subsequentRepositories)
-            .map { [unowned self] repositories in
-                repositoriesToRepositoryViewModelsMapper.map(input: repositories)
-            }
-
-        let items = Observable.combineLatest(repositories, subsequentActivityTracker.asObservable())
-            .map { repositories, isLoading -> [SearchRepositoriesItem] in
-                var items = repositories.map { SearchRepositoriesItem.item($0) }
-                if isLoading {
-                    items.append(SearchRepositoriesItem.activity)
-                }
-                return items
-            }
-
-        let failureMessage = failureTracker
-            .map { $0.localizedDescription }
-
-
-        return Output(
-            items: items.asDriver(onErrorDriveWith: .empty()),
-            refreshActivity: refreshActivityTracker.asDriver(),
-            searchActivity: searchActivityTracker.asDriver(),
-            failureMessage: failureMessage.asSignal(onErrorSignalWith: .empty())
+extension SearchRepositoriesViewModel.State {
+    static var empty: Self {
+        return Self(
+            search: "",
+            shouldLoad: true,
+            isInitialFetch: true,
+            items: [],
+            isLoading: false,
+            isRefreshing: false,
+            isSearching: false,
+            failureMessage: nil
         )
     }
 
-    private func fetch(with input: FetchRepositoriesInput, using activityTracker: ActivityTracker, and failureTracker: FailureTracker) -> Observable<[Repository]> {
-        fetchSearchedRepositoriesUseCase.execute(with: input)
-            .trackActivity(activityTracker)
-            .trackFailure(failureTracker)
-            .map { Optional($0) }
-            .catch { _ in
-                Observable<[Repository]?>.just(nil)
+    static func reduce(state: Self, event: SearchRepositoriesViewModel.Event) -> Self {
+        switch event {
+        case .searchChanged(let search):
+            var result = state
+            result.search = search
+            result.isInitialFetch = true
+            result.shouldLoad = true
+            result.isSearching = true
+            return result
+        case .refresh:
+            var result = state
+            result.isInitialFetch = true
+            result.shouldLoad = true
+            result.isRefreshing = true
+            return result
+        case .bottomReached:
+            var result = state
+            result.isInitialFetch = false
+            result.shouldLoad = true
+            if !result.isLoading {
+                result.items.append(.activity)
             }
-            .compactMap { $0 }
+            result.isLoading = true
+            return result
+        case .loaded(let repositories):
+            var result = state
+            result.isLoading = false
+            result.items = result.items.filter { $0 != .activity }
+            result.items = repositories.map { SearchRepositoriesItem.item($0) }
+            result.shouldLoad = false
+            result.failureMessage = nil
+            result.isRefreshing = false
+            result.isSearching = false
+            return result
+        case .failed(let message):
+            var result = state
+            result.isLoading = false
+            result.items = result.items.filter { $0 != .activity }
+            result.shouldLoad = false
+            result.failureMessage = message
+            result.isRefreshing = false
+            result.isSearching = false
+            return result
+        }
+    }
+
+    var loadIfNeeded: FetchRepositoriesInput? {
+        shouldLoad ? FetchRepositoriesInput(searchInput: search, isInitialFetch: isInitialFetch) : nil
     }
 }

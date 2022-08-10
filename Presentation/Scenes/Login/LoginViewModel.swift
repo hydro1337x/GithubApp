@@ -57,7 +57,6 @@ public final class LoginViewModel {
                     .distinctUntilChanged()
             }
             .share()
-            .debug()
             .startWith(.empty)
 
         let passwordValidation = input.password

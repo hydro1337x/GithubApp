@@ -8,6 +8,7 @@
 import UIKit
 import RxCocoa
 import RxSwift
+import RxFeedback
 
 public final class SearchRepositoriesViewController: UIViewController {
     typealias DataSource = UITableViewDiffableDataSource<String, SearchRepositoriesItem>
@@ -56,65 +57,63 @@ public final class SearchRepositoriesViewController: UIViewController {
     }
 
     private func setupSubscriptions() {
-        let refreshTrigger = refreshControl.rx
-            .controlEvent(.valueChanged)
-            .map { [unowned self] _ in searchBar.text ?? "" }
-            .asSignal(onErrorSignalWith: .empty())
+        let uiBindings: (Driver<SearchRepositoriesViewModel.State>) -> Signal<SearchRepositoriesViewModel.Event> = bind(self) { me, state in
+            let subscriptions = [
+                state
+                    .map(\.items)
+                    .distinctUntilChanged()
+                    .map { items in
+                        return me.makeSnapshot(with: items)
+                    }
+                    .drive(onNext: { snapshot in
+                        me.dataSource.apply(snapshot)
+                    }),
+                state
+                    .map(\.isRefreshing)
+                    .distinctUntilChanged()
+                    .drive(me.refreshControl.rx.isRefreshing),
+                state
+                    .map(\.isSearching)
+                    .distinctUntilChanged()
+                    .drive(me.activityIndicatorView.rx.isAnimating),
+                state
+                    .compactMap(\.failureMessage)
+                    .drive(onNext: { message in
+                        me.showToast(with: message)
+                    })
+            ]
 
-        let searchTrigger = searchBar.rx
-            .text
-            .orEmpty
-            .distinctUntilChanged()
-            .skip(1)
-            .asSignal(onErrorSignalWith: .empty())
+            let events: [Signal<SearchRepositoriesViewModel.Event>] = [
+                me.refreshControl.rx
+                    .controlEvent(.valueChanged)
+                    .map { .refresh }
+                    .asSignal(onErrorSignalWith: .empty()),
+                me.searchBar.rx
+                    .text
+                    .orEmpty
+                    .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
+                    .distinctUntilChanged()
+                    .skip(1)
+                    .map { .searchChanged($0) }
+                    .asSignal(onErrorSignalWith: .empty()),
+                me.tableView.rx
+                    .willDisplayCell
+                    .compactMap { input -> SubsequentTriggerInput? in
+                        guard let last = me.dataSource.snapshot().itemIdentifiers.indices.last else { return nil }
+                        return SubsequentTriggerInput(currentIndex: input.indexPath.row, lastIndex: last)
+                    }
+                    .filter { input in
+                        input.currentIndex == input.lastIndex
+                    }
+                    .map { _ in .bottomReached }
+                    .asSignal(onErrorSignalWith: .empty())
+            ]
 
-        let subsequentTrigger = tableView.rx
-            .willDisplayCell
-            .compactMap { [unowned self] input -> SubsequentTriggerInput? in
-                guard let last = dataSource.snapshot().itemIdentifiers.indices.last else { return nil }
-                return SubsequentTriggerInput(currentIndex: input.indexPath.row, lastIndex: last)
-            }
-            .filter { input in
-                input.currentIndex == input.lastIndex
-            }
-            .map { [unowned self] _ in searchBar.text ?? "" }
-            .asSignal(onErrorSignalWith: .empty())
+            return Bindings(subscriptions: subscriptions, events: events)
+        }
 
-        let input = SearchRepositoriesViewModel.Input(
-            searchTrigger: searchTrigger,
-            refreshTrigger: refreshTrigger,
-            subsequentTrigger: subsequentTrigger
-        )
-
-        let output = viewModel.transform(input: input)
-
-        output.items
-            .do(onNext: { [unowned self] items in
-                emptyStateButton.isHidden = !items.isEmpty
-                tableView.isScrollEnabled = !items.isEmpty
-            }, onSubscribed: { [unowned self] in
-                tableView.isScrollEnabled = false
-            })
-            .map { [unowned self] items in
-                makeSnapshot(with: items)
-            }
-            .drive(onNext: { [unowned self] snapshot in
-                dataSource.apply(snapshot)
-            })
-            .disposed(by: disposeBag)
-
-        output.refreshActivity
-            .drive(refreshControl.rx.isRefreshing)
-            .disposed(by: disposeBag)
-
-        output.searchActivity
-            .drive(activityIndicatorView.rx.isAnimating)
-            .disposed(by: disposeBag)
-
-        output.failureMessage
-            .emit(onNext: { [unowned self] message in
-                showToast(with: message)
-            })
+        viewModel.state(with: uiBindings)
+            .drive()
             .disposed(by: disposeBag)
 
         /**
