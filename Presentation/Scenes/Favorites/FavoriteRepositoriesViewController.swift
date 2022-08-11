@@ -53,7 +53,7 @@ public final class FavoriteRepositoriesViewController: UIViewController {
 
         let trigger = Observable.merge(initialTrigger.asObservable(), refreshRelay.asObservable())
 
-        let uiBindings: (Driver<FavoriteRepositoriesViewModel.State>) -> Signal<FavoriteRepositoriesViewModel.Event> = bind(self) { me, state in
+        let uiBindings: (Driver<FavoriteRepositoriesViewModel.State>) -> Signal<FavoriteRepositoriesViewModel.Event> = bind(self) { [unowned self] me, state in
             let subscriptions = [
                 state.drive(onNext: { [unowned self] state in
                     switch state {

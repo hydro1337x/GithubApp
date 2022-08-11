@@ -53,38 +53,38 @@ public final class SearchRepositoriesViewController: UIViewController {
     }
 
     private func setupSubscriptions() {
-        let uiBindings: (Driver<SearchRepositoriesViewModel.State>) -> Signal<SearchRepositoriesViewModel.Event> = bind(self) { me, state in
+        let uiBindings: (Driver<SearchRepositoriesViewModel.State>) -> Signal<SearchRepositoriesViewModel.Event> = bind(self) { [unowned self] me, state in
             let subscriptions = [
                 state
                     .map(\.items)
                     .distinctUntilChanged()
-                    .map { items in
-                        return me.makeSnapshot(with: items)
+                    .map { [unowned self] items in
+                        return makeSnapshot(with: items)
                     }
-                    .drive(onNext: { snapshot in
-                        me.dataSource.apply(snapshot)
+                    .drive(onNext: { [unowned self] snapshot in
+                        dataSource.apply(snapshot)
                     }),
                 state
                     .map(\.isRefreshing)
                     .distinctUntilChanged()
-                    .drive(me.refreshControl.rx.isRefreshing),
+                    .drive(refreshControl.rx.isRefreshing),
                 state
                     .map(\.isSearching)
                     .distinctUntilChanged()
-                    .drive(me.activityIndicatorView.rx.isAnimating),
+                    .drive(activityIndicatorView.rx.isAnimating),
                 state
                     .compactMap(\.failureMessage)
-                    .drive(onNext: { message in
-                        me.showToast(with: message)
+                    .drive(onNext: { [unowned self] message in
+                        showToast(with: message)
                     })
             ]
 
             let events: [Signal<SearchRepositoriesViewModel.Event>] = [
-                me.refreshControl.rx
+                refreshControl.rx
                     .controlEvent(.valueChanged)
                     .map { .refresh }
                     .asSignal(onErrorSignalWith: .empty()),
-                me.searchBar.rx
+                searchBar.rx
                     .text
                     .orEmpty
                     .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
@@ -92,10 +92,10 @@ public final class SearchRepositoriesViewController: UIViewController {
                     .skip(1)
                     .map { .searchChanged($0) }
                     .asSignal(onErrorSignalWith: .empty()),
-                me.tableView.rx
+                tableView.rx
                     .willDisplayCell
-                    .compactMap { input -> SubsequentTriggerInput? in
-                        guard let last = me.dataSource.snapshot().itemIdentifiers.indices.last else { return nil }
+                    .compactMap { [unowned self] input -> SubsequentTriggerInput? in
+                        guard let last = dataSource.snapshot().itemIdentifiers.indices.last else { return nil }
                         return SubsequentTriggerInput(currentIndex: input.indexPath.row, lastIndex: last)
                     }
                     .filter { input in
