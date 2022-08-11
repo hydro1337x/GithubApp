@@ -11,4 +11,6 @@ public struct MisformattedEmailError: LocalizedError {
     public var errorDescription: String? {
         "Misformatted email"
     }
+
+    public init() {}
 }

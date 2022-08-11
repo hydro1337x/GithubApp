@@ -8,7 +8,6 @@
 import Foundation
 
 enum ValidationState: Equatable {
-    case empty
     case valid
     case invalid(_ message: String)
 }

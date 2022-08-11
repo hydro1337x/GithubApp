@@ -50,7 +50,6 @@ public final class LoginViewModel {
                     }
             }
             .share()
-            .startWith(.empty)
 
         let passwordValidation = input.password
             .asObservable()
@@ -62,7 +61,6 @@ public final class LoginViewModel {
                     }
             }
             .share()
-            .startWith(.empty)
 
         let areInputsValid = Observable
             .combineLatest(

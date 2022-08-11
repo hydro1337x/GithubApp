@@ -78,7 +78,6 @@ public final class LoginViewController: UIViewController {
         output.emailValidation
             .drive(onNext: { [unowned self] state in
                 switch state {
-                case .empty: break
                 case .valid: emailValidityLabel.text = ""
                 case .invalid(let message): emailValidityLabel.text = message
                 }
@@ -88,7 +87,6 @@ public final class LoginViewController: UIViewController {
         output.passwordValidation
             .drive(onNext: { [unowned self] state in
                 switch state {
-                case .empty: break
                 case .valid: passwordValidityLabel.text = ""
                 case .invalid(let message): passwordValidityLabel.text = message
                 }

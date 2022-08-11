@@ -122,6 +122,11 @@
 		607DD9E42895E83A00957EEA /* FetchImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9E32895E83A00957EEA /* FetchImageRepository.swift */; };
 		607DD9E62895E8C100957EEA /* RemoteFetchImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607DD9E52895E8C100957EEA /* RemoteFetchImageRepository.swift */; };
 		6093FE5F28A447F7006C681A /* FetchRepositoriesInput+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6093FE5E28A447F7006C681A /* FetchRepositoriesInput+Extension.swift */; };
+		6093FE6128A46C4F006C681A /* LoginViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6093FE6028A46C4F006C681A /* LoginViewModelTests.swift */; };
+		6093FE6628A46CEA006C681A /* MockLoginUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6093FE6528A46CEA006C681A /* MockLoginUserUseCase.swift */; };
+		60AC0B4328A5202800DC2382 /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = 60AC0B4228A5202800DC2382 /* RxBlocking */; };
+		60AC0B4528A5202800DC2382 /* RxTest in Frameworks */ = {isa = PBXBuildFile; productRef = 60AC0B4428A5202800DC2382 /* RxTest */; };
+		60AC0B4828A541F700DC2382 /* TestScheduler+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AC0B4728A541F700DC2382 /* TestScheduler+Extension.swift */; };
 		60C8D94D289E6E6D00798A14 /* Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D94C289E6E6D00798A14 /* Mapper.swift */; };
 		60C8D94F289E6E7200798A14 /* AnyMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D94E289E6E7200798A14 /* AnyMapper.swift */; };
 		60C8D951289E708300798A14 /* URLToAsyncImageViewModelMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C8D950289E708300798A14 /* URLToAsyncImageViewModelMapper.swift */; };
@@ -157,7 +162,6 @@
 		60D7719E289469B00027CD4C /* PaginatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D7719D289469B00027CD4C /* PaginatorTests.swift */; };
 		60D771A2289469B00027CD4C /* Data.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60D7718F289469B00027CD4C /* Data.framework */; };
 		60D771B928946A070027CD4C /* Presentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60D771B128946A070027CD4C /* Presentation.framework */; };
-		60D771C028946A070027CD4C /* PresentationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D771BF28946A070027CD4C /* PresentationTests.swift */; };
 		60D771C428946A070027CD4C /* Presentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60D771B128946A070027CD4C /* Presentation.framework */; };
 		60D771F528946E820027CD4C /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 60D771F428946E820027CD4C /* RxCocoa */; };
 		60D771FA28946E830027CD4C /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60D7716C2894690E0027CD4C /* Domain.framework */; };
@@ -365,6 +369,9 @@
 		607DD9E32895E83A00957EEA /* FetchImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchImageRepository.swift; sourceTree = "<group>"; };
 		607DD9E52895E8C100957EEA /* RemoteFetchImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFetchImageRepository.swift; sourceTree = "<group>"; };
 		6093FE5E28A447F7006C681A /* FetchRepositoriesInput+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FetchRepositoriesInput+Extension.swift"; sourceTree = "<group>"; };
+		6093FE6028A46C4F006C681A /* LoginViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelTests.swift; sourceTree = "<group>"; };
+		6093FE6528A46CEA006C681A /* MockLoginUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLoginUserUseCase.swift; sourceTree = "<group>"; };
+		60AC0B4728A541F700DC2382 /* TestScheduler+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TestScheduler+Extension.swift"; sourceTree = "<group>"; };
 		60C8D94C289E6E6D00798A14 /* Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mapper.swift; sourceTree = "<group>"; };
 		60C8D94E289E6E7200798A14 /* AnyMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyMapper.swift; sourceTree = "<group>"; };
 		60C8D950289E708300798A14 /* URLToAsyncImageViewModelMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLToAsyncImageViewModelMapper.swift; sourceTree = "<group>"; };
@@ -404,7 +411,6 @@
 		60D7719D289469B00027CD4C /* PaginatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginatorTests.swift; sourceTree = "<group>"; };
 		60D771B128946A070027CD4C /* Presentation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Presentation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		60D771B828946A070027CD4C /* PresentationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PresentationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		60D771BF28946A070027CD4C /* PresentationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -476,6 +482,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				60D771B928946A070027CD4C /* Presentation.framework in Frameworks */,
+				60AC0B4528A5202800DC2382 /* RxTest in Frameworks */,
+				60AC0B4328A5202800DC2382 /* RxBlocking in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -909,6 +917,22 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		6093FE6228A46CC9006C681A /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				6093FE6528A46CEA006C681A /* MockLoginUserUseCase.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		60AC0B4628A541E700DC2382 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				60AC0B4728A541F700DC2382 /* TestScheduler+Extension.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		60C8D94A289E6E5500798A14 /* Mappers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1067,7 +1091,9 @@
 		60D771BE28946A070027CD4C /* PresentationTests */ = {
 			isa = PBXGroup;
 			children = (
-				60D771BF28946A070027CD4C /* PresentationTests.swift */,
+				60AC0B4628A541E700DC2382 /* Utilities */,
+				6093FE6228A46CC9006C681A /* Mocks */,
+				6093FE6028A46C4F006C681A /* LoginViewModelTests.swift */,
 			);
 			path = PresentationTests;
 			sourceTree = "<group>";
@@ -1273,6 +1299,10 @@
 				60D771BD28946A070027CD4C /* PBXTargetDependency */,
 			);
 			name = PresentationTests;
+			packageProductDependencies = (
+				60AC0B4228A5202800DC2382 /* RxBlocking */,
+				60AC0B4428A5202800DC2382 /* RxTest */,
+			);
 			productName = PresentationTests;
 			productReference = 60D771B828946A070027CD4C /* PresentationTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -1603,7 +1633,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60D771C028946A070027CD4C /* PresentationTests.swift in Sources */,
+				6093FE6628A46CEA006C681A /* MockLoginUserUseCase.swift in Sources */,
+				6093FE6128A46C4F006C681A /* LoginViewModelTests.swift in Sources */,
+				60AC0B4828A541F700DC2382 /* TestScheduler+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2348,6 +2380,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 601EAC1E28A3348400D740FA /* XCRemoteSwiftPackageReference "RxFeedback" */;
 			productName = RxFeedback;
+		};
+		60AC0B4228A5202800DC2382 /* RxBlocking */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 60D771CE28946BE80027CD4C /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxBlocking;
+		};
+		60AC0B4428A5202800DC2382 /* RxTest */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 60D771CE28946BE80027CD4C /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxTest;
 		};
 		60D771D928946C980027CD4C /* RxRelay */ = {
 			isa = XCSwiftPackageProductDependency;

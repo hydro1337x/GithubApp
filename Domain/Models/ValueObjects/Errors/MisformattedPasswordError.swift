@@ -11,4 +11,6 @@ public struct MisformattedPasswordError: LocalizedError {
     public var errorDescription: String? {
         "Min 6 characters and a special character"
     }
+
+    public init() {}
 }
