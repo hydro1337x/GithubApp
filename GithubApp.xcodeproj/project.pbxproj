@@ -81,7 +81,7 @@
 		604898882896CA9200EA6E21 /* FetchRepositoryDetailsInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604898872896CA9200EA6E21 /* FetchRepositoryDetailsInput.swift */; };
 		6048988A2896CB1E00EA6E21 /* FetchRepositoryDetailsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604898892896CB1E00EA6E21 /* FetchRepositoryDetailsRepository.swift */; };
 		6048988C2896CBC600EA6E21 /* ConcreteFetchRepositoryDetailsUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6048988B2896CBC600EA6E21 /* ConcreteFetchRepositoryDetailsUseCase.swift */; };
-		604DE7B3289FFFCF00A113C6 /* Interactors+Injectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604DE7B2289FFFCF00A113C6 /* Interactors+Injectable.swift */; };
+		604DE7B3289FFFCF00A113C6 /* UseCase+Injectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604DE7B2289FFFCF00A113C6 /* UseCase+Injectable.swift */; };
 		604DE7B528A0429500A113C6 /* CheckIfRepositoryIsFavoriteUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604DE7B428A0429500A113C6 /* CheckIfRepositoryIsFavoriteUseCase.swift */; };
 		604DE7B728A0434E00A113C6 /* FindRepositoryInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604DE7B628A0434E00A113C6 /* FindRepositoryInput.swift */; };
 		604DE7B928A0439400A113C6 /* ConcreteCheckIfRepositoryIsFavoriteUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604DE7B828A0439400A113C6 /* ConcreteCheckIfRepositoryIsFavoriteUseCase.swift */; };
@@ -323,7 +323,7 @@
 		604898872896CA9200EA6E21 /* FetchRepositoryDetailsInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRepositoryDetailsInput.swift; sourceTree = "<group>"; };
 		604898892896CB1E00EA6E21 /* FetchRepositoryDetailsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRepositoryDetailsRepository.swift; sourceTree = "<group>"; };
 		6048988B2896CBC600EA6E21 /* ConcreteFetchRepositoryDetailsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteFetchRepositoryDetailsUseCase.swift; sourceTree = "<group>"; };
-		604DE7B2289FFFCF00A113C6 /* Interactors+Injectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Interactors+Injectable.swift"; sourceTree = "<group>"; };
+		604DE7B2289FFFCF00A113C6 /* UseCase+Injectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UseCase+Injectable.swift"; sourceTree = "<group>"; };
 		604DE7B428A0429500A113C6 /* CheckIfRepositoryIsFavoriteUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckIfRepositoryIsFavoriteUseCase.swift; sourceTree = "<group>"; };
 		604DE7B628A0434E00A113C6 /* FindRepositoryInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindRepositoryInput.swift; sourceTree = "<group>"; };
 		604DE7B828A0439400A113C6 /* ConcreteCheckIfRepositoryIsFavoriteUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteCheckIfRepositoryIsFavoriteUseCase.swift; sourceTree = "<group>"; };
@@ -963,7 +963,7 @@
 			isa = PBXGroup;
 			children = (
 				60C8D972289F0F7600798A14 /* DependencyContainer.swift */,
-				604DE7B2289FFFCF00A113C6 /* Interactors+Injectable.swift */,
+				604DE7B2289FFFCF00A113C6 /* UseCase+Injectable.swift */,
 				60C8D976289F10BF00798A14 /* Mappers+Injectable.swift */,
 			);
 			path = Dependencies;
@@ -1448,7 +1448,7 @@
 				60C8D977289F10BF00798A14 /* Mappers+Injectable.swift in Sources */,
 				603D8C27289DA7A500A5CBE3 /* BiometricsAuthenticator.swift in Sources */,
 				601EABEF28A2A5F000D740FA /* FetchRepositoryDetailsRepositoryDecorator.swift in Sources */,
-				604DE7B3289FFFCF00A113C6 /* Interactors+Injectable.swift in Sources */,
+				604DE7B3289FFFCF00A113C6 /* UseCase+Injectable.swift in Sources */,
 				60C8D97F289F1F5C00798A14 /* FavoriteRepositoriesCoordinator.swift in Sources */,
 				603D8C11289D5C5500A5CBE3 /* SearchRepositoriesSceneFactory.swift in Sources */,
 				60C8D973289F0F7600798A14 /* DependencyContainer.swift in Sources */,
