@@ -9,7 +9,6 @@ import XCTest
 import RxSwift
 import RxCocoa
 import RxTest
-import RxBlocking
 import Domain
 @testable import Presentation
 
@@ -50,7 +49,7 @@ class LoginViewModelTests: XCTestCase {
 
         let areInputsValidResults = scheduler.record(source: output.areInputsValid)
         let expectedAreInputsValidResults = Recorded.events([
-            // Nothing should be @1 because of combineLatest
+            // Nothing should be @100 because of combineLatest
             .next(200, false),
             .next(300, false),
             .next(400, true)
